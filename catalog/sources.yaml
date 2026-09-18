@@ -16,6 +16,8 @@
 #                          rate is negligible on operational timescales)
 #               catalog   (reference data you need to compute a hazard)
 #   uniqueness: sole | few | many
+#   query_raw:  appended to the URL verbatim, for services like LaTiS whose
+#               query syntax is a bare expression rather than key=value pairs
 #   expect:     status      - required HTTP status (default 200)
 #               json_keys   - top-level JSON keys that must exist
 #               min_items   - {path: dotted.path, n: N} list length check
@@ -199,6 +201,12 @@ sources:
       which objects urgently need follow-up astrometry, the Close Approaches
       list, and per-object orbital elements and observation arcs.
     endpoints:
+      - id: all_neo
+        name: Full NEA list (documented automated-data-access endpoint)
+        url: https://neo.ssa.esa.int/PSDB-portlet/download
+        params: {file: allneo.lst}
+        expect: {min_bytes: 10000}
+        provides: designation list of every NEA known to the NEOCC
       - id: risk_list
         name: Risk list (flat file)
         url: https://neo.ssa.esa.int/PSDB-portlet/download
@@ -450,7 +458,7 @@ sources:
       - id: kp_ws
         name: Kp index web service
         url: https://kp.gfz.de/app/json/
-        params: {start: "2024-05-01T00:00:00Z", end: "2024-05-15T00:00:00Z", index: Kp}
+        params: {start: "2024-05-01T00:00:00Z", end: "2024-05-15T00:00:00Z", index: Kp, status: def}
         expect: {min_bytes: 200}
         provides: datetime array, Kp array, status (definitive/provisional)
       - id: kp_flatfile
@@ -627,7 +635,7 @@ sources:
       - id: f107
         name: Penticton F10.7 solar radio flux
         url: https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json
-        params: {time: ">=2024-05-01"}
+        query_raw: "time>=2024-05-01"
         expect: {min_bytes: 200}
         provides: time, adjusted_flux, observed_flux (10.7 cm, sfu)
 

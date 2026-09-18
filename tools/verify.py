@@ -66,6 +66,10 @@ def build_url(endpoint: dict) -> str:
     if params:
         sep = "&" if "?" in url else "?"
         url = url + sep + urllib.parse.urlencode(params, safe="'<>=")
+    raw = endpoint.get("query_raw")
+    if raw:
+        sep = "&" if "?" in url else "?"
+        url = url + sep + raw
     return url
 
 
