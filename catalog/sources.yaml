@@ -16,6 +16,7 @@
 #                          rate is negligible on operational timescales)
 #               catalog   (reference data you need to compute a hazard)
 #   uniqueness: sole | few | many
+#   timeout:    per-endpoint timeout override in seconds, for slow bulk files
 #   query_raw:  appended to the URL verbatim, for services like LaTiS whose
 #               query syntax is a bare expression rather than key=value pairs
 #   expect:     status      - required HTTP status (default 200)
@@ -281,16 +282,19 @@ sources:
       - id: nea_orbits
         name: Near-Earth asteroid orbit file
         url: https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz
+        timeout: 120
         expect: {min_bytes: 100000}
         provides: designation, epoch, a, e, i, node, peri, M, H, G, arc, n_opp, MOID, orbit class
       - id: neocp
         name: NEO Confirmation Page (unconfirmed objects)
         url: https://www.minorplanetcenter.net/iau/NEO/neocp.txt
+        timeout: 90
         expect: {status: 200}
         provides: temporary designation, discovery date, RA/Dec, V magnitude, motion, NEO score, n_obs
       - id: nea_mpcorb
         name: NEA orbits in MPCORB format
         url: https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt
+        timeout: 120
         expect: {min_bytes: 100000}
         provides: fixed-width MPCORB records — designation, H, G, epoch, M, peri, node, i, e, n, a, arc, n_obs, n_opp, rms
 
@@ -354,11 +358,16 @@ sources:
         url: https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json
         expect: {min_items: {path: "", n: 10}}
         provides: time_tag, satellite, flux (pfu), energy channel (>=10, >=50, >=100 MeV)
-      - id: solar_wind_index
-        name: Solar-wind product directory listing
-        url: https://services.swpc.noaa.gov/products/solar-wind/
-        expect: {min_bytes: 200}
-        provides: the authoritative list of available solar-wind JSON filenames
+      - id: rtsw_wind
+        name: Real-time solar wind plasma (RTSW)
+        url: https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json
+        expect: {min_items: {path: "", n: 10}}
+        provides: time_tag, proton_speed, proton_density, proton_temperature, source spacecraft
+      - id: rtsw_mag
+        name: Real-time interplanetary magnetic field (RTSW)
+        url: https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json
+        expect: {min_items: {path: "", n: 10}}
+        provides: time_tag, bx_gsm, by_gsm, bz_gsm, bt, lat_gsm, lon_gsm
       - id: solar_wind_plasma
         name: DSCOVR real-time solar wind plasma (1 day)
         url: https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json

@@ -282,7 +282,16 @@ def probe(source: dict, endpoint: dict, timeout: float) -> dict:
         }
 
     url = build_url(endpoint)
+    timeout = float(endpoint.get("timeout") or timeout)
     res = fetch(url, timeout=timeout)
+    if not res["ok"] and not is_egress_block(res.get("error", "")):
+        time.sleep(2.0)
+        retry = fetch(url, timeout=timeout)
+        retry["retried"] = True
+        if retry["ok"] or is_egress_block(retry.get("error", "")):
+            res = retry
+        else:
+            res["error"] = f"{res.get('error')} (retried once)"
     record = {
         "source_id": source["id"],
         "endpoint_id": endpoint["id"],
@@ -320,6 +329,8 @@ def probe(source: dict, endpoint: dict, timeout: float) -> dict:
         record["decode"] = res["decode"]
     if res.get("truncated"):
         record["truncated"] = True
+    if res.get("retried"):
+        record["retried"] = True
     return record
 
 
