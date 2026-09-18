@@ -189,9 +189,10 @@ def render_md(ranked: list[dict], meta: dict) -> str:
     A("Scores are computed, not hand-assigned. The weights live in "
       "`catalog/sources.yaml` under `scoring`:")
     A("")
-    A("Tiers are assigned from the score as a percentage of what was scorable, "
-      "so a provisional row and a verified row are compared on the same footing.")
-    A("")
+    if provisional:
+        A("Tiers are assigned from the score as a percentage of what was scorable, "
+          "so a provisional row and a verified row are compared on the same footing.")
+        A("")
     A("| Dimension | Max | What it measures |")
     A("|-----------|----:|------------------|")
     A("| Liveness | 25 | Fraction of this source's probes that passed just now |")
