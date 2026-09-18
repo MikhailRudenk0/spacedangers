@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import argparse
 import gzip
-import io
 import json
 import os
 import ssl
@@ -30,6 +29,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import zlib
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
@@ -62,7 +62,7 @@ def build_url(endpoint: dict) -> str:
     params = dict(endpoint.get("params") or {})
     key_param = endpoint.get("api_key_param")
     if key_param:
-        params[key_param] = os.environ.get("NASA_API_KEY", "DEMO_KEY")
+        params[key_param] = os.environ.get("NASA_API_KEY") or "DEMO_KEY"
     if params:
         sep = "&" if "?" in url else "?"
         url = url + sep + urllib.parse.urlencode(params, safe="'<>=")
@@ -74,16 +74,21 @@ def build_url(endpoint: dict) -> str:
 
 
 def decode_body(raw: bytes, headers) -> tuple[bytes, str | None]:
-    """Return (decoded_bytes, decode_note)."""
+    """Return (decoded_bytes, decode_note).
+
+    Large archives are read up to a cap, so the gzip stream is often cut off
+    mid-way. A decompressobj yields the decodable prefix instead of raising,
+    which is enough to confirm the file is real and well-formed.
+    """
     enc = (headers.get("Content-Encoding") or "").lower()
     if enc == "gzip" or raw[:2] == b"\x1f\x8b":
         try:
             return gzip.decompress(raw), "gzip"
-        except OSError:
+        except (OSError, EOFError, zlib.error):
             try:
-                with gzip.GzipFile(fileobj=io.BytesIO(raw)) as fh:
-                    return fh.read(), "gzip-partial"
-            except OSError:
+                obj = zlib.decompressobj(16 + zlib.MAX_WBITS)
+                return obj.decompress(raw), "gzip-truncated"
+            except zlib.error:
                 return raw, "gzip-failed"
     return raw, None
 
@@ -115,6 +120,7 @@ def fetch(url: str, timeout: float, max_bytes: int = 4_000_000) -> dict:
             body, note = decode_body(raw, resp.headers)
             return {
                 "ok": True,
+                "truncated": len(raw) >= max_bytes,
                 "status": resp.status,
                 "final_url": resp.geturl(),
                 "content_type": (resp.headers.get("Content-Type") or "").split(";")[0].strip(),
@@ -295,6 +301,8 @@ def probe(source: dict, endpoint: dict, timeout: float) -> dict:
     )
     if res.get("decode"):
         record["decode"] = res["decode"]
+    if res.get("truncated"):
+        record["truncated"] = True
     return record
 
 

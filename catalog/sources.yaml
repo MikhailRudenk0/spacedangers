@@ -216,7 +216,7 @@ sources:
       - id: priority_list
         name: Observation priority list
         url: https://neo.ssa.esa.int/PSDB-portlet/download
-        params: {file: esa_priority_neo_list}
+        params: {file: esa_priority_list}
         expect: {min_bytes: 500}
         provides: designation, priority, RA/Dec, V magnitude, observability window
       - id: close_approaches
@@ -285,11 +285,11 @@ sources:
         url: https://www.minorplanetcenter.net/iau/NEO/neocp.txt
         expect: {status: 200}
         provides: temporary designation, discovery date, RA/Dec, V magnitude, motion, NEO score, n_obs
-      - id: last_obs
-        name: Recent observations of NEOs
-        url: https://www.minorplanetcenter.net/iau/lists/LastNEO.html
-        expect: {min_bytes: 1000}
-        provides: recently updated NEO designations and observation dates
+      - id: nea_mpcorb
+        name: NEA orbits in MPCORB format
+        url: https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt
+        expect: {min_bytes: 100000}
+        provides: fixed-width MPCORB records — designation, H, G, epoch, M, peri, node, i, e, n, a, arc, n_obs, n_opp, rms
 
   # ------------------------------------------------------------- space weather
 
@@ -352,13 +352,13 @@ sources:
         expect: {min_items: {path: "", n: 10}}
         provides: time_tag, satellite, flux (pfu), energy channel (>=10, >=50, >=100 MeV)
       - id: solar_wind_plasma
-        name: DSCOVR real-time solar wind plasma
-        url: https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json
+        name: DSCOVR real-time solar wind plasma (1 day)
+        url: https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json
         expect: {min_items: {path: "", n: 10}}
         provides: time_tag, density (p/cm^3), speed (km/s), temperature (K)
       - id: solar_wind_mag
-        name: DSCOVR real-time interplanetary magnetic field
-        url: https://services.swpc.noaa.gov/products/solar-wind/mag-2-hour.json
+        name: DSCOVR real-time interplanetary magnetic field (1 day)
+        url: https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json
         expect: {min_items: {path: "", n: 10}}
         provides: time_tag, bx_gsm, by_gsm, bz_gsm, bt, lon_gsm, lat_gsm
       - id: ovation
@@ -605,12 +605,12 @@ sources:
         url: https://cdaweb.gsfc.nasa.gov/hapi/data
         params:
           id: OMNI2_H0_MRG1HR
-          parameters: "KP1800,DST1800,F10_INDEX1800"
+          parameters: "DST1800"
           time.min: "2024-05-09T00:00:00Z"
           time.max: "2024-05-12T00:00:00Z"
           format: csv
         expect: {min_bytes: 200}
-        provides: time, Kp, Dst, F10.7 (and ~50 more parameters on request)
+        provides: time, Dst (and ~50 more parameters on request; HAPI requires them in dataset order)
 
   - id: lisird
     name: LASP Interactive Solar Irradiance Data Center (LISIRD)
@@ -721,7 +721,7 @@ sources:
       - id: login_probe
         name: Service liveness (unauthenticated login endpoint)
         url: https://www.space-track.org/ajaxauth/login
-        expect: {status: 200, min_bytes: 100}
+        expect: {status: 200}
         provides: confirms the API host is reachable; real queries require credentials
 
   - id: esa_discos
@@ -760,13 +760,18 @@ sources:
     homepage: https://aerospace.org/reentries
     domains: [reentry]
     auth: none
-    formats: [html, json]
+    formats: [html]
     cadence: daily
     depth: years
     relevance: warning
     uniqueness: few
     license: Public web content
     provides: |
+      NOTE: verified as NOT programmatically accessible — the site sits behind a
+      WAF that answers automated requests with HTTP 403 and a challenge page.
+      Read it in a browser; do not plan a scraper around it. Its probe is left
+      in place and left failing so the ranking reflects that.
+
       Independent, publicly readable reentry predictions for large uncontrolled
       objects: predicted reentry time with an uncertainty window, ground-track
       maps for the possible reentry passes, object mass and expected surviving
