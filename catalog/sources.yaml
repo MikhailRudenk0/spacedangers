@@ -326,7 +326,8 @@ sources:
         the thing that threatens astronauts, polar flights and satellite parts.
       * GOES integral/differential electrons — surface and deep-dielectric
         charging risk for spacecraft.
-      * DSCOVR/ACE real-time solar wind at L1 — density, speed, temperature and
+      * DSCOVR real-time solar wind at L1 (the /json/rtsw/ files; the older
+        /products/solar-wind/ paths are gone) — density, speed, temperature and
         the interplanetary magnetic field including Bz, which is the single best
         ~30–60 minute lead indicator of a geomagnetic storm.
       * Planetary K index (1-minute estimated and 3-hourly), Kp forecast.
@@ -368,16 +369,6 @@ sources:
         url: https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json
         expect: {min_items: {path: "", n: 10}}
         provides: time_tag, bx_gsm, by_gsm, bz_gsm, bt, lat_gsm, lon_gsm
-      - id: solar_wind_plasma
-        name: DSCOVR real-time solar wind plasma (1 day)
-        url: https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json
-        expect: {min_items: {path: "", n: 10}}
-        provides: time_tag, density (p/cm^3), speed (km/s), temperature (K)
-      - id: solar_wind_mag
-        name: DSCOVR real-time interplanetary magnetic field (1 day)
-        url: https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json
-        expect: {min_items: {path: "", n: 10}}
-        provides: time_tag, bx_gsm, by_gsm, bz_gsm, bt, lon_gsm, lat_gsm
       - id: ovation
         name: OVATION aurora nowcast grid
         url: https://services.swpc.noaa.gov/json/ovation_aurora_latest.json

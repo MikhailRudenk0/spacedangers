@@ -251,9 +251,23 @@ def render_md(ranked: list[dict], meta: dict) -> str:
             else:
                 why = "; ".join(p.get("checks_failed") or [p.get("error", "unknown")])
                 res = f"FAIL · {why[:110]}"
-            fields = (e["provides"] or "").replace("|", "/")
+            fields = (e["provides"] or "").replace("|", "/").replace("\n", " ").strip()
             A(f"| `{e['id']}`<br/>`{e['url'][:78]}` | {res} | {fields} |")
         A("")
+        samples = [
+            (e["id"], probes[e["id"]]["sample"])
+            for e in r["endpoints"]
+            if probes.get(e["id"], {}).get("verdict") == "pass"
+            and probes[e["id"]].get("sample")
+        ]
+        if samples:
+            A("<details><summary>Verified response shapes</summary>")
+            A("")
+            for eid, sample in samples:
+                A(f"- `{eid}` — {sample[:400]}")
+            A("")
+            A("</details>")
+            A("")
         A("---")
         A("")
     A("## Score breakdown")
