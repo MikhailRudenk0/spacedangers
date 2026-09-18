@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T20:15:48+00:00",
-  "verified_at": "2026-09-18T20:12:30+00:00",
+  "generated_at": "2026-09-18T20:25:11+00:00",
+  "verified_at": "2026-09-18T20:25:11+00:00",
   "weights": {
     "liveness": 25,
     "access": 15,
@@ -11,6 +11,317 @@
     "uniqueness": 8
   },
   "ranking": [
+    {
+      "id": "jpl_ssd_cneos",
+      "name": "NASA/JPL Solar System Dynamics & CNEOS API",
+      "org": "NASA Jet Propulsion Laboratory",
+      "homepage": "https://ssd-api.jpl.nasa.gov/doc/",
+      "domains": [
+        "neo_impact",
+        "fireballs",
+        "orbits"
+      ],
+      "auth": "none",
+      "formats": [
+        "json"
+      ],
+      "cadence": "daily",
+      "depth": "decades",
+      "relevance": "warning",
+      "uniqueness": "sole",
+      "license": "Public domain (US Government)",
+      "provides": "The authoritative machine-readable feed for asteroid and comet hazard.\nFour distinct products behind one host:\n* Close-Approach Data (CAD): every known close approach of an asteroid or\n  comet to Earth (or any planet) between 1900 and 2200 \u2014 date, nominal and\n  minimum distance in au / lunar distances, relative velocity, absolute\n  magnitude H, and the 3-sigma uncertainty on time of approach.\n* Sentry: the impact-risk table. Per object: number of potential impacts,\n  impact probability, year range, Palermo and Torino scale ratings,\n  estimated diameter and impact energy in megatons.\n* Fireball: energy and location of atmospheric bolide detections by US\n  government sensors since 1988 \u2014 date, lat/lon, altitude, velocity vector,\n  total radiated energy and computed impact energy.\n* SBDB / SBDB Query: full orbital elements, covariance, physical parameters\n  (diameter, albedo, rotation, spectral type) and discovery circumstances\n  for ~1.4M small bodies; the query endpoint does server-side filtering so\n  you can pull \"all PHAs with H < 22\" in one request.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 20.0,
+        "cadence": 8.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 96.0,
+      "max_score": 100,
+      "normalized": 96.0,
+      "verified": true,
+      "liveness_note": "5/5 probes passed",
+      "median_latency_ms": 147,
+      "endpoints": [
+        {
+          "id": "cad",
+          "name": "Close-approach data (next 60 days, inside 0.05 au)",
+          "url": "https://ssd-api.jpl.nasa.gov/cad.api",
+          "provides": "des, orbit_id, jd, cd, dist, dist_min, dist_max, v_rel, v_inf, t_sigma_f, h"
+        },
+        {
+          "id": "sentry",
+          "name": "Impact-risk table (Palermo scale >= -5)",
+          "url": "https://ssd-api.jpl.nasa.gov/sentry.api",
+          "provides": "des, ip (impact probability), ps_cum, ts_max, diameter, energy, last_obs, n_imp"
+        },
+        {
+          "id": "fireball",
+          "name": "Bolide / fireball detections",
+          "url": "https://ssd-api.jpl.nasa.gov/fireball.api",
+          "provides": "date, lat, lon, alt, vel, energy (kt), impact-e"
+        },
+        {
+          "id": "sbdb_query",
+          "name": "Bulk query \u2014 potentially hazardous asteroids",
+          "url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api",
+          "provides": "any of ~200 orbital/physical columns, server-side filtered"
+        },
+        {
+          "id": "scout",
+          "name": "Scout \u2014 imminent-impactor hazard assessment",
+          "url": "https://ssd-api.jpl.nasa.gov/scout.api",
+          "provides": "impact probability and geographic corridor for objects still on the MPC confirmation page"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "jpl_ssd_cneos",
+          "endpoint_id": "cad",
+          "name": "Close-approach data (next 60 days, inside 0.05 au)",
+          "url": "https://ssd-api.jpl.nasa.gov/cad.api?date-min=now&date-max=%2B60&dist-max=0.05&sort=dist&limit=20",
+          "status": 200,
+          "elapsed_ms": 147,
+          "bytes": 3721,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:signature",
+            "key:count",
+            "key:fields",
+            "key:data"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['count', 'data', 'fields', 'signature', 'total']"
+        },
+        {
+          "source_id": "jpl_ssd_cneos",
+          "endpoint_id": "sentry",
+          "name": "Impact-risk table (Palermo scale >= -5)",
+          "url": "https://ssd-api.jpl.nasa.gov/sentry.api?ps-min=-5",
+          "status": 200,
+          "elapsed_ms": 168,
+          "bytes": 55967,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:signature",
+            "key:count",
+            "key:data"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['count', 'data', 'signature']"
+        },
+        {
+          "source_id": "jpl_ssd_cneos",
+          "endpoint_id": "fireball",
+          "name": "Bolide / fireball detections",
+          "url": "https://ssd-api.jpl.nasa.gov/fireball.api?limit=10&sort=-date",
+          "status": 200,
+          "elapsed_ms": 79,
+          "bytes": 892,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:signature",
+            "key:count",
+            "key:fields",
+            "key:data"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['count', 'data', 'fields', 'signature']"
+        },
+        {
+          "source_id": "jpl_ssd_cneos",
+          "endpoint_id": "sbdb_query",
+          "name": "Bulk query \u2014 potentially hazardous asteroids",
+          "url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name%2CH%2Cdiameter%2Cmoid%2Cclass&sb-group=pha&limit=10",
+          "status": 200,
+          "elapsed_ms": 4233,
+          "bytes": 750,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:signature",
+            "key:fields",
+            "key:data"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['count', 'data', 'fields', 'signature']"
+        },
+        {
+          "source_id": "jpl_ssd_cneos",
+          "endpoint_id": "scout",
+          "name": "Scout \u2014 imminent-impactor hazard assessment",
+          "url": "https://ssd-api.jpl.nasa.gov/scout.api",
+          "status": 200,
+          "elapsed_ms": 124,
+          "bytes": 52289,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:signature",
+            "key:count"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['count', 'data', 'signature']"
+        }
+      ]
+    },
+    {
+      "id": "celestrak",
+      "name": "CelesTrak",
+      "org": "CelesTrak / T.S. Kelso",
+      "homepage": "https://celestrak.org/",
+      "domains": [
+        "debris",
+        "conjunctions",
+        "reentry",
+        "geomagnetic"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "csv",
+        "text"
+      ],
+      "cadence": "hourly",
+      "depth": "decades",
+      "relevance": "warning",
+      "uniqueness": "few",
+      "license": "Free, attribution requested",
+      "provides": "The keyless front door to the US catalogue of tracked objects, and the one\nmost projects actually build on:\n* GP element sets for ~28,000 tracked objects in TLE, 3LE, JSON, CSV or OMM\n  format, grouped (active, starlink, last-30-days, cosmos-2251-debris,\n  iridium-33-debris, ...) or queried by NORAD ID / name. Feed these to an\n  SGP4 propagator and you have every satellite and debris position.\n* SATCAT \u2014 the object catalogue: international designator, launch date and\n  site, object type, RCS size class, current orbital parameters, decay date\n  for objects that have reentered, and operational status.\n* SOCRATES \u2014 twice-daily all-on-all conjunction screening of the public\n  catalogue: object pairs, time of closest approach, minimum range,\n  relative velocity, maximum probability of collision.\n* Space-weather CSV \u2014 historical and predicted Ap, Kp, F10.7 in exactly the\n  form atmospheric-drag models want, which is what turns a TLE into a\n  reentry-date estimate.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 20.0,
+        "cadence": 10.0,
+        "depth": 8.0,
+        "uniqueness": 5.0
+      },
+      "total": 95.0,
+      "max_score": 100,
+      "normalized": 95.0,
+      "verified": true,
+      "liveness_note": "4/4 probes passed",
+      "median_latency_ms": 176,
+      "endpoints": [
+        {
+          "id": "gp_recent",
+          "name": "GP elements for objects launched in the last 30 days",
+          "url": "https://celestrak.org/NORAD/elements/gp.php",
+          "provides": "OBJECT_NAME, NORAD_CAT_ID, EPOCH, MEAN_MOTION, ECCENTRICITY, INCLINATION, RA_OF_ASC_NODE, ARG_OF_PERICENTER, MEAN_ANOMALY, BSTAR"
+        },
+        {
+          "id": "satcat",
+          "name": "Satellite catalogue (payloads, rocket bodies, debris)",
+          "url": "https://celestrak.org/satcat/records.php",
+          "provides": "OBJECT_ID, OBJECT_TYPE, OPS_STATUS_CODE, OWNER, LAUNCH_DATE, LAUNCH_SITE, DECAY_DATE, PERIOD, APOGEE, PERIGEE, RCS"
+        },
+        {
+          "id": "space_weather_csv",
+          "name": "Space-weather indices for drag modelling",
+          "url": "https://celestrak.org/SpaceData/SW-Last5Years.csv",
+          "provides": "date, Bartels rotation, Kp x8, Kp sum, ap x8, Ap, Cp, C9, ISN, F10.7 obs/adj/centred-81-day"
+        },
+        {
+          "id": "socrates",
+          "name": "SOCRATES conjunction screening",
+          "url": "https://celestrak.org/SOCRATES/",
+          "provides": "satellite pair, TCA, minimum range (km), relative velocity, max collision probability"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "celestrak",
+          "endpoint_id": "gp_recent",
+          "name": "GP elements for objects launched in the last 30 days",
+          "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json",
+          "status": 200,
+          "elapsed_ms": 147,
+          "bytes": 113532,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=1 (got 268)"
+          ],
+          "checks_failed": [],
+          "sample": "list[268], first keys: ['ARG_OF_PERICENTER', 'BSTAR', 'CLASSIFICATION_TYPE', 'ECCENTRICITY', 'ELEMENT_SET_NO', 'EPHEMERIS_TYPE', 'EPOCH', 'INCLINATION']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "celestrak",
+          "endpoint_id": "satcat",
+          "name": "Satellite catalogue (payloads, rocket bodies, debris)",
+          "url": "https://celestrak.org/satcat/records.php?GROUP=last-30-days&FORMAT=json",
+          "status": 200,
+          "elapsed_ms": 191,
+          "bytes": 90218,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=1 (got 272)"
+          ],
+          "checks_failed": [],
+          "sample": "list[272], first keys: ['APOGEE', 'DATA_STATUS_CODE', 'DECAY_DATE', 'INCLINATION', 'LAUNCH_DATE', 'LAUNCH_SITE', 'NORAD_CAT_ID', 'OBJECT_ID']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "celestrak",
+          "endpoint_id": "space_weather_csv",
+          "name": "Space-weather indices for drag modelling",
+          "url": "https://celestrak.org/SpaceData/SW-Last5Years.csv",
+          "status": 200,
+          "elapsed_ms": 176,
+          "bytes": 259650,
+          "content_type": "application/octet-stream",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=100000"
+          ],
+          "checks_failed": [],
+          "sample": "text: DATE,BSRN,ND,KP1,KP2,KP3,KP4,KP5,KP6,KP7,KP8,KP_SUM,AP1,AP2,AP3,AP4,AP5,AP6,AP7,AP8,AP_AVG,CP,C9,ISN,F10.7_OBS,F10.7_ADJ,F10.7_DATA_TYPE,F10.7_OBS_CENTER81,F10."
+        },
+        {
+          "source_id": "celestrak",
+          "endpoint_id": "socrates",
+          "name": "SOCRATES conjunction screening",
+          "url": "https://celestrak.org/SOCRATES/",
+          "status": 200,
+          "elapsed_ms": 112,
+          "bytes": 20609,
+          "content_type": "text/html",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=2000"
+          ],
+          "checks_failed": [],
+          "sample": "text: <!DOCTYPE html>\r \r <html>\r \r <head>\r \r <title>CelesTrak: SOCRATES Plus</title>\r \r <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r <link re",
+          "decode": "gzip"
+        }
+      ]
+    },
     {
       "id": "noaa_swpc",
       "name": "NOAA Space Weather Prediction Center \u2014 services.swpc.noaa.gov",
@@ -34,7 +345,7 @@
       "license": "Public domain (US Government)",
       "provides": "The operational space-weather feed. No key, no rate limit, updates every\n1\u20135 minutes, and it carries both the raw measurements and the official\nwarnings:\n* alerts.json \u2014 the actual issued Watches, Warnings and Alerts (geomagnetic\n  storm G1\u2013G5, radio blackout R1\u2013R5, radiation storm S1\u2013S5), with issue\n  time and free-text product.\n* noaa-scales.json \u2014 current and 3-day forecast R/S/G scale values.\n* GOES X-ray flux (1-minute, 0.05\u20130.4 nm and 0.1\u20130.8 nm) \u2014 this is how you\n  detect a solar flare and classify it A/B/C/M/X.\n* GOES integral proton flux at >10/>50/>100 MeV \u2014 solar radiation storms,\n  the thing that threatens astronauts, polar flights and satellite parts.\n* GOES integral/differential electrons \u2014 surface and deep-dielectric\n  charging risk for spacecraft.\n* DSCOVR/ACE real-time solar wind at L1 \u2014 density, speed, temperature and\n  the interplanetary magnetic field including Bz, which is the single best\n  ~30\u201360 minute lead indicator of a geomagnetic storm.\n* Planetary K index (1-minute estimated and 3-hourly), Kp forecast.\n* OVATION aurora nowcast grid, D-region absorption, 3-day forecast text.\n* Solar-cycle indices: sunspot number and F10.7 monthly back to 1749.",
       "components": {
-        "liveness": null,
+        "liveness": 20.0,
         "access": 15.0,
         "parseability": 12.0,
         "relevance": 20.0,
@@ -42,12 +353,12 @@
         "depth": 8.0,
         "uniqueness": 8.0
       },
-      "total": 75.0,
-      "max_score": 75,
-      "normalized": 100.0,
-      "verified": false,
-      "liveness_note": "not measured (10 probes blocked by local network)",
-      "median_latency_ms": null,
+      "total": 95.0,
+      "max_score": 100,
+      "normalized": 95.0,
+      "verified": true,
+      "liveness_note": "8/10 probes passed",
+      "median_latency_ms": 12,
       "endpoints": [
         {
           "id": "alerts",
@@ -116,130 +427,364 @@
           "endpoint_id": "alerts",
           "name": "Issued alerts, watches and warnings",
           "url": "https://services.swpc.noaa.gov/products/alerts.json",
-          "status": null,
-          "elapsed_ms": 242,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 112,
+          "bytes": 42240,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=5 (got 77)"
+          ],
+          "checks_failed": [],
+          "sample": "list[77], first keys: ['issue_datetime', 'message', 'product_id']",
+          "decode": "gzip"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "scales",
           "name": "NOAA R/S/G scales, observed + 3-day forecast",
           "url": "https://services.swpc.noaa.gov/products/noaa-scales.json",
-          "status": null,
-          "elapsed_ms": 296,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 11,
+          "bytes": 1096,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "bytes>=100"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['-1', '0', '1', '2', '3']",
+          "decode": "gzip"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "kp_1m",
           "name": "Planetary K index, 1-minute estimated",
           "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
-          "status": null,
-          "elapsed_ms": 306,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 9,
+          "bytes": 27925,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=10 (got 358)"
+          ],
+          "checks_failed": [],
+          "sample": "list[358], first keys: ['estimated_kp', 'kp', 'kp_index', 'time_tag']",
+          "decode": "gzip"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "xray_flux",
           "name": "GOES X-ray flux, 1-day",
           "url": "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json",
-          "status": null,
-          "elapsed_ms": 239,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 12,
+          "bytes": 651130,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=10 (got 2874)"
+          ],
+          "checks_failed": [],
+          "sample": "list[2874], first keys: ['electron_contaminaton', 'electron_correction', 'energy', 'flux', 'observed_flux', 'satellite', 'time_tag']",
+          "decode": "gzip"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "protons",
           "name": "GOES integral proton flux, 1-day",
           "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
-          "status": null,
-          "elapsed_ms": 232,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 12,
+          "bytes": 242277,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=10 (got 2296)"
+          ],
+          "checks_failed": [],
+          "sample": "list[2296], first keys: ['energy', 'flux', 'satellite', 'time_tag']",
+          "decode": "gzip"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "solar_wind_plasma",
           "name": "DSCOVR real-time solar wind plasma",
           "url": "https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json",
-          "status": null,
-          "elapsed_ms": 280,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 404,
+          "elapsed_ms": 258,
+          "bytes": 196,
+          "content_type": "text/html",
+          "verdict": "fail",
+          "checks_passed": [],
+          "checks_failed": [
+            "status 404 != 200",
+            "min_items 10 at '' -> NoneType"
+          ],
+          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "solar_wind_mag",
           "name": "DSCOVR real-time interplanetary magnetic field",
           "url": "https://services.swpc.noaa.gov/products/solar-wind/mag-2-hour.json",
-          "status": null,
-          "elapsed_ms": 237,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 404,
+          "elapsed_ms": 13,
+          "bytes": 196,
+          "content_type": "text/html",
+          "verdict": "fail",
+          "checks_passed": [],
+          "checks_failed": [
+            "status 404 != 200",
+            "min_items 10 at '' -> NoneType"
+          ],
+          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "ovation",
           "name": "OVATION aurora nowcast grid",
           "url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
-          "status": null,
-          "elapsed_ms": 246,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 15,
+          "bytes": 921170,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:Observation Time",
+            "key:Forecast Time",
+            "key:coordinates"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['Data Format', 'Forecast Time', 'Observation Time', 'coordinates', 'type']",
+          "decode": "gzip"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "forecast_3day",
           "name": "3-day space weather forecast (text product)",
           "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
-          "status": null,
-          "elapsed_ms": 246,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 10,
+          "bytes": 1986,
+          "content_type": "text/plain",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "contains:'NOAA'",
+            "bytes>=500"
+          ],
+          "checks_failed": [],
+          "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Sep 18 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Act",
+          "decode": "gzip"
         },
         {
           "source_id": "noaa_swpc",
           "endpoint_id": "solar_cycle",
           "name": "Observed solar cycle indices",
           "url": "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json",
-          "status": null,
-          "elapsed_ms": 235,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 12,
+          "bytes": 512287,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=100 (got 3332)"
+          ],
+          "checks_failed": [],
+          "sample": "list[3332], first keys: ['f10.7', 'observed_swpc_ssn', 'smoothed_f10.7', 'smoothed_ssn', 'smoothed_swpc_ssn', 'ssn', 'time-tag']",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "gfz_kp",
+      "name": "GFZ Potsdam geomagnetic indices (Kp / ap / Hp30 / Hp60)",
+      "org": "GFZ German Research Centre for Geosciences",
+      "homepage": "https://kp.gfz.de/",
+      "domains": [
+        "geomagnetic"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "text"
+      ],
+      "cadence": "hourly",
+      "depth": "decades",
+      "relevance": "driver",
+      "uniqueness": "sole",
+      "license": "CC BY 4.0",
+      "provides": "The definitive Kp index \u2014 SWPC's Kp is an estimate, GFZ is the official\nproducer. The web service returns Kp and ap at 3-hour cadence continuously\nfrom 1932, the international sunspot number and F10.7 on the same grid, and\nthe newer high-cadence Hp30/Hp60 and ap30/ap60 indices which resolve storm\nsubstructure that 3-hourly Kp smears out. This is the series you use for\nany statistical or historical study of geomagnetic risk, and the definitive\nvalues that late-arriving corrections are applied to.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 14.0,
+        "cadence": 10.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 92.0,
+      "max_score": 100,
+      "normalized": 92.0,
+      "verified": true,
+      "liveness_note": "2/2 probes passed",
+      "median_latency_ms": 2009,
+      "endpoints": [
+        {
+          "id": "kp_ws",
+          "name": "Kp index web service",
+          "url": "https://kp.gfz.de/app/json/",
+          "provides": "datetime array, Kp array, status (definitive/provisional)"
+        },
+        {
+          "id": "kp_flatfile",
+          "name": "Kp/ap/Ap/SN/F10.7 since 1932 (flat file)",
+          "url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
+          "provides": "full historical table, 3-hourly Kp and ap, daily Ap, sunspot number, F10.7"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "gfz_kp",
+          "endpoint_id": "kp_ws",
+          "name": "Kp index web service",
+          "url": "https://kp.gfz.de/app/json/?start=2024-05-01T00%3A00%3A00Z&end=2024-05-15T00%3A00%3A00Z&index=Kp&status=def",
+          "status": 200,
+          "elapsed_ms": 1266,
+          "bytes": 3972,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "bytes>=200"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['Kp', 'datetime', 'meta', 'status']"
+        },
+        {
+          "source_id": "gfz_kp",
+          "endpoint_id": "kp_flatfile",
+          "name": "Kp/ap/Ap/SN/F10.7 since 1932 (flat file)",
+          "url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
+          "status": 200,
+          "elapsed_ms": 2009,
+          "bytes": 5504038,
+          "content_type": "text/plain",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=500000"
+          ],
+          "checks_failed": [],
+          "sample": "text: # PURPOSE: This file distributes the geomagnetic planetary three-hour index Kp and associated geomagnetic indices as well as relevant solar indices. # LICENSE: ",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "helioviewer",
+      "name": "Helioviewer API",
+      "org": "NASA Goddard / ESA",
+      "homepage": "https://api.helioviewer.org/docs/v2/",
+      "domains": [
+        "solar"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "binary"
+      ],
+      "cadence": "minutes",
+      "depth": "decades",
+      "relevance": "driver",
+      "uniqueness": "few",
+      "license": "Open",
+      "provides": "Programmatic access to the full solar-imagery archive \u2014 SDO/AIA and HMI,\nSOHO/LASCO C2 and C3 coronagraphs, STEREO, PROBA-2, GOES/SUVI \u2014 from 1991\nto now. You can ask for the closest image to a timestamp, build composite\nlayers, generate movies, and query the event layer. The LASCO coronagraph\nframes are how a halo CME is actually recognised as Earth-directed before\nany model runs, so this is the visual evidence layer behind a CME warning.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 14.0,
+        "cadence": 12.0,
+        "depth": 8.0,
+        "uniqueness": 5.0
+      },
+      "total": 91.0,
+      "max_score": 100,
+      "normalized": 91.0,
+      "verified": true,
+      "liveness_note": "2/2 probes passed",
+      "median_latency_ms": 346,
+      "endpoints": [
+        {
+          "id": "status",
+          "name": "Data-source freshness",
+          "url": "https://api.helioviewer.org/v2/getStatus/",
+          "provides": "per-observatory latest image time and staleness in seconds"
+        },
+        {
+          "id": "closest_image",
+          "name": "Closest LASCO C3 image to a time",
+          "url": "https://api.helioviewer.org/v2/getClosestImage/",
+          "provides": "image id, timestamp, scale, dimensions, instrument metadata"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "helioviewer",
+          "endpoint_id": "status",
+          "name": "Data-source freshness",
+          "url": "https://api.helioviewer.org/v2/getStatus/",
+          "status": 200,
+          "elapsed_ms": 346,
+          "bytes": 1795,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "bytes>=50"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['AIA', 'CCOR-1', 'COSMO', 'EIT', 'EUI', 'GONG', 'HMI', 'LASCO', 'MDI', 'RHESSI']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "helioviewer",
+          "endpoint_id": "closest_image",
+          "name": "Closest LASCO C3 image to a time",
+          "url": "https://api.helioviewer.org/v2/getClosestImage/?date=2024-05-10T12%3A00%3A00Z&sourceId=5",
+          "status": 200,
+          "elapsed_ms": 335,
+          "bytes": 282,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "bytes>=50"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['date', 'dsun', 'height', 'id', 'layeringOrder', 'name', 'offsetX', 'offsetY', 'refPixelX', 'refPixelY']",
+          "decode": "gzip"
         }
       ]
     },
@@ -264,7 +809,7 @@
       "license": "Public domain (US Government)",
       "provides": "Human-curated space-weather *events*, not raw instrument counts \u2014 which is\nwhat you need to build a timeline or a causal chain. Separate endpoints per\nevent type: CME (time, source location, active region) and CME Analysis\n(measured speed, half-angle, latitude/longitude, type S/C/O/R/ER plus the\nWSA-ENLIL model run and its predicted Earth arrival time), solar flares\n(begin/peak/end, class, active region, linked events), geomagnetic storms\n(observed Kp series), solar energetic particle events, interplanetary\nshocks, magnetopause crossings, radiation-belt enhancements, and the\nnotification texts themselves. Each event carries `linkedEvents`, so you\ncan trace flare -> CME -> shock -> storm as one chain.\nMirrored on api.nasa.gov (needs a key) and on the CCMC host (no key).",
       "components": {
-        "liveness": null,
+        "liveness": 20.0,
         "access": 15.0,
         "parseability": 12.0,
         "relevance": 20.0,
@@ -272,12 +817,12 @@
         "depth": 6.0,
         "uniqueness": 8.0
       },
-      "total": 71.0,
-      "max_score": 75,
-      "normalized": 94.7,
-      "verified": false,
-      "liveness_note": "not measured (5 probes blocked by local network)",
-      "median_latency_ms": null,
+      "total": 91.0,
+      "max_score": 100,
+      "normalized": 91.0,
+      "verified": true,
+      "liveness_note": "4/5 probes passed",
+      "median_latency_ms": 1190,
       "endpoints": [
         {
           "id": "ccmc_cme_analysis",
@@ -316,531 +861,92 @@
           "endpoint_id": "ccmc_cme_analysis",
           "name": "CME analyses (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/CMEAnalysis?startDate=2024-05-01&endDate=2024-05-15&mostAccurateOnly=true",
-          "status": null,
-          "elapsed_ms": 267,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 1190,
+          "bytes": 59692,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=1 (got 72)"
+          ],
+          "checks_failed": [],
+          "sample": "list[72], first keys: ['associatedCMEID', 'associatedCMELink', 'associatedCMEstartTime', 'catalog', 'dataLevel', 'featureCode', 'halfAngle', 'imageType']"
         },
         {
           "source_id": "nasa_donki",
           "endpoint_id": "ccmc_gst",
           "name": "Geomagnetic storms (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2024-05-01&endDate=2024-05-15",
-          "status": null,
-          "elapsed_ms": 259,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 448,
+          "bytes": 4127,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=1 (got 3)"
+          ],
+          "checks_failed": [],
+          "sample": "list[3], first keys: ['allKpIndex', 'gstID', 'link', 'linkedEvents', 'sentNotifications', 'startTime', 'submissionTime', 'versionId']"
         },
         {
           "source_id": "nasa_donki",
           "endpoint_id": "ccmc_flr",
           "name": "Solar flares (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/FLR?startDate=2024-05-01&endDate=2024-05-15",
-          "status": null,
-          "elapsed_ms": 257,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 1451,
+          "bytes": 87105,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=1 (got 148)"
+          ],
+          "checks_failed": [],
+          "sample": "list[148], first keys: ['activeRegionNum', 'beginTime', 'catalog', 'classType', 'endTime', 'flrID', 'instruments', 'link']"
         },
         {
           "source_id": "nasa_donki",
           "endpoint_id": "ccmc_notifications",
           "name": "Space-weather notifications (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/notifications?startDate=2024-05-01&endDate=2024-05-15&type=all",
-          "status": null,
-          "elapsed_ms": 203,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 632,
+          "bytes": 225748,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=1 (got 130)"
+          ],
+          "checks_failed": [],
+          "sample": "list[130], first keys: ['messageBody', 'messageID', 'messageIssueTime', 'messageType', 'messageURL']"
         },
         {
           "source_id": "nasa_donki",
           "endpoint_id": "api_nasa_cme",
           "name": "CME list via api.nasa.gov mirror",
-          "url": "https://api.nasa.gov/DONKI/CME?startDate=2024-05-01&endDate=2024-05-10&api_key=DEMO_KEY",
-          "status": null,
-          "elapsed_ms": 265,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "jpl_ssd_cneos",
-      "name": "NASA/JPL Solar System Dynamics & CNEOS API",
-      "org": "NASA Jet Propulsion Laboratory",
-      "homepage": "https://ssd-api.jpl.nasa.gov/doc/",
-      "domains": [
-        "neo_impact",
-        "fireballs",
-        "orbits"
-      ],
-      "auth": "none",
-      "formats": [
-        "json"
-      ],
-      "cadence": "daily",
-      "depth": "decades",
-      "relevance": "warning",
-      "uniqueness": "sole",
-      "license": "Public domain (US Government)",
-      "provides": "The authoritative machine-readable feed for asteroid and comet hazard.\nFour distinct products behind one host:\n* Close-Approach Data (CAD): every known close approach of an asteroid or\n  comet to Earth (or any planet) between 1900 and 2200 \u2014 date, nominal and\n  minimum distance in au / lunar distances, relative velocity, absolute\n  magnitude H, and the 3-sigma uncertainty on time of approach.\n* Sentry: the impact-risk table. Per object: number of potential impacts,\n  impact probability, year range, Palermo and Torino scale ratings,\n  estimated diameter and impact energy in megatons.\n* Fireball: energy and location of atmospheric bolide detections by US\n  government sensors since 1988 \u2014 date, lat/lon, altitude, velocity vector,\n  total radiated energy and computed impact energy.\n* SBDB / SBDB Query: full orbital elements, covariance, physical parameters\n  (diameter, albedo, rotation, spectral type) and discovery circumstances\n  for ~1.4M small bodies; the query endpoint does server-side filtering so\n  you can pull \"all PHAs with H < 22\" in one request.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 20.0,
-        "cadence": 8.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 71.0,
-      "max_score": 75,
-      "normalized": 94.7,
-      "verified": false,
-      "liveness_note": "not measured (5 probes blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "cad",
-          "name": "Close-approach data (next 60 days, inside 0.05 au)",
-          "url": "https://ssd-api.jpl.nasa.gov/cad.api",
-          "provides": "des, orbit_id, jd, cd, dist, dist_min, dist_max, v_rel, v_inf, t_sigma_f, h"
-        },
-        {
-          "id": "sentry",
-          "name": "Impact-risk table (Palermo scale >= -5)",
-          "url": "https://ssd-api.jpl.nasa.gov/sentry.api",
-          "provides": "des, ip (impact probability), ps_cum, ts_max, diameter, energy, last_obs, n_imp"
-        },
-        {
-          "id": "fireball",
-          "name": "Bolide / fireball detections",
-          "url": "https://ssd-api.jpl.nasa.gov/fireball.api",
-          "provides": "date, lat, lon, alt, vel, energy (kt), impact-e"
-        },
-        {
-          "id": "sbdb_query",
-          "name": "Bulk query \u2014 potentially hazardous asteroids",
-          "url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api",
-          "provides": "any of ~200 orbital/physical columns, server-side filtered"
-        },
-        {
-          "id": "scout",
-          "name": "Scout \u2014 imminent-impactor hazard assessment",
-          "url": "https://ssd-api.jpl.nasa.gov/scout.api",
-          "provides": "impact probability and geographic corridor for objects still on the MPC confirmation page"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "jpl_ssd_cneos",
-          "endpoint_id": "cad",
-          "name": "Close-approach data (next 60 days, inside 0.05 au)",
-          "url": "https://ssd-api.jpl.nasa.gov/cad.api?date-min=now&date-max=%2B60&dist-max=0.05&sort=dist&limit=20",
-          "status": null,
-          "elapsed_ms": 235,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "jpl_ssd_cneos",
-          "endpoint_id": "sentry",
-          "name": "Impact-risk table (Palermo scale >= -5)",
-          "url": "https://ssd-api.jpl.nasa.gov/sentry.api?ps-min=-5",
-          "status": null,
-          "elapsed_ms": 245,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "jpl_ssd_cneos",
-          "endpoint_id": "fireball",
-          "name": "Bolide / fireball detections",
-          "url": "https://ssd-api.jpl.nasa.gov/fireball.api?limit=10&sort=-date",
-          "status": null,
-          "elapsed_ms": 281,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "jpl_ssd_cneos",
-          "endpoint_id": "sbdb_query",
-          "name": "Bulk query \u2014 potentially hazardous asteroids",
-          "url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name%2CH%2Cdiameter%2Cmoid%2Cclass&sb-group=pha&limit=10",
-          "status": null,
-          "elapsed_ms": 257,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "jpl_ssd_cneos",
-          "endpoint_id": "scout",
-          "name": "Scout \u2014 imminent-impactor hazard assessment",
-          "url": "https://ssd-api.jpl.nasa.gov/scout.api",
-          "status": null,
-          "elapsed_ms": 265,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "celestrak",
-      "name": "CelesTrak",
-      "org": "CelesTrak / T.S. Kelso",
-      "homepage": "https://celestrak.org/",
-      "domains": [
-        "debris",
-        "conjunctions",
-        "reentry",
-        "geomagnetic"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "csv",
-        "text"
-      ],
-      "cadence": "hourly",
-      "depth": "decades",
-      "relevance": "warning",
-      "uniqueness": "few",
-      "license": "Free, attribution requested",
-      "provides": "The keyless front door to the US catalogue of tracked objects, and the one\nmost projects actually build on:\n* GP element sets for ~28,000 tracked objects in TLE, 3LE, JSON, CSV or OMM\n  format, grouped (active, starlink, last-30-days, cosmos-2251-debris,\n  iridium-33-debris, ...) or queried by NORAD ID / name. Feed these to an\n  SGP4 propagator and you have every satellite and debris position.\n* SATCAT \u2014 the object catalogue: international designator, launch date and\n  site, object type, RCS size class, current orbital parameters, decay date\n  for objects that have reentered, and operational status.\n* SOCRATES \u2014 twice-daily all-on-all conjunction screening of the public\n  catalogue: object pairs, time of closest approach, minimum range,\n  relative velocity, maximum probability of collision.\n* Space-weather CSV \u2014 historical and predicted Ap, Kp, F10.7 in exactly the\n  form atmospheric-drag models want, which is what turns a TLE into a\n  reentry-date estimate.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 20.0,
-        "cadence": 10.0,
-        "depth": 8.0,
-        "uniqueness": 5.0
-      },
-      "total": 70.0,
-      "max_score": 75,
-      "normalized": 93.3,
-      "verified": false,
-      "liveness_note": "not measured (4 probes blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "gp_recent",
-          "name": "GP elements for objects launched in the last 30 days",
-          "url": "https://celestrak.org/NORAD/elements/gp.php",
-          "provides": "OBJECT_NAME, NORAD_CAT_ID, EPOCH, MEAN_MOTION, ECCENTRICITY, INCLINATION, RA_OF_ASC_NODE, ARG_OF_PERICENTER, MEAN_ANOMALY, BSTAR"
-        },
-        {
-          "id": "satcat",
-          "name": "Satellite catalogue (payloads, rocket bodies, debris)",
-          "url": "https://celestrak.org/satcat/records.php",
-          "provides": "OBJECT_ID, OBJECT_TYPE, OPS_STATUS_CODE, OWNER, LAUNCH_DATE, LAUNCH_SITE, DECAY_DATE, PERIOD, APOGEE, PERIGEE, RCS"
-        },
-        {
-          "id": "space_weather_csv",
-          "name": "Space-weather indices for drag modelling",
-          "url": "https://celestrak.org/SpaceData/SW-Last5Years.csv",
-          "provides": "date, Bartels rotation, Kp x8, Kp sum, ap x8, Ap, Cp, C9, ISN, F10.7 obs/adj/centred-81-day"
-        },
-        {
-          "id": "socrates",
-          "name": "SOCRATES conjunction screening",
-          "url": "https://celestrak.org/SOCRATES/",
-          "provides": "satellite pair, TCA, minimum range (km), relative velocity, max collision probability"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "celestrak",
-          "endpoint_id": "gp_recent",
-          "name": "GP elements for objects launched in the last 30 days",
-          "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json",
-          "status": null,
-          "elapsed_ms": 268,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "celestrak",
-          "endpoint_id": "satcat",
-          "name": "Satellite catalogue (payloads, rocket bodies, debris)",
-          "url": "https://celestrak.org/satcat/records.php?GROUP=last-30-days&FORMAT=json",
-          "status": null,
-          "elapsed_ms": 284,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "celestrak",
-          "endpoint_id": "space_weather_csv",
-          "name": "Space-weather indices for drag modelling",
-          "url": "https://celestrak.org/SpaceData/SW-Last5Years.csv",
-          "status": null,
-          "elapsed_ms": 102,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "celestrak",
-          "endpoint_id": "socrates",
-          "name": "SOCRATES conjunction screening",
-          "url": "https://celestrak.org/SOCRATES/",
-          "status": null,
-          "elapsed_ms": 246,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "gfz_kp",
-      "name": "GFZ Potsdam geomagnetic indices (Kp / ap / Hp30 / Hp60)",
-      "org": "GFZ German Research Centre for Geosciences",
-      "homepage": "https://kp.gfz.de/",
-      "domains": [
-        "geomagnetic"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "text"
-      ],
-      "cadence": "hourly",
-      "depth": "decades",
-      "relevance": "driver",
-      "uniqueness": "sole",
-      "license": "CC BY 4.0",
-      "provides": "The definitive Kp index \u2014 SWPC's Kp is an estimate, GFZ is the official\nproducer. The web service returns Kp and ap at 3-hour cadence continuously\nfrom 1932, the international sunspot number and F10.7 on the same grid, and\nthe newer high-cadence Hp30/Hp60 and ap30/ap60 indices which resolve storm\nsubstructure that 3-hourly Kp smears out. This is the series you use for\nany statistical or historical study of geomagnetic risk, and the definitive\nvalues that late-arriving corrections are applied to.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 14.0,
-        "cadence": 10.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 67.0,
-      "max_score": 75,
-      "normalized": 89.3,
-      "verified": false,
-      "liveness_note": "not measured (2 probes blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "kp_ws",
-          "name": "Kp index web service",
-          "url": "https://kp.gfz.de/app/json/",
-          "provides": "datetime array, Kp array, status (definitive/provisional)"
-        },
-        {
-          "id": "kp_flatfile",
-          "name": "Kp/ap/Ap/SN/F10.7 since 1932 (flat file)",
-          "url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
-          "provides": "full historical table, 3-hourly Kp and ap, daily Ap, sunspot number, F10.7"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "gfz_kp",
-          "endpoint_id": "kp_ws",
-          "name": "Kp index web service",
-          "url": "https://kp.gfz.de/app/json/?start=2024-05-01T00%3A00%3A00Z&end=2024-05-15T00%3A00%3A00Z&index=Kp",
-          "status": null,
-          "elapsed_ms": 210,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "gfz_kp",
-          "endpoint_id": "kp_flatfile",
-          "name": "Kp/ap/Ap/SN/F10.7 since 1932 (flat file)",
-          "url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
-          "status": null,
-          "elapsed_ms": 225,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "aerospace_cords",
-      "name": "Aerospace Corporation CORDS reentry predictions",
-      "org": "The Aerospace Corporation",
-      "homepage": "https://aerospace.org/reentries",
-      "domains": [
-        "reentry"
-      ],
-      "auth": "none",
-      "formats": [
-        "html",
-        "json"
-      ],
-      "cadence": "daily",
-      "depth": "years",
-      "relevance": "warning",
-      "uniqueness": "few",
-      "license": "Public web content",
-      "provides": "Independent, publicly readable reentry predictions for large uncontrolled\nobjects: predicted reentry time with an uncertainty window, ground-track\nmaps for the possible reentry passes, object mass and expected surviving\ndebris, and post-event reconstructions. Where Space-Track's TIP messages\nare terse and access-controlled, CORDS is the public narrative layer,\nupdated as the prediction tightens in the final days.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 20.0,
-        "cadence": 8.0,
-        "depth": 6.0,
-        "uniqueness": 5.0
-      },
-      "total": 66.0,
-      "max_score": 75,
-      "normalized": 88.0,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "reentries_page",
-          "name": "Reentry predictions index",
-          "url": "https://aerospace.org/reentries",
-          "provides": "object name, NORAD ID, predicted reentry window, uncertainty, status"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "aerospace_cords",
-          "endpoint_id": "reentries_page",
-          "name": "Reentry predictions index",
-          "url": "https://aerospace.org/reentries",
-          "status": null,
-          "elapsed_ms": 263,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "helioviewer",
-      "name": "Helioviewer API",
-      "org": "NASA Goddard / ESA",
-      "homepage": "https://api.helioviewer.org/docs/v2/",
-      "domains": [
-        "solar"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "binary"
-      ],
-      "cadence": "minutes",
-      "depth": "decades",
-      "relevance": "driver",
-      "uniqueness": "few",
-      "license": "Open",
-      "provides": "Programmatic access to the full solar-imagery archive \u2014 SDO/AIA and HMI,\nSOHO/LASCO C2 and C3 coronagraphs, STEREO, PROBA-2, GOES/SUVI \u2014 from 1991\nto now. You can ask for the closest image to a timestamp, build composite\nlayers, generate movies, and query the event layer. The LASCO coronagraph\nframes are how a halo CME is actually recognised as Earth-directed before\nany model runs, so this is the visual evidence layer behind a CME warning.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 14.0,
-        "cadence": 12.0,
-        "depth": 8.0,
-        "uniqueness": 5.0
-      },
-      "total": 66.0,
-      "max_score": 75,
-      "normalized": 88.0,
-      "verified": false,
-      "liveness_note": "not measured (2 probes blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "status",
-          "name": "Data-source freshness",
-          "url": "https://api.helioviewer.org/v2/getStatus/",
-          "provides": "per-observatory latest image time and staleness in seconds"
-        },
-        {
-          "id": "closest_image",
-          "name": "Closest LASCO C3 image to a time",
-          "url": "https://api.helioviewer.org/v2/getClosestImage/",
-          "provides": "image id, timestamp, scale, dimensions, instrument metadata"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "helioviewer",
-          "endpoint_id": "status",
-          "name": "Data-source freshness",
-          "url": "https://api.helioviewer.org/v2/getStatus/",
-          "status": null,
-          "elapsed_ms": 134,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "helioviewer",
-          "endpoint_id": "closest_image",
-          "name": "Closest LASCO C3 image to a time",
-          "url": "https://api.helioviewer.org/v2/getClosestImage/?date=2024-05-10T12%3A00%3A00Z&sourceId=5",
-          "status": null,
-          "elapsed_ms": 261,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "url": "https://api.nasa.gov/DONKI/CME?startDate=2024-05-01&endDate=2024-05-10&api_key=",
+          "status": 403,
+          "elapsed_ms": 87,
+          "bytes": 129,
+          "content_type": "application/json",
+          "verdict": "fail",
+          "checks_passed": [
+            "valid JSON"
+          ],
+          "checks_failed": [
+            "status 403 != 200",
+            "min_items 1 at '' -> dict"
+          ],
+          "sample": "object keys: ['error']",
+          "decode": "gzip"
         }
       ]
     },
@@ -865,7 +971,7 @@
       "license": "Public domain (US Government)",
       "provides": "The real-time alert bus for high-energy transients: gamma-ray bursts from\nSwift and Fermi, gravitational-wave candidates from LIGO/Virgo/KAGRA,\nhigh-energy neutrinos from IceCube, and magnetar giant flares. Notices\ncarry the trigger time, localisation (position plus error radius or a\nHEALPix probability map), significance and classification, within seconds\nto minutes of the event; Circulars are the human follow-up record going\nback to 1997. Relevant to space hazards as the extreme tail \u2014 a nearby\nmagnetar giant flare or GRB is the only astrophysical event that ionises\nEarth's atmosphere on human timescales \u2014 and as a source of realistic\nevent-driven alert plumbing.",
       "components": {
-        "liveness": null,
+        "liveness": 25.0,
         "access": 15.0,
         "parseability": 12.0,
         "relevance": 10.0,
@@ -873,12 +979,12 @@
         "depth": 8.0,
         "uniqueness": 8.0
       },
-      "total": 65.0,
-      "max_score": 75,
-      "normalized": 86.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
+      "total": 90.0,
+      "max_score": 100,
+      "normalized": 90.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 452,
       "endpoints": [
         {
           "id": "circulars_index",
@@ -893,13 +999,940 @@
           "endpoint_id": "circulars_index",
           "name": "Circulars archive",
           "url": "https://gcn.nasa.gov/circulars",
-          "status": null,
-          "elapsed_ms": 257,
+          "status": 200,
+          "elapsed_ms": 452,
+          "bytes": 57943,
+          "content_type": "text/html",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=1000"
+          ],
+          "checks_failed": [],
+          "sample": "text: <!DOCTYPE html><html lang=\"en-US\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><link rel=\"stylesheet\" href=\"",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "neodys",
+      "name": "NEODyS-2",
+      "org": "SpaceDyS / University of Pisa",
+      "homepage": "https://newton.spacedys.com/neodys/",
+      "domains": [
+        "neo_impact"
+      ],
+      "auth": "none",
+      "formats": [
+        "text",
+        "html"
+      ],
+      "cadence": "daily",
+      "depth": "decades",
+      "relevance": "warning",
+      "uniqueness": "few",
+      "license": "Free for scientific use",
+      "provides": "The third independent impact-monitoring system (the original CLOMON2 line\nof work). Per NEO it publishes orbital elements with full covariance, the\nobservation arc, residuals, ephemerides, close-approach tables, and the\nrisk page listing virtual impactors with date, impact probability, Palermo\nand Torino values. Also serves the raw astrometric observation files, which\nlets you re-fit an orbit yourself rather than trusting a published one.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 8.0,
+        "relevance": 20.0,
+        "cadence": 8.0,
+        "depth": 8.0,
+        "uniqueness": 5.0
+      },
+      "total": 89.0,
+      "max_score": 100,
+      "normalized": 89.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 1535,
+      "endpoints": [
+        {
+          "id": "risk_page",
+          "name": "Risk list",
+          "url": "https://newton.spacedys.com/neodys/index.php",
+          "provides": "designation, date, impact probability, Palermo, Torino, H, diameter"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "neodys",
+          "endpoint_id": "risk_page",
+          "name": "Risk list",
+          "url": "https://newton.spacedys.com/neodys/index.php?pc=4.1",
+          "status": 200,
+          "elapsed_ms": 1535,
+          "bytes": 1311005,
+          "content_type": "text/html",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "contains:'Risk'",
+            "bytes>=2000"
+          ],
+          "checks_failed": [],
+          "sample": "text: <!DOCTYPE html  \tPUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \t\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">  <html xmlns=\"http://www.w3.org/1999/xhtml\" lan",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "silso",
+      "name": "SILSO \u2014 World Data Center for the Sunspot Index",
+      "org": "Royal Observatory of Belgium",
+      "homepage": "https://www.sidc.be/SILSO/",
+      "domains": [
+        "solar"
+      ],
+      "auth": "none",
+      "formats": [
+        "csv",
+        "text"
+      ],
+      "cadence": "daily",
+      "depth": "decades",
+      "relevance": "driver",
+      "uniqueness": "sole",
+      "license": "CC BY-NC 4.0",
+      "provides": "The official international sunspot number \u2014 the longest continuous record\nof solar activity, daily since 1818 and monthly since 1749, plus the\n13-month smoothed series, hemispheric split, the estimated (provisional)\ncurrent-month value updated daily, and the official solar-cycle prediction.\nSunspot number is the baseline against which \"is this cycle dangerous\"\nquestions are answered, and it drives thermospheric-density models that\ndetermine satellite drag and debris lifetime.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 11.0,
+        "relevance": 14.0,
+        "cadence": 8.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 89.0,
+      "max_score": 100,
+      "normalized": 89.0,
+      "verified": true,
+      "liveness_note": "2/2 probes passed",
+      "median_latency_ms": 10321,
+      "endpoints": [
+        {
+          "id": "eisn",
+          "name": "Estimated international sunspot number, current month",
+          "url": "https://www.sidc.be/SILSO/DATA/EISN/EISN_current.csv",
+          "provides": "year, month, day, decimal date, estimated SN, std dev, n stations"
+        },
+        {
+          "id": "daily_total",
+          "name": "Daily total sunspot number since 1818",
+          "url": "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv",
+          "provides": "date, daily SN, standard deviation, observations, definitive/provisional flag"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "silso",
+          "endpoint_id": "eisn",
+          "name": "Estimated international sunspot number, current month",
+          "url": "https://www.sidc.be/SILSO/DATA/EISN/EISN_current.csv",
+          "status": 200,
+          "elapsed_ms": 1057,
+          "bytes": 828,
+          "content_type": "text/csv",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=100"
+          ],
+          "checks_failed": [],
+          "sample": "text: 2026, 09, 01, 2026.667,  65,  10.9,  33,  40, 2026, 09, 02, 2026.670,  42,  12.8,  37,  42, 2026, 09, 03, 2026.673,  41,   6.7,  28,  34, 2026, 09, 04, 2026.675"
+        },
+        {
+          "source_id": "silso",
+          "endpoint_id": "daily_total",
+          "name": "Daily total sunspot number since 1818",
+          "url": "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv",
+          "status": 200,
+          "elapsed_ms": 10321,
+          "bytes": 2896132,
+          "content_type": "text/csv",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=1000000"
+          ],
+          "checks_failed": [],
+          "sample": "text: 1818;01;01;1818.001;  -1; -1.0;   0;1 1818;01;02;1818.004;  -1; -1.0;   0;1 1818;01;03;1818.007;  -1; -1.0;   0;1 1818;01;04;1818.010;  -1; -1.0;   0;1 1818;01;"
+        }
+      ]
+    },
+    {
+      "id": "ams_meteors",
+      "name": "American Meteor Society fireball reports",
+      "org": "American Meteor Society",
+      "homepage": "https://www.amsmeteors.org/fireballs/",
+      "domains": [
+        "fireballs"
+      ],
+      "auth": "free_key",
+      "formats": [
+        "json"
+      ],
+      "cadence": "realtime",
+      "depth": "years",
+      "relevance": "warning",
+      "uniqueness": "few",
+      "license": "Free API key for non-commercial use",
+      "provides": "Crowd-sourced fireball sightings, usually within minutes of an event and\noften before any official detection is published. Each event aggregates\neyewitness reports into a computed trajectory: start and end lat/lon and\naltitude, ground track, velocity, estimated magnitude, sound and\nfragmentation reports, and the individual report records. This is the\nfastest public signal that something just entered the atmosphere over a\npopulated area, and it covers events too small for CNEOS sensors.",
+      "components": {
+        "liveness": 25.0,
+        "access": 8.0,
+        "parseability": 12.0,
+        "relevance": 20.0,
+        "cadence": 12.0,
+        "depth": 6.0,
+        "uniqueness": 5.0
+      },
+      "total": 88.0,
+      "max_score": 100,
+      "normalized": 88.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 36288,
+      "endpoints": [
+        {
+          "id": "open_api_probe",
+          "name": "Open API without a key (expects rejection or error payload)",
+          "url": "https://www.amsmeteors.org/members/api/open_api/get_events",
+          "provides": "confirms the endpoint is live; real queries need api_key"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "ams_meteors",
+          "endpoint_id": "open_api_probe",
+          "name": "Open API without a key (expects rejection or error payload)",
+          "url": "https://www.amsmeteors.org/members/api/open_api/get_events?year=2024",
+          "status": 200,
+          "elapsed_ms": 36288,
+          "bytes": 8137,
+          "content_type": "text/html",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=10"
+          ],
+          "checks_failed": [],
+          "sample": "text: <!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"UTF-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/><meta name=\"app-route\" conten",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "gmn",
+      "name": "Global Meteor Network",
+      "org": "Global Meteor Network (open collaboration)",
+      "homepage": "https://globalmeteornetwork.org/",
+      "domains": [
+        "fireballs"
+      ],
+      "auth": "none",
+      "formats": [
+        "csv",
+        "text"
+      ],
+      "cadence": "daily",
+      "depth": "years",
+      "relevance": "driver",
+      "uniqueness": "sole",
+      "license": "CC BY 4.0",
+      "provides": "A worldwide network of low-cost video meteor cameras publishing fully\nreduced, open trajectory data nightly: per-meteor radiant, geocentric and\nheliocentric velocity, orbital elements, absolute magnitude, mass estimate,\nbegin and end height, and the observing stations that saw it. Aggregated\ndaily and monthly files plus a live fireball page. It is the only open\ndataset that quantifies the small-impactor flux \u2014 the population between\n\"harmless meteor\" and \"CNEOS-detectable bolide\" \u2014 which is what a\nstatistical risk model for small impacts needs.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 11.0,
+        "relevance": 14.0,
+        "cadence": 8.0,
+        "depth": 6.0,
+        "uniqueness": 8.0
+      },
+      "total": 87.0,
+      "max_score": 100,
+      "normalized": 87.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 438,
+      "endpoints": [
+        {
+          "id": "traj_summary",
+          "name": "Monthly trajectory summary files",
+          "url": "https://globalmeteornetwork.org/data/traj_summary_data/monthly/",
+          "provides": "index of monthly CSVs with per-meteor orbits, radiants, velocities, magnitudes, masses"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "gmn",
+          "endpoint_id": "traj_summary",
+          "name": "Monthly trajectory summary files",
+          "url": "https://globalmeteornetwork.org/data/traj_summary_data/monthly/",
+          "status": 200,
+          "elapsed_ms": 438,
+          "bytes": 11853,
+          "content_type": "text/html",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=500"
+          ],
+          "checks_failed": [],
+          "sample": "text: <html>\r <head><title>Index of /data/traj_summary_data/monthly/</title></head>\r <body>\r <h1>Index of /data/traj_summary_data/monthly/</h1><hr><pre><a href=\"../\">",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "lmsal_hek",
+      "name": "Heliophysics Event Knowledgebase (HEK)",
+      "org": "Lockheed Martin Solar & Astrophysics Lab / NASA",
+      "homepage": "https://www.lmsal.com/hek/",
+      "domains": [
+        "solar"
+      ],
+      "auth": "none",
+      "formats": [
+        "json"
+      ],
+      "cadence": "hourly",
+      "depth": "years",
+      "relevance": "driver",
+      "uniqueness": "few",
+      "license": "Open",
+      "provides": "A searchable database of automatically and manually detected solar features\nand events across all major solar observatories: flares, filament\neruptions, coronal holes, sigmoids, sunspots, emerging flux, CMEs and\ncoronal dimmings. Each record carries start/peak/end times, heliographic\nbounding box and chain code, the detection algorithm, the instrument, GOES\nclass where applicable, and links to the source data. Coronal-hole records\nare the practical way to anticipate recurrent high-speed-stream storms\nthat have no flare or CME attached to them.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 14.0,
+        "cadence": 10.0,
+        "depth": 6.0,
+        "uniqueness": 5.0
+      },
+      "total": 87.0,
+      "max_score": 100,
+      "normalized": 87.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 810,
+      "endpoints": [
+        {
+          "id": "her_flares",
+          "name": "Flare events from the HEK query interface",
+          "url": "https://www.lmsal.com/hek/her",
+          "provides": "event_starttime, event_peaktime, fl_goescls, ar_noaanum, frm_name, obs_instrument"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "lmsal_hek",
+          "endpoint_id": "her_flares",
+          "name": "Flare events from the HEK query interface",
+          "url": "https://www.lmsal.com/hek/her?cosec=2&cmd=search&type=column&event_type=fl&event_starttime=2024-05-08T00%3A00%3A00&event_endtime=2024-05-12T00%3A00%3A00&event_coordsys=helioprojective&x1=-1200&x2=1200&y1=-1200&y2=1200&result_limit=10&return=event_starttime%2Cevent_peaktime%2Cfl_goescls%2Car_noaanum%2Cfrm_name",
+          "status": 200,
+          "elapsed_ms": 810,
+          "bytes": 1626,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:result"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['association', 'overmax', 'result']"
+        }
+      ]
+    },
+    {
+      "id": "lisird",
+      "name": "LASP Interactive Solar Irradiance Data Center (LISIRD)",
+      "org": "University of Colorado LASP",
+      "homepage": "https://lasp.colorado.edu/lisird/",
+      "domains": [
+        "solar"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "csv"
+      ],
+      "cadence": "daily",
+      "depth": "decades",
+      "relevance": "driver",
+      "uniqueness": "few",
+      "license": "Open with attribution",
+      "provides": "Solar irradiance and solar-index time series served through the LaTiS API:\ntotal solar irradiance composites back to 1978 and reconstructions back to\n1610, spectral irradiance from SORCE/TSIS, the Mg II core-to-wing index,\nand the adjusted and observed F10.7 radio flux from Penticton. F10.7 is the\nstandard driver of every operational thermosphere-density model, so this\nfeeds directly into satellite-drag and reentry-timing estimates.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 14.0,
+        "cadence": 8.0,
+        "depth": 8.0,
+        "uniqueness": 5.0
+      },
+      "total": 87.0,
+      "max_score": 100,
+      "normalized": 87.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 3538,
+      "endpoints": [
+        {
+          "id": "f107",
+          "name": "Penticton F10.7 solar radio flux",
+          "url": "https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json",
+          "provides": "time, adjusted_flux, observed_flux (10.7 cm, sfu)"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "lisird",
+          "endpoint_id": "f107",
+          "name": "Penticton F10.7 solar radio flux",
+          "url": "https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json?time>=2024-05-01",
+          "status": 200,
+          "elapsed_ms": 3538,
+          "bytes": 184993,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "bytes>=200"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['penticton_radio_flux']",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "usgs_fdsn",
+      "name": "USGS Earthquake Catalog (FDSN event service)",
+      "org": "US Geological Survey",
+      "homepage": "https://earthquake.usgs.gov/fdsnws/event/1/",
+      "domains": [
+        "earth_effects",
+        "fireballs"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "csv",
+        "xml"
+      ],
+      "cadence": "minutes",
+      "depth": "decades",
+      "relevance": "catalog",
+      "uniqueness": "few",
+      "license": "Public domain (US Government)",
+      "provides": "Seismic and infrasound-adjacent event records with origin time, location,\ndepth, magnitude and magnitude type, in GeoJSON. Large bolide airbursts\nregister on seismic and infrasound networks, so this is a cross-check for\nconfirming and geolocating an atmospheric impact independently of optical\nreports \u2014 the Chelyabinsk airburst appears in seismic records. Also the\ncleanest public example of an FDSN-standard query interface.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 8.0,
+        "cadence": 12.0,
+        "depth": 8.0,
+        "uniqueness": 5.0
+      },
+      "total": 85.0,
+      "max_score": 100,
+      "normalized": 85.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 95,
+      "endpoints": [
+        {
+          "id": "query",
+          "name": "Recent significant events",
+          "url": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+          "provides": "time, place, mag, magType, depth, coordinates, event type, felt reports"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "usgs_fdsn",
+          "endpoint_id": "query",
+          "name": "Recent significant events",
+          "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmagnitude=5&orderby=time",
+          "status": 200,
+          "elapsed_ms": 95,
+          "bytes": 7608,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:type",
+            "key:features",
+            "key:metadata"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['bbox', 'features', 'metadata', 'type']",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "sscweb",
+      "name": "NASA Satellite Situation Center (SSCWeb)",
+      "org": "NASA Goddard Space Physics Data Facility",
+      "homepage": "https://sscweb.gsfc.nasa.gov/",
+      "domains": [
+        "radiation",
+        "geomagnetic"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "xml"
+      ],
+      "cadence": "daily",
+      "depth": "decades",
+      "relevance": "catalog",
+      "uniqueness": "sole",
+      "license": "Public domain (US Government)",
+      "provides": "Where a spacecraft is relative to the magnetosphere, not just relative to\nEarth: positions for hundreds of heliophysics missions in GEO, GSE, GSM and\nSM coordinates, plus magnetic-field-line tracing and region classification\n(magnetosheath, magnetotail, plasmasphere, radiation belt, bow shock and\nmagnetopause crossings). For radiation-exposure and charging questions the\nmagnetospheric region matters more than the altitude, and this is the only\nservice that resolves it.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 8.0,
+        "cadence": 8.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 84.0,
+      "max_score": 100,
+      "normalized": 84.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 289,
+      "endpoints": [
+        {
+          "id": "observatories",
+          "name": "Available observatories",
+          "url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/observatories",
+          "provides": "spacecraft id, name, resolution, start and end time of available ephemeris"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "sscweb",
+          "endpoint_id": "observatories",
+          "name": "Available observatories",
+          "url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/observatories",
+          "status": 200,
+          "elapsed_ms": 289,
+          "bytes": 97537,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "bytes>=1000"
+          ],
+          "checks_failed": [],
+          "sample": "list[2], first: \"gov.nasa.gsfc.sscweb.schema.ObservatoryResponse\"",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "jpl_horizons",
+      "name": "NASA/JPL Horizons ephemeris API",
+      "org": "NASA Jet Propulsion Laboratory",
+      "homepage": "https://ssd-api.jpl.nasa.gov/doc/horizons.html",
+      "domains": [
+        "orbits",
+        "neo_impact"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "text"
+      ],
+      "cadence": "daily",
+      "depth": "decades",
+      "relevance": "catalog",
+      "uniqueness": "sole",
+      "license": "Public domain (US Government)",
+      "provides": "Numerically integrated ephemerides for any solar-system body, spacecraft or\nuser-supplied orbit, as seen from any observing site. Used for turning a\nhazard catalogue entry into an actual sky position, range and range-rate:\nRA/Dec, apparent magnitude, Earth and Sun distance, phase angle, elongation,\nillumination, and state vectors in a chosen reference frame at arbitrary\ntime steps. This is the ground truth other NEO products are checked against.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 8.0,
+        "cadence": 8.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 84.0,
+      "max_score": 100,
+      "normalized": 84.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 760,
+      "endpoints": [
+        {
+          "id": "observer",
+          "name": "Observer table for 99942 Apophis",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api",
+          "provides": "date, RA, Dec, apparent magnitude, delta (Earth range), deldot, S-O-T elongation"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "jpl_horizons",
+          "endpoint_id": "observer",
+          "name": "Observer table for 99942 Apophis",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='99942'&OBJ_DATA='NO'&MAKE_EPHEM='YES'&EPHEM_TYPE='OBSERVER'&CENTER='500%40399'&START_TIME='2026-01-01'&STOP_TIME='2026-01-02'&STEP_SIZE='1+d'",
+          "status": 200,
+          "elapsed_ms": 760,
+          "bytes": 37842,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:signature",
+            "key:result"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['result', 'signature']"
+        }
+      ]
+    },
+    {
+      "id": "heasarc_tap",
+      "name": "HEASARC Virtual Observatory TAP service",
+      "org": "NASA Goddard High Energy Astrophysics Science Archive",
+      "homepage": "https://heasarc.gsfc.nasa.gov/xamin/",
+      "domains": [
+        "transients"
+      ],
+      "auth": "none",
+      "formats": [
+        "xml",
+        "csv",
+        "json"
+      ],
+      "cadence": "daily",
+      "depth": "decades",
+      "relevance": "catalog",
+      "uniqueness": "few",
+      "license": "Public domain (US Government)",
+      "provides": "ADQL/SQL access over hundreds of high-energy mission catalogues \u2014 the Swift\nand Fermi GRB tables, all-sky monitor light curves, source catalogues and\nobservation logs. For hazard work it is the archive that turns a transient\nalert into a historical rate: how often a burst of a given fluence occurs,\nwith what sky distribution. Standard IVOA TAP, so any VO client or a plain\nHTTP GET with a query string works.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 8.0,
+        "cadence": 8.0,
+        "depth": 8.0,
+        "uniqueness": 5.0
+      },
+      "total": 81.0,
+      "max_score": 100,
+      "normalized": 81.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 7516,
+      "endpoints": [
+        {
+          "id": "tap_tables",
+          "name": "TAP schema \u2014 available tables",
+          "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/tables",
+          "provides": "table names and column metadata for every HEASARC catalogue"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "heasarc_tap",
+          "endpoint_id": "tap_tables",
+          "name": "TAP schema \u2014 available tables",
+          "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/tables",
+          "status": 200,
+          "elapsed_ms": 7516,
+          "bytes": 4000000,
+          "content_type": "text/xml",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=5000"
+          ],
+          "checks_failed": [],
+          "sample": "text: <?xml version=\"1.0\"?> <tableset xsi:schemaLocation=\"http://www.ivoa.net/xml/VODataService/v1.1 http://vo.ari.uni-heidelberg.de/docs/schemata/VODataService-v1.1."
+        }
+      ]
+    },
+    {
+      "id": "esa_neocc",
+      "name": "ESA NEO Coordination Centre",
+      "org": "European Space Agency",
+      "homepage": "https://neo.ssa.esa.int/",
+      "domains": [
+        "neo_impact"
+      ],
+      "auth": "none",
+      "formats": [
+        "text",
+        "html"
+      ],
+      "cadence": "daily",
+      "depth": "years",
+      "relevance": "warning",
+      "uniqueness": "few",
+      "license": "ESA public data",
+      "provides": "Europe's independent impact-monitoring chain (AstOD/Aegis), computed\nseparately from Sentry \u2014 valuable precisely because it is an independent\ncheck on JPL. Downloadable flat files give the Risk List (objects with a\nnon-zero impact probability: designation, year range, impact probability,\nPalermo scale, diameter, velocity), the Priority List telling observers\nwhich objects urgently need follow-up astrometry, the Close Approaches\nlist, and per-object orbital elements and observation arcs.",
+      "components": {
+        "liveness": 18.75,
+        "access": 15.0,
+        "parseability": 8.0,
+        "relevance": 20.0,
+        "cadence": 8.0,
+        "depth": 6.0,
+        "uniqueness": 5.0
+      },
+      "total": 80.75,
+      "max_score": 100,
+      "normalized": 80.8,
+      "verified": true,
+      "liveness_note": "3/4 probes passed",
+      "median_latency_ms": 1168,
+      "endpoints": [
+        {
+          "id": "all_neo",
+          "name": "Full NEA list (documented automated-data-access endpoint)",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download",
+          "provides": "designation list of every NEA known to the NEOCC"
+        },
+        {
+          "id": "risk_list",
+          "name": "Risk list (flat file)",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download",
+          "provides": "object, date, impact probability, Palermo scale, H, diameter, v_inf"
+        },
+        {
+          "id": "priority_list",
+          "name": "Observation priority list",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download",
+          "provides": "designation, priority, RA/Dec, V magnitude, observability window"
+        },
+        {
+          "id": "close_approaches",
+          "name": "Upcoming close approaches",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download",
+          "provides": "object, close-approach date, distance, v_rel, H"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "esa_neocc",
+          "endpoint_id": "all_neo",
+          "name": "Full NEA list (documented automated-data-access endpoint)",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=allneo.lst",
+          "status": 200,
+          "elapsed_ms": 1668,
+          "bytes": 1315857,
+          "content_type": "text/plain",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=10000"
+          ],
+          "checks_failed": [],
+          "sample": "text: 433       Eros                 719       Albert               887       Alinda               1036      Ganymed              1221      Amor                 1566 ",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "esa_neocc",
+          "endpoint_id": "risk_list",
+          "name": "Risk list (flat file)",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_risk_list",
+          "status": 200,
+          "elapsed_ms": 1168,
+          "bytes": 275706,
+          "content_type": "text/plain",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=2000"
+          ],
+          "checks_failed": [],
+          "sample": "text: Last Update: 2026-09-18 19:19 UTC            Object             |    Diameter    |             VI Max                                   |          VIs          ",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "esa_neocc",
+          "endpoint_id": "priority_list",
+          "name": "Observation priority list",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_priority_neo_list",
+          "status": 200,
+          "elapsed_ms": 731,
           "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "content_type": "",
+          "verdict": "fail",
+          "checks_passed": [
+            "status==200"
+          ],
+          "checks_failed": [
+            "only 0 bytes, wanted 500"
+          ],
+          "sample": "text: "
+        },
+        {
+          "source_id": "esa_neocc",
+          "endpoint_id": "close_approaches",
+          "name": "Upcoming close approaches",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_upcoming_close_app",
+          "status": 200,
+          "elapsed_ms": 684,
+          "bytes": 25150,
+          "content_type": "text/plain",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=500"
+          ],
+          "checks_failed": [],
+          "sample": "text: Last Update: 2026-09-18 19:32 UTC            Object             |            |   Miss Distance             |     Diameter     |  H   | Max bright | Rel. vel | C",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "gcat",
+      "name": "GCAT \u2014 Jonathan McDowell's General Catalog of Artificial Space Objects",
+      "org": "Jonathan C. McDowell (Harvard-Smithsonian CfA)",
+      "homepage": "https://planet4589.org/space/gcat/",
+      "domains": [
+        "debris",
+        "reentry"
+      ],
+      "auth": "none",
+      "formats": [
+        "text",
+        "csv"
+      ],
+      "cadence": "weekly",
+      "depth": "decades",
+      "relevance": "catalog",
+      "uniqueness": "sole",
+      "license": "CC BY 4.0",
+      "provides": "A hand-curated, heavily cross-checked catalogue of everything launched\nsince 1957 \u2014 objects, launches, launch vehicles, sites, organisations,\nreentries and deep-space probes \u2014 with the historical corrections and\nidentity resolutions the official catalogues never made. It is the best\nsource for provenance questions (\"what object actually was this\", \"when\ndid it really reenter\", \"which launch did this fragment come from\") and\nfor reentry statistics over the whole space age. Plain tab-delimited\ntables, trivially parsable.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 11.0,
+        "relevance": 8.0,
+        "cadence": 5.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 80.0,
+      "max_score": 100,
+      "normalized": 80.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 1152,
+      "endpoints": [
+        {
+          "id": "currentcat",
+          "name": "Current in-orbit catalogue",
+          "url": "https://planet4589.org/space/gcat/tsv/cat/satcat.tsv",
+          "provides": "JCAT id, satellite name, launch date, state, type, orbital class, mass, dimensions, status, reentry date"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "gcat",
+          "endpoint_id": "currentcat",
+          "name": "Current in-orbit catalogue",
+          "url": "https://planet4589.org/space/gcat/tsv/cat/satcat.tsv",
+          "status": 200,
+          "elapsed_ms": 1152,
+          "bytes": 4000000,
+          "content_type": "text/tab-separated-values",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "bytes>=100000"
+          ],
+          "checks_failed": [],
+          "sample": "text: #JCAT\tSatcat\tLaunch_Tag\tPiece\tType\tName\tPLName\tLDate\tParent\tSDate\tPrimary\tDDate\tStatus\tDest\tOwner\tState\tManufacturer\tBus\tMotor\tMass\tMassFlag\tDryMass\tDryFlag\tTot"
+        }
+      ]
+    },
+    {
+      "id": "nasa_eonet",
+      "name": "NASA EONET (Earth Observatory Natural Event Tracker)",
+      "org": "NASA Earth Observatory",
+      "homepage": "https://eonet.gsfc.nasa.gov/",
+      "domains": [
+        "earth_effects"
+      ],
+      "auth": "none",
+      "formats": [
+        "json"
+      ],
+      "cadence": "daily",
+      "depth": "years",
+      "relevance": "catalog",
+      "uniqueness": "few",
+      "license": "Public domain (US Government)",
+      "provides": "A curated GeoJSON feed of ongoing natural events observed from orbit \u2014\nwildfires, severe storms, volcanoes, dust and haze, icebergs, landslides.\nNot a space hazard itself, but the standard way to correlate a candidate\nspace-related signature with a mundane terrestrial explanation, and a\nclean reference implementation of an event/category/geometry API.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 8.0,
+        "cadence": 8.0,
+        "depth": 6.0,
+        "uniqueness": 5.0
+      },
+      "total": 79.0,
+      "max_score": 100,
+      "normalized": 79.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 353,
+      "endpoints": [
+        {
+          "id": "events",
+          "name": "Open events",
+          "url": "https://eonet.gsfc.nasa.gov/api/v3/events",
+          "provides": "event id, title, category, sources, geometry (point or polygon) with date"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "nasa_eonet",
+          "endpoint_id": "events",
+          "name": "Open events",
+          "url": "https://eonet.gsfc.nasa.gov/api/v3/events?limit=10&status=open",
+          "status": 200,
+          "elapsed_ms": 353,
+          "bytes": 8398,
+          "content_type": "application/rss+xml",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:title",
+            "key:events"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['description', 'events', 'link', 'title']"
         }
       ]
     },
@@ -925,7 +1958,7 @@
       "license": "Public domain (US Government)",
       "provides": "A standard HAPI (Heliophysics API) interface over roughly two thousand\nspace-physics datasets: OMNI merged solar wind at 1-minute and 1-hour\nresolution back to 1963, ACE, Wind, DSCOVR, Cluster, THEMIS, Van Allen\nProbes particle and field data, GOES energetic particles, and magnetometer\nnetworks. Uniform request shape \u2014 /catalog, /info, /data with a time range\nand parameter list \u2014 returns CSV or JSON. This is the archive-quality\ncounterpart to SWPC's real-time feed: worse latency, far better calibration\nand depth, and the only practical way to get decades of L1 solar wind.",
       "components": {
-        "liveness": null,
+        "liveness": 12.5,
         "access": 15.0,
         "parseability": 12.0,
         "relevance": 14.0,
@@ -933,12 +1966,12 @@
         "depth": 8.0,
         "uniqueness": 8.0
       },
-      "total": 65.0,
-      "max_score": 75,
-      "normalized": 86.7,
-      "verified": false,
-      "liveness_note": "not measured (2 probes blocked by local network)",
-      "median_latency_ms": null,
+      "total": 77.5,
+      "max_score": 100,
+      "normalized": 77.5,
+      "verified": true,
+      "liveness_note": "1/2 probes passed",
+      "median_latency_ms": 445,
       "endpoints": [
         {
           "id": "catalog",
@@ -959,548 +1992,165 @@
           "endpoint_id": "catalog",
           "name": "Dataset catalog",
           "url": "https://cdaweb.gsfc.nasa.gov/hapi/catalog",
-          "status": null,
-          "elapsed_ms": 224,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 445,
+          "bytes": 108155,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:HAPI",
+            "key:catalog"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['HAPI', 'catalog', 'status']"
         },
         {
           "source_id": "cdaweb_hapi",
           "endpoint_id": "omni_data",
           "name": "OMNI 1-hour solar wind sample",
           "url": "https://cdaweb.gsfc.nasa.gov/hapi/data?id=OMNI2_H0_MRG1HR&parameters=KP1800%2CDST1800%2CF10_INDEX1800&time.min=2024-05-09T00%3A00%3A00Z&time.max=2024-05-12T00%3A00%3A00Z&format=csv",
-          "status": null,
-          "elapsed_ms": 245,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 210,
+          "bytes": 83,
+          "content_type": "text/csv",
+          "verdict": "fail",
+          "checks_passed": [
+            "status==200"
+          ],
+          "checks_failed": [
+            "only 83 bytes, wanted 200"
+          ],
+          "sample": "text: , \"status\": {\"code\": 1411, \"message\": \"HAPI error 1411: Parameter out of order\"} }"
         }
       ]
     },
     {
-      "id": "neodys",
-      "name": "NEODyS-2",
-      "org": "SpaceDyS / University of Pisa",
-      "homepage": "https://newton.spacedys.com/neodys/",
+      "id": "esa_discos",
+      "name": "ESA DISCOSweb",
+      "org": "ESA Space Debris Office",
+      "homepage": "https://discosweb.esoc.esa.int/",
       "domains": [
-        "neo_impact"
-      ],
-      "auth": "none",
-      "formats": [
-        "text",
-        "html"
-      ],
-      "cadence": "daily",
-      "depth": "decades",
-      "relevance": "warning",
-      "uniqueness": "few",
-      "license": "Free for scientific use",
-      "provides": "The third independent impact-monitoring system (the original CLOMON2 line\nof work). Per NEO it publishes orbital elements with full covariance, the\nobservation arc, residuals, ephemerides, close-approach tables, and the\nrisk page listing virtual impactors with date, impact probability, Palermo\nand Torino values. Also serves the raw astrometric observation files, which\nlets you re-fit an orbit yourself rather than trusting a published one.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 8.0,
-        "relevance": 20.0,
-        "cadence": 8.0,
-        "depth": 8.0,
-        "uniqueness": 5.0
-      },
-      "total": 64.0,
-      "max_score": 75,
-      "normalized": 85.3,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "risk_page",
-          "name": "Risk list",
-          "url": "https://newton.spacedys.com/neodys/index.php",
-          "provides": "designation, date, impact probability, Palermo, Torino, H, diameter"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "neodys",
-          "endpoint_id": "risk_page",
-          "name": "Risk list",
-          "url": "https://newton.spacedys.com/neodys/index.php?pc=4.1",
-          "status": null,
-          "elapsed_ms": 236,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "silso",
-      "name": "SILSO \u2014 World Data Center for the Sunspot Index",
-      "org": "Royal Observatory of Belgium",
-      "homepage": "https://www.sidc.be/SILSO/",
-      "domains": [
-        "solar"
-      ],
-      "auth": "none",
-      "formats": [
-        "csv",
-        "text"
-      ],
-      "cadence": "daily",
-      "depth": "decades",
-      "relevance": "driver",
-      "uniqueness": "sole",
-      "license": "CC BY-NC 4.0",
-      "provides": "The official international sunspot number \u2014 the longest continuous record\nof solar activity, daily since 1818 and monthly since 1749, plus the\n13-month smoothed series, hemispheric split, the estimated (provisional)\ncurrent-month value updated daily, and the official solar-cycle prediction.\nSunspot number is the baseline against which \"is this cycle dangerous\"\nquestions are answered, and it drives thermospheric-density models that\ndetermine satellite drag and debris lifetime.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 11.0,
-        "relevance": 14.0,
-        "cadence": 8.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 64.0,
-      "max_score": 75,
-      "normalized": 85.3,
-      "verified": false,
-      "liveness_note": "not measured (2 probes blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "eisn",
-          "name": "Estimated international sunspot number, current month",
-          "url": "https://www.sidc.be/SILSO/DATA/EISN/EISN_current.csv",
-          "provides": "year, month, day, decimal date, estimated SN, std dev, n stations"
-        },
-        {
-          "id": "daily_total",
-          "name": "Daily total sunspot number since 1818",
-          "url": "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv",
-          "provides": "date, daily SN, standard deviation, observations, definitive/provisional flag"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "silso",
-          "endpoint_id": "eisn",
-          "name": "Estimated international sunspot number, current month",
-          "url": "https://www.sidc.be/SILSO/DATA/EISN/EISN_current.csv",
-          "status": null,
-          "elapsed_ms": 252,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "silso",
-          "endpoint_id": "daily_total",
-          "name": "Daily total sunspot number since 1818",
-          "url": "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv",
-          "status": null,
-          "elapsed_ms": 293,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "ams_meteors",
-      "name": "American Meteor Society fireball reports",
-      "org": "American Meteor Society",
-      "homepage": "https://www.amsmeteors.org/fireballs/",
-      "domains": [
-        "fireballs"
+        "debris",
+        "reentry"
       ],
       "auth": "free_key",
       "formats": [
         "json"
       ],
-      "cadence": "realtime",
-      "depth": "years",
-      "relevance": "warning",
-      "uniqueness": "few",
-      "license": "Free API key for non-commercial use",
-      "provides": "Crowd-sourced fireball sightings, usually within minutes of an event and\noften before any official detection is published. Each event aggregates\neyewitness reports into a computed trajectory: start and end lat/lon and\naltitude, ground track, velocity, estimated magnitude, sound and\nfragmentation reports, and the individual report records. This is the\nfastest public signal that something just entered the atmosphere over a\npopulated area, and it covers events too small for CNEOS sensors.",
+      "cadence": "daily",
+      "depth": "decades",
+      "relevance": "catalog",
+      "uniqueness": "sole",
+      "license": "Free token for non-commercial use",
+      "provides": "Europe's Database and Information System Characterising Objects in Space:\nthe physical-properties catalogue that the US catalogue lacks. Per object\nit gives mass, dimensions (span, height, depth), cross-section (minimum,\nmaximum and average), shape, and construction materials; plus launch\nrecords, reentry epochs, fragmentation events with cause and resulting\ndebris counts, and destination orbits. Mass and area are exactly what you\nneed to convert \"an object is reentering\" into \"how much survives to the\nground\" or to compute an area-to-mass ratio for drag. JSON:API over HTTPS\nwith a bearer token.",
       "components": {
-        "liveness": null,
+        "liveness": 25.0,
         "access": 8.0,
         "parseability": 12.0,
-        "relevance": 20.0,
-        "cadence": 12.0,
-        "depth": 6.0,
-        "uniqueness": 5.0
-      },
-      "total": 63.0,
-      "max_score": 75,
-      "normalized": 84.0,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "open_api_probe",
-          "name": "Open API without a key (expects rejection or error payload)",
-          "url": "https://www.amsmeteors.org/members/api/open_api/get_events",
-          "provides": "confirms the endpoint is live; real queries need api_key"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "ams_meteors",
-          "endpoint_id": "open_api_probe",
-          "name": "Open API without a key (expects rejection or error payload)",
-          "url": "https://www.amsmeteors.org/members/api/open_api/get_events?year=2024",
-          "status": null,
-          "elapsed_ms": 252,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "esa_neocc",
-      "name": "ESA NEO Coordination Centre",
-      "org": "European Space Agency",
-      "homepage": "https://neo.ssa.esa.int/",
-      "domains": [
-        "neo_impact"
-      ],
-      "auth": "none",
-      "formats": [
-        "text",
-        "html"
-      ],
-      "cadence": "daily",
-      "depth": "years",
-      "relevance": "warning",
-      "uniqueness": "few",
-      "license": "ESA public data",
-      "provides": "Europe's independent impact-monitoring chain (AstOD/Aegis), computed\nseparately from Sentry \u2014 valuable precisely because it is an independent\ncheck on JPL. Downloadable flat files give the Risk List (objects with a\nnon-zero impact probability: designation, year range, impact probability,\nPalermo scale, diameter, velocity), the Priority List telling observers\nwhich objects urgently need follow-up astrometry, the Close Approaches\nlist, and per-object orbital elements and observation arcs.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 8.0,
-        "relevance": 20.0,
+        "relevance": 8.0,
         "cadence": 8.0,
-        "depth": 6.0,
-        "uniqueness": 5.0
-      },
-      "total": 62.0,
-      "max_score": 75,
-      "normalized": 82.7,
-      "verified": false,
-      "liveness_note": "not measured (3 probes blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "risk_list",
-          "name": "Risk list (flat file)",
-          "url": "https://neo.ssa.esa.int/PSDB-portlet/download",
-          "provides": "object, date, impact probability, Palermo scale, H, diameter, v_inf"
-        },
-        {
-          "id": "priority_list",
-          "name": "Observation priority list",
-          "url": "https://neo.ssa.esa.int/PSDB-portlet/download",
-          "provides": "designation, priority, RA/Dec, V magnitude, observability window"
-        },
-        {
-          "id": "close_approaches",
-          "name": "Upcoming close approaches",
-          "url": "https://neo.ssa.esa.int/PSDB-portlet/download",
-          "provides": "object, close-approach date, distance, v_rel, H"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "esa_neocc",
-          "endpoint_id": "risk_list",
-          "name": "Risk list (flat file)",
-          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_risk_list",
-          "status": null,
-          "elapsed_ms": 236,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "esa_neocc",
-          "endpoint_id": "priority_list",
-          "name": "Observation priority list",
-          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_priority_neo_list",
-          "status": null,
-          "elapsed_ms": 233,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        },
-        {
-          "source_id": "esa_neocc",
-          "endpoint_id": "close_approaches",
-          "name": "Upcoming close approaches",
-          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_upcoming_close_app",
-          "status": null,
-          "elapsed_ms": 120,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "gmn",
-      "name": "Global Meteor Network",
-      "org": "Global Meteor Network (open collaboration)",
-      "homepage": "https://globalmeteornetwork.org/",
-      "domains": [
-        "fireballs"
-      ],
-      "auth": "none",
-      "formats": [
-        "csv",
-        "text"
-      ],
-      "cadence": "daily",
-      "depth": "years",
-      "relevance": "driver",
-      "uniqueness": "sole",
-      "license": "CC BY 4.0",
-      "provides": "A worldwide network of low-cost video meteor cameras publishing fully\nreduced, open trajectory data nightly: per-meteor radiant, geocentric and\nheliocentric velocity, orbital elements, absolute magnitude, mass estimate,\nbegin and end height, and the observing stations that saw it. Aggregated\ndaily and monthly files plus a live fireball page. It is the only open\ndataset that quantifies the small-impactor flux \u2014 the population between\n\"harmless meteor\" and \"CNEOS-detectable bolide\" \u2014 which is what a\nstatistical risk model for small impacts needs.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 11.0,
-        "relevance": 14.0,
-        "cadence": 8.0,
-        "depth": 6.0,
+        "depth": 8.0,
         "uniqueness": 8.0
       },
-      "total": 62.0,
-      "max_score": 75,
-      "normalized": 82.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
+      "total": 77.0,
+      "max_score": 100,
+      "normalized": 77.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 1054,
       "endpoints": [
         {
-          "id": "traj_summary",
-          "name": "Monthly trajectory summary files",
-          "url": "https://globalmeteornetwork.org/data/traj_summary_data/monthly/",
-          "provides": "index of monthly CSVs with per-meteor orbits, radiants, velocities, magnitudes, masses"
+          "id": "objects_unauth",
+          "name": "Objects endpoint without a token (expects rejection)",
+          "url": "https://discosweb.esoc.esa.int/api/objects",
+          "provides": "confirms the API is live; real queries need a bearer token"
         }
       ],
       "probes": [
         {
-          "source_id": "gmn",
-          "endpoint_id": "traj_summary",
-          "name": "Monthly trajectory summary files",
-          "url": "https://globalmeteornetwork.org/data/traj_summary_data/monthly/",
-          "status": null,
-          "elapsed_ms": 253,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "source_id": "esa_discos",
+          "endpoint_id": "objects_unauth",
+          "name": "Objects endpoint without a token (expects rejection)",
+          "url": "https://discosweb.esoc.esa.int/api/objects",
+          "status": 401,
+          "elapsed_ms": 1054,
+          "bytes": 118,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==401",
+            "valid JSON"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['errors']"
         }
       ]
     },
     {
-      "id": "lmsal_hek",
-      "name": "Heliophysics Event Knowledgebase (HEK)",
-      "org": "Lockheed Martin Solar & Astrophysics Lab / NASA",
-      "homepage": "https://www.lmsal.com/hek/",
+      "id": "wheretheiss",
+      "name": "Where the ISS at? API",
+      "org": "Bill Shupp (independent)",
+      "homepage": "https://wheretheiss.at/w/developer",
       "domains": [
-        "solar"
+        "debris"
       ],
       "auth": "none",
       "formats": [
         "json"
       ],
-      "cadence": "hourly",
-      "depth": "years",
-      "relevance": "driver",
-      "uniqueness": "few",
-      "license": "Open",
-      "provides": "A searchable database of automatically and manually detected solar features\nand events across all major solar observatories: flares, filament\neruptions, coronal holes, sigmoids, sunspots, emerging flux, CMEs and\ncoronal dimmings. Each record carries start/peak/end times, heliographic\nbounding box and chain code, the detection algorithm, the instrument, GOES\nclass where applicable, and links to the source data. Coronal-hole records\nare the practical way to anticipate recurrent high-speed-stream storms\nthat have no flare or CME attached to them.",
+      "cadence": "realtime",
+      "depth": "realtime_only",
+      "relevance": "catalog",
+      "uniqueness": "many",
+      "license": "Free, no key",
+      "provides": "Instant SGP4-propagated position, velocity, altitude, footprint, solar\nillumination and ground-track lat/lon for any catalogued satellite by NORAD\nID, plus TLE retrieval and timestamp-batch queries. No key, no rate limit\nworth worrying about. Useful as a zero-setup positional layer or a sanity\ncheck on your own propagator, but it is derived from public TLEs and adds\nno independent information.",
       "components": {
-        "liveness": null,
+        "liveness": 25.0,
         "access": 15.0,
         "parseability": 12.0,
-        "relevance": 14.0,
-        "cadence": 10.0,
-        "depth": 6.0,
-        "uniqueness": 5.0
+        "relevance": 8.0,
+        "cadence": 12.0,
+        "depth": 1.0,
+        "uniqueness": 2.0
       },
-      "total": 62.0,
-      "max_score": 75,
-      "normalized": 82.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
+      "total": 75.0,
+      "max_score": 100,
+      "normalized": 75.0,
+      "verified": true,
+      "liveness_note": "1/1 probes passed",
+      "median_latency_ms": 496,
       "endpoints": [
         {
-          "id": "her_flares",
-          "name": "Flare events from the HEK query interface",
-          "url": "https://www.lmsal.com/hek/her",
-          "provides": "event_starttime, event_peaktime, fl_goescls, ar_noaanum, frm_name, obs_instrument"
+          "id": "iss_now",
+          "name": "ISS position now",
+          "url": "https://api.wheretheiss.at/v1/satellites/25544",
+          "provides": "latitude, longitude, altitude, velocity, visibility, footprint, solar_lat, solar_lon, daynum"
         }
       ],
       "probes": [
         {
-          "source_id": "lmsal_hek",
-          "endpoint_id": "her_flares",
-          "name": "Flare events from the HEK query interface",
-          "url": "https://www.lmsal.com/hek/her?cosec=2&cmd=search&type=column&event_type=fl&event_starttime=2024-05-08T00%3A00%3A00&event_endtime=2024-05-12T00%3A00%3A00&event_coordsys=helioprojective&x1=-1200&x2=1200&y1=-1200&y2=1200&result_limit=10&return=event_starttime%2Cevent_peaktime%2Cfl_goescls%2Car_noaanum%2Cfrm_name",
-          "status": null,
-          "elapsed_ms": 238,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "lisird",
-      "name": "LASP Interactive Solar Irradiance Data Center (LISIRD)",
-      "org": "University of Colorado LASP",
-      "homepage": "https://lasp.colorado.edu/lisird/",
-      "domains": [
-        "solar"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "csv"
-      ],
-      "cadence": "daily",
-      "depth": "decades",
-      "relevance": "driver",
-      "uniqueness": "few",
-      "license": "Open with attribution",
-      "provides": "Solar irradiance and solar-index time series served through the LaTiS API:\ntotal solar irradiance composites back to 1978 and reconstructions back to\n1610, spectral irradiance from SORCE/TSIS, the Mg II core-to-wing index,\nand the adjusted and observed F10.7 radio flux from Penticton. F10.7 is the\nstandard driver of every operational thermosphere-density model, so this\nfeeds directly into satellite-drag and reentry-timing estimates.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 14.0,
-        "cadence": 8.0,
-        "depth": 8.0,
-        "uniqueness": 5.0
-      },
-      "total": 62.0,
-      "max_score": 75,
-      "normalized": 82.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "f107",
-          "name": "Penticton F10.7 solar radio flux",
-          "url": "https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json",
-          "provides": "time, adjusted_flux, observed_flux (10.7 cm, sfu)"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "lisird",
-          "endpoint_id": "f107",
-          "name": "Penticton F10.7 solar radio flux",
-          "url": "https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json?time=>=2024-05-01",
-          "status": null,
-          "elapsed_ms": 240,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "space_track",
-      "name": "Space-Track.org",
-      "org": "US Space Force / 18th & 19th Space Defense Squadron",
-      "homepage": "https://www.space-track.org/",
-      "domains": [
-        "debris",
-        "conjunctions",
-        "reentry"
-      ],
-      "auth": "account",
-      "formats": [
-        "json",
-        "csv",
-        "xml"
-      ],
-      "cadence": "hourly",
-      "depth": "decades",
-      "relevance": "warning",
-      "uniqueness": "sole",
-      "license": "Free account, redistribution restricted by user agreement",
-      "provides": "The authoritative upstream. A free account unlocks data that exists\nnowhere else: the full GP and GP_HISTORY element catalogue including\nanalyst objects, CDM_PUBLIC conjunction data messages for operators\n(miss distance, collision probability, covariance at TCA), the DECAY\ntable and Tracking and Impact Prediction (TIP) messages giving predicted\nreentry time and ground footprint with an uncertainty window, boxscore\nstatistics per country, and SATCAT change logs. Everything CelesTrak\npublishes is derived from here, minus the CDMs and TIPs.\nAccess is by POST login to /ajaxauth/login followed by REST queries; the\nuser agreement forbids bulk redistribution, so treat it as a private feed.",
-      "components": {
-        "liveness": null,
-        "access": 4.0,
-        "parseability": 12.0,
-        "relevance": 20.0,
-        "cadence": 10.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 62.0,
-      "max_score": 75,
-      "normalized": 82.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "login_probe",
-          "name": "Service liveness (unauthenticated login endpoint)",
-          "url": "https://www.space-track.org/ajaxauth/login",
-          "provides": "confirms the API host is reachable; real queries require credentials"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "space_track",
-          "endpoint_id": "login_probe",
-          "name": "Service liveness (unauthenticated login endpoint)",
-          "url": "https://www.space-track.org/ajaxauth/login",
-          "status": null,
-          "elapsed_ms": 235,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "source_id": "wheretheiss",
+          "endpoint_id": "iss_now",
+          "name": "ISS position now",
+          "url": "https://api.wheretheiss.at/v1/satellites/25544",
+          "status": 200,
+          "elapsed_ms": 496,
+          "bytes": 313,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:latitude",
+            "key:longitude",
+            "key:altitude",
+            "key:velocity",
+            "key:timestamp"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['altitude', 'daynum', 'footprint', 'id', 'latitude', 'longitude', 'name', 'solar_lat', 'solar_lon', 'timestamp']"
         }
       ]
     },
@@ -1525,7 +2175,7 @@
       "license": "Free with attribution",
       "provides": "The single clearing house every other NEO product depends on: it receives\nraw astrometry from the world's telescopes, assigns designations, and\npublishes the orbit catalogue. For hazard work the important products are\nthe NEA orbit files (orbital elements, H, arc length, number of oppositions,\nMOID), the NEO Confirmation Page listing brand-new unconfirmed objects that\nmay be on an impacting trajectory, the daily orbit-update files, and the\nraw observation records in the ADES/obs80 formats. If an object is not here\nyet, no risk system knows about it.",
       "components": {
-        "liveness": null,
+        "liveness": 8.33,
         "access": 15.0,
         "parseability": 12.0,
         "relevance": 8.0,
@@ -1533,12 +2183,12 @@
         "depth": 8.0,
         "uniqueness": 8.0
       },
-      "total": 61.0,
-      "max_score": 75,
-      "normalized": 81.3,
-      "verified": false,
-      "liveness_note": "not measured (3 probes blocked by local network)",
-      "median_latency_ms": null,
+      "total": 69.33,
+      "max_score": 100,
+      "normalized": 69.3,
+      "verified": true,
+      "liveness_note": "1/3 probes passed",
+      "median_latency_ms": 471,
       "endpoints": [
         {
           "id": "nea_orbits",
@@ -1566,38 +2216,177 @@
           "name": "Near-Earth asteroid orbit file",
           "url": "https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz",
           "status": null,
-          "elapsed_ms": 245,
+          "elapsed_ms": 2200,
           "bytes": 0,
           "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "verdict": "fail",
+          "error": "EOFError: Compressed file ended before the end-of-stream marker was reached",
+          "checks_failed": [
+            "transport"
+          ]
         },
         {
           "source_id": "mpc",
           "endpoint_id": "neocp",
           "name": "NEO Confirmation Page (unconfirmed objects)",
           "url": "https://www.minorplanetcenter.net/iau/NEO/neocp.txt",
-          "status": null,
-          "elapsed_ms": 227,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "status": 200,
+          "elapsed_ms": 471,
+          "bytes": 14382,
+          "content_type": "text/plain",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200"
+          ],
+          "checks_failed": [],
+          "sample": "text: CETVWY2  79 2026 09 18.5   5.6286  +0.9180 21.0 Added Sept. 18.51 UT             4   0.01 16.9  0.348 CETVTU2  87 2026 09 18.5   4.7978  -0.2239 21.5 Updated Se"
         },
         {
           "source_id": "mpc",
           "endpoint_id": "last_obs",
           "name": "Recent observations of NEOs",
           "url": "https://www.minorplanetcenter.net/iau/lists/LastNEO.html",
-          "status": null,
-          "elapsed_ms": 256,
+          "status": 404,
+          "elapsed_ms": 541,
+          "bytes": 196,
+          "content_type": "text/html",
+          "verdict": "fail",
+          "checks_passed": [],
+          "checks_failed": [
+            "status 404 != 200",
+            "only 196 bytes, wanted 1000"
+          ],
+          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found"
+        }
+      ]
+    },
+    {
+      "id": "aerospace_cords",
+      "name": "Aerospace Corporation CORDS reentry predictions",
+      "org": "The Aerospace Corporation",
+      "homepage": "https://aerospace.org/reentries",
+      "domains": [
+        "reentry"
+      ],
+      "auth": "none",
+      "formats": [
+        "html",
+        "json"
+      ],
+      "cadence": "daily",
+      "depth": "years",
+      "relevance": "warning",
+      "uniqueness": "few",
+      "license": "Public web content",
+      "provides": "Independent, publicly readable reentry predictions for large uncontrolled\nobjects: predicted reentry time with an uncertainty window, ground-track\nmaps for the possible reentry passes, object mass and expected surviving\ndebris, and post-event reconstructions. Where Space-Track's TIP messages\nare terse and access-controlled, CORDS is the public narrative layer,\nupdated as the prediction tightens in the final days.",
+      "components": {
+        "liveness": 0.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 20.0,
+        "cadence": 8.0,
+        "depth": 6.0,
+        "uniqueness": 5.0
+      },
+      "total": 66.0,
+      "max_score": 100,
+      "normalized": 66.0,
+      "verified": true,
+      "liveness_note": "0/1 probes passed",
+      "median_latency_ms": null,
+      "endpoints": [
+        {
+          "id": "reentries_page",
+          "name": "Reentry predictions index",
+          "url": "https://aerospace.org/reentries",
+          "provides": "object name, NORAD ID, predicted reentry window, uncertainty, status"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "aerospace_cords",
+          "endpoint_id": "reentries_page",
+          "name": "Reentry predictions index",
+          "url": "https://aerospace.org/reentries",
+          "status": 403,
+          "elapsed_ms": 183,
+          "bytes": 5773,
+          "content_type": "text/html",
+          "verdict": "fail",
+          "checks_passed": [
+            "bytes>=2000"
+          ],
+          "checks_failed": [
+            "status 403 != 200"
+          ],
+          "sample": "text: <!DOCTYPE html> <!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]--> <!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endi",
+          "decode": "gzip"
+        }
+      ]
+    },
+    {
+      "id": "space_track",
+      "name": "Space-Track.org",
+      "org": "US Space Force / 18th & 19th Space Defense Squadron",
+      "homepage": "https://www.space-track.org/",
+      "domains": [
+        "debris",
+        "conjunctions",
+        "reentry"
+      ],
+      "auth": "account",
+      "formats": [
+        "json",
+        "csv",
+        "xml"
+      ],
+      "cadence": "hourly",
+      "depth": "decades",
+      "relevance": "warning",
+      "uniqueness": "sole",
+      "license": "Free account, redistribution restricted by user agreement",
+      "provides": "The authoritative upstream. A free account unlocks data that exists\nnowhere else: the full GP and GP_HISTORY element catalogue including\nanalyst objects, CDM_PUBLIC conjunction data messages for operators\n(miss distance, collision probability, covariance at TCA), the DECAY\ntable and Tracking and Impact Prediction (TIP) messages giving predicted\nreentry time and ground footprint with an uncertainty window, boxscore\nstatistics per country, and SATCAT change logs. Everything CelesTrak\npublishes is derived from here, minus the CDMs and TIPs.\nAccess is by POST login to /ajaxauth/login followed by REST queries; the\nuser agreement forbids bulk redistribution, so treat it as a private feed.",
+      "components": {
+        "liveness": 0.0,
+        "access": 4.0,
+        "parseability": 12.0,
+        "relevance": 20.0,
+        "cadence": 10.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 62.0,
+      "max_score": 100,
+      "normalized": 62.0,
+      "verified": true,
+      "liveness_note": "0/1 probes passed",
+      "median_latency_ms": null,
+      "endpoints": [
+        {
+          "id": "login_probe",
+          "name": "Service liveness (unauthenticated login endpoint)",
+          "url": "https://www.space-track.org/ajaxauth/login",
+          "provides": "confirms the API host is reachable; real queries require credentials"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "space_track",
+          "endpoint_id": "login_probe",
+          "name": "Service liveness (unauthenticated login endpoint)",
+          "url": "https://www.space-track.org/ajaxauth/login",
+          "status": 200,
+          "elapsed_ms": 387,
           "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "content_type": "application/csv",
+          "verdict": "fail",
+          "checks_passed": [
+            "status==200"
+          ],
+          "checks_failed": [
+            "only 0 bytes, wanted 100"
+          ],
+          "sample": "text: "
         }
       ]
     },
@@ -1620,7 +2409,7 @@
       "license": "Public domain (US Government)",
       "provides": "A friendlier re-packaging of JPL SBDB/CAD keyed by date: \"what passes close\nto Earth this week\". Per object it returns estimated diameter min/max in\nfour unit systems, the is_potentially_hazardous_asteroid flag, close-approach\ndate, relative velocity, miss distance, the orbiting body, plus a browse\nendpoint over the whole ~40k NEO catalogue. Easier to consume than the raw\nJPL APIs but derived from them, rate-limited, and needs a key.",
       "components": {
-        "liveness": null,
+        "liveness": 0.0,
         "access": 11.0,
         "parseability": 12.0,
         "relevance": 20.0,
@@ -1629,10 +2418,10 @@
         "uniqueness": 2.0
       },
       "total": 61.0,
-      "max_score": 75,
-      "normalized": 81.3,
-      "verified": false,
-      "liveness_note": "not measured (2 probes blocked by local network)",
+      "max_score": 100,
+      "normalized": 61.0,
+      "verified": true,
+      "liveness_note": "0/2 probes passed",
       "median_latency_ms": null,
       "endpoints": [
         {
@@ -1653,495 +2442,43 @@
           "source_id": "nasa_neows",
           "endpoint_id": "feed",
           "name": "Close approaches for a date range",
-          "url": "https://api.nasa.gov/neo/rest/v1/feed?start_date=2026-09-01&end_date=2026-09-03&api_key=DEMO_KEY",
-          "status": null,
-          "elapsed_ms": 243,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "url": "https://api.nasa.gov/neo/rest/v1/feed?start_date=2026-09-01&end_date=2026-09-03&api_key=",
+          "status": 403,
+          "elapsed_ms": 149,
+          "bytes": 129,
+          "content_type": "application/json",
+          "verdict": "fail",
+          "checks_passed": [
+            "valid JSON"
+          ],
+          "checks_failed": [
+            "status 403 != 200",
+            "missing JSON key: element_count",
+            "missing JSON key: near_earth_objects"
+          ],
+          "sample": "object keys: ['error']",
+          "decode": "gzip"
         },
         {
           "source_id": "nasa_neows",
           "endpoint_id": "stats",
           "name": "Catalogue statistics",
-          "url": "https://api.nasa.gov/neo/rest/v1/stats?api_key=DEMO_KEY",
-          "status": null,
-          "elapsed_ms": 239,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "usgs_fdsn",
-      "name": "USGS Earthquake Catalog (FDSN event service)",
-      "org": "US Geological Survey",
-      "homepage": "https://earthquake.usgs.gov/fdsnws/event/1/",
-      "domains": [
-        "earth_effects",
-        "fireballs"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "csv",
-        "xml"
-      ],
-      "cadence": "minutes",
-      "depth": "decades",
-      "relevance": "catalog",
-      "uniqueness": "few",
-      "license": "Public domain (US Government)",
-      "provides": "Seismic and infrasound-adjacent event records with origin time, location,\ndepth, magnitude and magnitude type, in GeoJSON. Large bolide airbursts\nregister on seismic and infrasound networks, so this is a cross-check for\nconfirming and geolocating an atmospheric impact independently of optical\nreports \u2014 the Chelyabinsk airburst appears in seismic records. Also the\ncleanest public example of an FDSN-standard query interface.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 8.0,
-        "cadence": 12.0,
-        "depth": 8.0,
-        "uniqueness": 5.0
-      },
-      "total": 60.0,
-      "max_score": 75,
-      "normalized": 80.0,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "query",
-          "name": "Recent significant events",
-          "url": "https://earthquake.usgs.gov/fdsnws/event/1/query",
-          "provides": "time, place, mag, magType, depth, coordinates, event type, felt reports"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "usgs_fdsn",
-          "endpoint_id": "query",
-          "name": "Recent significant events",
-          "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmagnitude=5&orderby=time",
-          "status": null,
-          "elapsed_ms": 235,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "sscweb",
-      "name": "NASA Satellite Situation Center (SSCWeb)",
-      "org": "NASA Goddard Space Physics Data Facility",
-      "homepage": "https://sscweb.gsfc.nasa.gov/",
-      "domains": [
-        "radiation",
-        "geomagnetic"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "xml"
-      ],
-      "cadence": "daily",
-      "depth": "decades",
-      "relevance": "catalog",
-      "uniqueness": "sole",
-      "license": "Public domain (US Government)",
-      "provides": "Where a spacecraft is relative to the magnetosphere, not just relative to\nEarth: positions for hundreds of heliophysics missions in GEO, GSE, GSM and\nSM coordinates, plus magnetic-field-line tracing and region classification\n(magnetosheath, magnetotail, plasmasphere, radiation belt, bow shock and\nmagnetopause crossings). For radiation-exposure and charging questions the\nmagnetospheric region matters more than the altitude, and this is the only\nservice that resolves it.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 8.0,
-        "cadence": 8.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 59.0,
-      "max_score": 75,
-      "normalized": 78.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "observatories",
-          "name": "Available observatories",
-          "url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/observatories",
-          "provides": "spacecraft id, name, resolution, start and end time of available ephemeris"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "sscweb",
-          "endpoint_id": "observatories",
-          "name": "Available observatories",
-          "url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/observatories",
-          "status": null,
-          "elapsed_ms": 111,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "jpl_horizons",
-      "name": "NASA/JPL Horizons ephemeris API",
-      "org": "NASA Jet Propulsion Laboratory",
-      "homepage": "https://ssd-api.jpl.nasa.gov/doc/horizons.html",
-      "domains": [
-        "orbits",
-        "neo_impact"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "text"
-      ],
-      "cadence": "daily",
-      "depth": "decades",
-      "relevance": "catalog",
-      "uniqueness": "sole",
-      "license": "Public domain (US Government)",
-      "provides": "Numerically integrated ephemerides for any solar-system body, spacecraft or\nuser-supplied orbit, as seen from any observing site. Used for turning a\nhazard catalogue entry into an actual sky position, range and range-rate:\nRA/Dec, apparent magnitude, Earth and Sun distance, phase angle, elongation,\nillumination, and state vectors in a chosen reference frame at arbitrary\ntime steps. This is the ground truth other NEO products are checked against.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 8.0,
-        "cadence": 8.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 59.0,
-      "max_score": 75,
-      "normalized": 78.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "observer",
-          "name": "Observer table for 99942 Apophis",
-          "url": "https://ssd.jpl.nasa.gov/api/horizons.api",
-          "provides": "date, RA, Dec, apparent magnitude, delta (Earth range), deldot, S-O-T elongation"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "jpl_horizons",
-          "endpoint_id": "observer",
-          "name": "Observer table for 99942 Apophis",
-          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='99942'&OBJ_DATA='NO'&MAKE_EPHEM='YES'&EPHEM_TYPE='OBSERVER'&CENTER='500%40399'&START_TIME='2026-01-01'&STOP_TIME='2026-01-02'&STEP_SIZE='1+d'",
-          "status": null,
-          "elapsed_ms": 246,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "heasarc_tap",
-      "name": "HEASARC Virtual Observatory TAP service",
-      "org": "NASA Goddard High Energy Astrophysics Science Archive",
-      "homepage": "https://heasarc.gsfc.nasa.gov/xamin/",
-      "domains": [
-        "transients"
-      ],
-      "auth": "none",
-      "formats": [
-        "xml",
-        "csv",
-        "json"
-      ],
-      "cadence": "daily",
-      "depth": "decades",
-      "relevance": "catalog",
-      "uniqueness": "few",
-      "license": "Public domain (US Government)",
-      "provides": "ADQL/SQL access over hundreds of high-energy mission catalogues \u2014 the Swift\nand Fermi GRB tables, all-sky monitor light curves, source catalogues and\nobservation logs. For hazard work it is the archive that turns a transient\nalert into a historical rate: how often a burst of a given fluence occurs,\nwith what sky distribution. Standard IVOA TAP, so any VO client or a plain\nHTTP GET with a query string works.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 8.0,
-        "cadence": 8.0,
-        "depth": 8.0,
-        "uniqueness": 5.0
-      },
-      "total": 56.0,
-      "max_score": 75,
-      "normalized": 74.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "tap_tables",
-          "name": "TAP schema \u2014 available tables",
-          "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/tables",
-          "provides": "table names and column metadata for every HEASARC catalogue"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "heasarc_tap",
-          "endpoint_id": "tap_tables",
-          "name": "TAP schema \u2014 available tables",
-          "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/tables",
-          "status": null,
-          "elapsed_ms": 238,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "gcat",
-      "name": "GCAT \u2014 Jonathan McDowell's General Catalog of Artificial Space Objects",
-      "org": "Jonathan C. McDowell (Harvard-Smithsonian CfA)",
-      "homepage": "https://planet4589.org/space/gcat/",
-      "domains": [
-        "debris",
-        "reentry"
-      ],
-      "auth": "none",
-      "formats": [
-        "text",
-        "csv"
-      ],
-      "cadence": "weekly",
-      "depth": "decades",
-      "relevance": "catalog",
-      "uniqueness": "sole",
-      "license": "CC BY 4.0",
-      "provides": "A hand-curated, heavily cross-checked catalogue of everything launched\nsince 1957 \u2014 objects, launches, launch vehicles, sites, organisations,\nreentries and deep-space probes \u2014 with the historical corrections and\nidentity resolutions the official catalogues never made. It is the best\nsource for provenance questions (\"what object actually was this\", \"when\ndid it really reenter\", \"which launch did this fragment come from\") and\nfor reentry statistics over the whole space age. Plain tab-delimited\ntables, trivially parsable.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 11.0,
-        "relevance": 8.0,
-        "cadence": 5.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 55.0,
-      "max_score": 75,
-      "normalized": 73.3,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "currentcat",
-          "name": "Current in-orbit catalogue",
-          "url": "https://planet4589.org/space/gcat/tsv/cat/satcat.tsv",
-          "provides": "JCAT id, satellite name, launch date, state, type, orbital class, mass, dimensions, status, reentry date"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "gcat",
-          "endpoint_id": "currentcat",
-          "name": "Current in-orbit catalogue",
-          "url": "https://planet4589.org/space/gcat/tsv/cat/satcat.tsv",
-          "status": null,
-          "elapsed_ms": 136,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "nasa_eonet",
-      "name": "NASA EONET (Earth Observatory Natural Event Tracker)",
-      "org": "NASA Earth Observatory",
-      "homepage": "https://eonet.gsfc.nasa.gov/",
-      "domains": [
-        "earth_effects"
-      ],
-      "auth": "none",
-      "formats": [
-        "json"
-      ],
-      "cadence": "daily",
-      "depth": "years",
-      "relevance": "catalog",
-      "uniqueness": "few",
-      "license": "Public domain (US Government)",
-      "provides": "A curated GeoJSON feed of ongoing natural events observed from orbit \u2014\nwildfires, severe storms, volcanoes, dust and haze, icebergs, landslides.\nNot a space hazard itself, but the standard way to correlate a candidate\nspace-related signature with a mundane terrestrial explanation, and a\nclean reference implementation of an event/category/geometry API.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 8.0,
-        "cadence": 8.0,
-        "depth": 6.0,
-        "uniqueness": 5.0
-      },
-      "total": 54.0,
-      "max_score": 75,
-      "normalized": 72.0,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "events",
-          "name": "Open events",
-          "url": "https://eonet.gsfc.nasa.gov/api/v3/events",
-          "provides": "event id, title, category, sources, geometry (point or polygon) with date"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "nasa_eonet",
-          "endpoint_id": "events",
-          "name": "Open events",
-          "url": "https://eonet.gsfc.nasa.gov/api/v3/events?limit=10&status=open",
-          "status": null,
-          "elapsed_ms": 258,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "esa_discos",
-      "name": "ESA DISCOSweb",
-      "org": "ESA Space Debris Office",
-      "homepage": "https://discosweb.esoc.esa.int/",
-      "domains": [
-        "debris",
-        "reentry"
-      ],
-      "auth": "free_key",
-      "formats": [
-        "json"
-      ],
-      "cadence": "daily",
-      "depth": "decades",
-      "relevance": "catalog",
-      "uniqueness": "sole",
-      "license": "Free token for non-commercial use",
-      "provides": "Europe's Database and Information System Characterising Objects in Space:\nthe physical-properties catalogue that the US catalogue lacks. Per object\nit gives mass, dimensions (span, height, depth), cross-section (minimum,\nmaximum and average), shape, and construction materials; plus launch\nrecords, reentry epochs, fragmentation events with cause and resulting\ndebris counts, and destination orbits. Mass and area are exactly what you\nneed to convert \"an object is reentering\" into \"how much survives to the\nground\" or to compute an area-to-mass ratio for drag. JSON:API over HTTPS\nwith a bearer token.",
-      "components": {
-        "liveness": null,
-        "access": 8.0,
-        "parseability": 12.0,
-        "relevance": 8.0,
-        "cadence": 8.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 52.0,
-      "max_score": 75,
-      "normalized": 69.3,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "objects_unauth",
-          "name": "Objects endpoint without a token (expects rejection)",
-          "url": "https://discosweb.esoc.esa.int/api/objects",
-          "provides": "confirms the API is live; real queries need a bearer token"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "esa_discos",
-          "endpoint_id": "objects_unauth",
-          "name": "Objects endpoint without a token (expects rejection)",
-          "url": "https://discosweb.esoc.esa.int/api/objects",
-          "status": null,
-          "elapsed_ms": 271,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
-        }
-      ]
-    },
-    {
-      "id": "wheretheiss",
-      "name": "Where the ISS at? API",
-      "org": "Bill Shupp (independent)",
-      "homepage": "https://wheretheiss.at/w/developer",
-      "domains": [
-        "debris"
-      ],
-      "auth": "none",
-      "formats": [
-        "json"
-      ],
-      "cadence": "realtime",
-      "depth": "realtime_only",
-      "relevance": "catalog",
-      "uniqueness": "many",
-      "license": "Free, no key",
-      "provides": "Instant SGP4-propagated position, velocity, altitude, footprint, solar\nillumination and ground-track lat/lon for any catalogued satellite by NORAD\nID, plus TLE retrieval and timestamp-batch queries. No key, no rate limit\nworth worrying about. Useful as a zero-setup positional layer or a sanity\ncheck on your own propagator, but it is derived from public TLEs and adds\nno independent information.",
-      "components": {
-        "liveness": null,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 8.0,
-        "cadence": 12.0,
-        "depth": 1.0,
-        "uniqueness": 2.0
-      },
-      "total": 50.0,
-      "max_score": 75,
-      "normalized": 66.7,
-      "verified": false,
-      "liveness_note": "not measured (1 probe blocked by local network)",
-      "median_latency_ms": null,
-      "endpoints": [
-        {
-          "id": "iss_now",
-          "name": "ISS position now",
-          "url": "https://api.wheretheiss.at/v1/satellites/25544",
-          "provides": "latitude, longitude, altitude, velocity, visibility, footprint, solar_lat, solar_lon, daynum"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "wheretheiss",
-          "endpoint_id": "iss_now",
-          "name": "ISS position now",
-          "url": "https://api.wheretheiss.at/v1/satellites/25544",
-          "status": null,
-          "elapsed_ms": 214,
-          "bytes": 0,
-          "content_type": null,
-          "verdict": "blocked",
-          "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>",
-          "reason": "local egress policy refused the connection; source not tested"
+          "url": "https://api.nasa.gov/neo/rest/v1/stats?api_key=",
+          "status": 403,
+          "elapsed_ms": 87,
+          "bytes": 129,
+          "content_type": "application/json",
+          "verdict": "fail",
+          "checks_passed": [
+            "valid JSON"
+          ],
+          "checks_failed": [
+            "status 403 != 200",
+            "missing JSON key: near_earth_object_count",
+            "missing JSON key: close_approach_count"
+          ],
+          "sample": "object keys: ['error']",
+          "decode": "gzip"
         }
       ]
     }
