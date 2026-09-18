@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: pip install --disable-pip-version-check -r requirements.txt
 
+      - name: Self-test the verifier
+        run: python3 tools/selftest.py
+
       - name: Probe every source
         env:
           NASA_API_KEY: ${{ secrets.NASA_API_KEY }}

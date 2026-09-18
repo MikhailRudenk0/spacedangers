@@ -39,6 +39,20 @@ import yaml
 UA = "spacedangers-source-verifier/1.0 (+https://github.com/MikhailRudenk0/spacedangers)"
 PER_HOST_DELAY = 1.0  # seconds between consecutive requests to the same host
 
+# A local egress proxy refusing the CONNECT says nothing about the remote
+# service. Runs from inside a restricted network must not record a healthy
+# source as dead, so these are reported as `blocked` and excluded from scoring.
+EGRESS_BLOCK_MARKERS = (
+    "Tunnel connection failed",
+    "CONNECT tunnel failed",
+    "407 Proxy Authentication",
+    "ProxyError",
+)
+
+
+def is_egress_block(error: str) -> bool:
+    return any(m.lower() in error.lower() for m in EGRESS_BLOCK_MARKERS)
+
 _host_locks: dict[str, threading.Lock] = defaultdict(threading.Lock)
 _host_last: dict[str, float] = defaultdict(float)
 
@@ -253,7 +267,17 @@ def probe(source: dict, endpoint: dict, timeout: float) -> dict:
         "content_type": res.get("content_type"),
     }
     if not res["ok"]:
-        record.update({"verdict": "fail", "error": res.get("error"), "checks_failed": ["transport"]})
+        err = res.get("error", "")
+        if is_egress_block(err):
+            record.update(
+                {
+                    "verdict": "blocked",
+                    "error": err,
+                    "reason": "local egress policy refused the connection; source not tested",
+                }
+            )
+        else:
+            record.update({"verdict": "fail", "error": err, "checks_failed": ["transport"]})
         return record
 
     passed, failed, _parsed, sample = check(endpoint, res)
@@ -296,11 +320,13 @@ def main() -> int:
         for fut in futures:
             rec = fut.result()
             results.append(rec)
-            mark = {"pass": "PASS", "fail": "FAIL", "skipped": "SKIP"}[rec["verdict"]]
+            mark = {"pass": "PASS", "fail": "FAIL", "skipped": "SKIP", "blocked": "BLOK"}[
+                rec["verdict"]
+            ]
             detail = ""
             if rec["verdict"] == "fail":
                 detail = "  <- " + "; ".join(rec.get("checks_failed") or [rec.get("error", "")])[:160]
-            elif rec["verdict"] == "skipped":
+            elif rec["verdict"] in ("skipped", "blocked"):
                 detail = "  <- " + rec["reason"]
             print(
                 f"  {mark}  {rec['source_id']}/{rec['endpoint_id']}  "
@@ -321,6 +347,7 @@ def main() -> int:
             "pass": sum(1 for r in results if r["verdict"] == "pass"),
             "fail": sum(1 for r in results if r["verdict"] == "fail"),
             "skipped": sum(1 for r in results if r["verdict"] == "skipped"),
+            "blocked": sum(1 for r in results if r["verdict"] == "blocked"),
         },
         "results": results,
         "by_source": {k: v for k, v in by_source.items()},
@@ -332,7 +359,15 @@ def main() -> int:
         fh.write("\n")
 
     t = doc["totals"]
-    print(f"\n{t['pass']} pass / {t['fail']} fail / {t['skipped']} skipped -> {args.out}")
+    print(
+        f"\n{t['pass']} pass / {t['fail']} fail / {t['skipped']} skipped / "
+        f"{t['blocked']} blocked -> {args.out}"
+    )
+    if t["blocked"] and not t["pass"]:
+        print(
+            "\nEvery probe was refused by the local network, so nothing was tested.\n"
+            "Re-run from a host with open outbound HTTPS to get a real ranking."
+        )
     return 0
 
 

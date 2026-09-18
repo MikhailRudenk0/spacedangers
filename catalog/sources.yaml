@@ -12,6 +12,8 @@
 #   depth:      decades | years | months | realtime_only
 #   relevance:  warning   (tells you a hazard is happening / will happen)
 #               driver    (physical quantity that causes hazards)
+#               tail_risk (a real warning feed, but for events whose occurrence
+#                          rate is negligible on operational timescales)
 #               catalog   (reference data you need to compute a hazard)
 #   uniqueness: sole | few | many
 #   expect:     status      - required HTTP status (default 200)
@@ -36,7 +38,7 @@ scoring:
     uniqueness: 8     # can you get this anywhere else?
   access_points:   {none: 15, demo_key: 11, free_key: 8, account: 4, paid: 0}
   parse_points:    {json: 12, csv: 11, xml: 10, text: 8, binary: 6, html: 4}
-  relevance_points: {warning: 20, driver: 14, catalog: 8}
+  relevance_points: {warning: 20, driver: 14, tail_risk: 10, catalog: 8}
   cadence_points:  {realtime: 12, minutes: 12, hourly: 10, daily: 8, weekly: 5, irregular: 3}
   depth_points:    {decades: 8, years: 6, months: 3, realtime_only: 1}
   uniqueness_points: {sole: 8, few: 5, many: 2}
@@ -868,7 +870,7 @@ sources:
     formats: [json, text, xml]
     cadence: realtime
     depth: decades
-    relevance: warning
+    relevance: tail_risk
     uniqueness: sole
     license: Public domain (US Government)
     provides: |
