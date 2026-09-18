@@ -216,9 +216,12 @@ sources:
       - id: priority_list
         name: Observation priority list
         url: https://neo.ssa.esa.int/PSDB-portlet/download
-        params: {file: esa_priority_list}
-        expect: {min_bytes: 500}
-        provides: designation, priority, RA/Dec, V magnitude, observability window
+        params: {file: esa_priority_neo_list}
+        expect: {min_bytes: 1}
+        provides: |
+          designation, priority, RA/Dec, V magnitude, observability window.
+          VERIFIED EMPTY: the documented endpoint answers 200 with a zero-byte
+          body. Left failing on purpose so it self-heals if ESA repopulates it.
       - id: close_approaches
         name: Upcoming close approaches
         url: https://neo.ssa.esa.int/PSDB-portlet/download
@@ -351,6 +354,11 @@ sources:
         url: https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json
         expect: {min_items: {path: "", n: 10}}
         provides: time_tag, satellite, flux (pfu), energy channel (>=10, >=50, >=100 MeV)
+      - id: solar_wind_index
+        name: Solar-wind product directory listing
+        url: https://services.swpc.noaa.gov/products/solar-wind/
+        expect: {min_bytes: 200}
+        provides: the authoritative list of available solar-wind JSON filenames
       - id: solar_wind_plasma
         name: DSCOVR real-time solar wind plasma (1 day)
         url: https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json

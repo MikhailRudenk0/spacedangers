@@ -181,6 +181,18 @@ def dig(obj, path: str):
     return cur
 
 
+def first_json_record(text: str):
+    """Decode the first complete object from a truncated JSON array."""
+    start = text.find("{")
+    if start == -1:
+        return None
+    try:
+        obj, _ = json.JSONDecoder().raw_decode(text, start)
+    except json.JSONDecodeError:
+        return None
+    return obj if isinstance(obj, dict) else None
+
+
 def summarise(parsed, body: bytes) -> str:
     """A short, honest fingerprint of what came back."""
     if parsed is not None:
@@ -191,8 +203,8 @@ def summarise(parsed, body: bytes) -> str:
             return f"list[{len(parsed)}], first: {json.dumps(head)[:120]}"
         if isinstance(parsed, dict):
             return f"object keys: {sorted(parsed)[:10]}"
-    text = body[:200].decode("utf-8", "replace").replace("\n", " ").strip()
-    return f"text: {text[:160]}"
+    text = body[:900].decode("utf-8", "replace").replace("\n", " ").strip()
+    return f"text: {' '.join(text.split())[:600]}"
 
 
 def check(endpoint: dict, res: dict) -> tuple[list[str], list[str], object, str]:
@@ -212,11 +224,16 @@ def check(endpoint: dict, res: dict) -> tuple[list[str], list[str], object, str]
     ctype = res.get("content_type", "")
     looks_json = "json" in ctype or body[:1] in (b"{", b"[")
     if looks_json and body:
+        text = body.decode("utf-8", "replace")
         try:
-            parsed = json.loads(body.decode("utf-8", "replace"))
+            parsed = json.loads(text)
             passed.append("valid JSON")
         except (json.JSONDecodeError, UnicodeDecodeError) as exc:
-            failed.append(f"JSON parse failed: {exc}")
+            record = first_json_record(text) if res.get("truncated") else None
+            if record is not None:
+                passed.append(f"valid JSON prefix ({len(record)} fields in first record)")
+            else:
+                failed.append(f"JSON parse failed: {exc}")
 
     for key in expect.get("json_keys") or []:
         if isinstance(parsed, dict) and key in parsed:
