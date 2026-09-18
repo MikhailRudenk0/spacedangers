@@ -1,0 +1,102 @@
+name: verify-sources
+
+# Hits every endpoint in catalog/sources.yaml over the real network, rescores
+# the ranking from the measured result, and commits the refreshed report back.
+# Sources rot; the ranking is only meaningful if it is re-measured.
+
+on:
+  push:
+    branches: ["**"]
+    paths-ignore:
+      - "results/**"
+      - "docs/SOURCES.md"
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: verify-sources-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Probe every source
+        env:
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          SPACETRACK_USER: ${{ secrets.SPACETRACK_USER }}
+          SPACETRACK_PASS: ${{ secrets.SPACETRACK_PASS }}
+          DISCOS_TOKEN: ${{ secrets.DISCOS_TOKEN }}
+          AMS_API_KEY: ${{ secrets.AMS_API_KEY }}
+        run: python3 tools/verify.py --out results/verification-latest.json
+
+      - name: Rank and regenerate the report
+        run: python3 tools/rank.py
+
+      - name: Failure detail (for debugging a probe)
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json
+          doc = json.load(open("results/verification-latest.json"))
+          bad = [r for r in doc["results"] if r["verdict"] == "fail"]
+          print(f"=== {len(bad)} failing probes ===")
+          for r in bad:
+              print(f"\n--- {r['source_id']}/{r['endpoint_id']}")
+              print(f"    url:    {r['url']}")
+              print(f"    status: {r.get('status')}  bytes: {r.get('bytes')}  ctype: {r.get('content_type')}")
+              print(f"    failed: {r.get('checks_failed')}")
+              if r.get("error"):
+                  print(f"    error:  {r['error']}")
+              if r.get("sample"):
+                  print(f"    sample: {r['sample'][:400]}")
+          PY
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## Source verification"
+            echo
+            python3 - <<'PY'
+          import json
+          doc = json.load(open("results/verification-latest.json"))
+          t = doc["totals"]
+          print(f"`{t['pass']}` pass / `{t['fail']}` fail / `{t['skipped']}` skipped "
+                f"across {t['endpoints']} probes at {doc['verified_at']}")
+          print()
+          print("| Verdict | Source / endpoint | Status | ms | Bytes |")
+          print("|---|---|---:|---:|---:|")
+          order = {"fail": 0, "skipped": 1, "pass": 2}
+          for r in sorted(doc["results"], key=lambda x: (order[x["verdict"]], x["source_id"])):
+              print(f"| {r['verdict']} | {r['source_id']}/{r['endpoint_id']} | "
+                    f"{r.get('status')} | {r.get('elapsed_ms')} | {r.get('bytes')} |")
+          PY
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit refreshed results
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results docs/SOURCES.md
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+          else
+            git commit -m "chore: refresh source verification results [skip ci]"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
