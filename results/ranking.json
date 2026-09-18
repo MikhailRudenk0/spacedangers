@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T20:28:18+00:00",
-  "verified_at": "2026-09-18T20:28:18+00:00",
+  "generated_at": "2026-09-18T20:30:57+00:00",
+  "verified_at": "2026-09-18T20:30:57+00:00",
   "weights": {
     "liveness": 25,
     "access": 15,
@@ -45,7 +45,7 @@
       "normalized": 96.0,
       "verified": true,
       "liveness_note": "5/5 probes passed",
-      "median_latency_ms": 948,
+      "median_latency_ms": 1569,
       "endpoints": [
         {
           "id": "ccmc_cme_analysis",
@@ -85,7 +85,7 @@
           "name": "CME analyses (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/CMEAnalysis?startDate=2024-05-01&endDate=2024-05-15&mostAccurateOnly=true",
           "status": 200,
-          "elapsed_ms": 948,
+          "elapsed_ms": 3027,
           "bytes": 59692,
           "content_type": "application/json",
           "verdict": "pass",
@@ -103,7 +103,7 @@
           "name": "Geomagnetic storms (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2024-05-01&endDate=2024-05-15",
           "status": 200,
-          "elapsed_ms": 382,
+          "elapsed_ms": 1276,
           "bytes": 4127,
           "content_type": "application/json",
           "verdict": "pass",
@@ -121,7 +121,7 @@
           "name": "Solar flares (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/FLR?startDate=2024-05-01&endDate=2024-05-15",
           "status": 200,
-          "elapsed_ms": 1151,
+          "elapsed_ms": 1569,
           "bytes": 87105,
           "content_type": "application/json",
           "verdict": "pass",
@@ -139,7 +139,7 @@
           "name": "Space-weather notifications (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/notifications?startDate=2024-05-01&endDate=2024-05-15&type=all",
           "status": 200,
-          "elapsed_ms": 339,
+          "elapsed_ms": 652,
           "bytes": 225748,
           "content_type": "application/json",
           "verdict": "pass",
@@ -157,7 +157,7 @@
           "name": "CME list via api.nasa.gov mirror",
           "url": "https://api.nasa.gov/DONKI/CME?startDate=2024-05-01&endDate=2024-05-10&api_key=DEMO_KEY",
           "status": 200,
-          "elapsed_ms": 2963,
+          "elapsed_ms": 2946,
           "bytes": 124617,
           "content_type": "application/json",
           "verdict": "pass",
@@ -206,7 +206,7 @@
       "normalized": 96.0,
       "verified": true,
       "liveness_note": "5/5 probes passed",
-      "median_latency_ms": 318,
+      "median_latency_ms": 209,
       "endpoints": [
         {
           "id": "cad",
@@ -246,7 +246,7 @@
           "name": "Close-approach data (next 60 days, inside 0.05 au)",
           "url": "https://ssd-api.jpl.nasa.gov/cad.api?date-min=now&date-max=%2B60&dist-max=0.05&sort=dist&limit=20",
           "status": 200,
-          "elapsed_ms": 259,
+          "elapsed_ms": 209,
           "bytes": 3721,
           "content_type": "application/json",
           "verdict": "pass",
@@ -267,7 +267,7 @@
           "name": "Impact-risk table (Palermo scale >= -5)",
           "url": "https://ssd-api.jpl.nasa.gov/sentry.api?ps-min=-5",
           "status": 200,
-          "elapsed_ms": 318,
+          "elapsed_ms": 227,
           "bytes": 55967,
           "content_type": "application/json",
           "verdict": "pass",
@@ -287,7 +287,7 @@
           "name": "Bolide / fireball detections",
           "url": "https://ssd-api.jpl.nasa.gov/fireball.api?limit=10&sort=-date",
           "status": 200,
-          "elapsed_ms": 203,
+          "elapsed_ms": 128,
           "bytes": 892,
           "content_type": "application/json",
           "verdict": "pass",
@@ -308,7 +308,7 @@
           "name": "Bulk query \u2014 potentially hazardous asteroids",
           "url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name%2CH%2Cdiameter%2Cmoid%2Cclass&sb-group=pha&limit=10",
           "status": 200,
-          "elapsed_ms": 3887,
+          "elapsed_ms": 4914,
           "bytes": 750,
           "content_type": "application/json",
           "verdict": "pass",
@@ -328,7 +328,7 @@
           "name": "Scout \u2014 imminent-impactor hazard assessment",
           "url": "https://ssd-api.jpl.nasa.gov/scout.api",
           "status": 200,
-          "elapsed_ms": 333,
+          "elapsed_ms": 198,
           "bytes": 52289,
           "content_type": "application/json",
           "verdict": "pass",
@@ -380,7 +380,7 @@
       "normalized": 95.0,
       "verified": true,
       "liveness_note": "4/4 probes passed",
-      "median_latency_ms": 307,
+      "median_latency_ms": 489,
       "endpoints": [
         {
           "id": "gp_recent",
@@ -414,7 +414,7 @@
           "name": "GP elements for objects launched in the last 30 days",
           "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json",
           "status": 200,
-          "elapsed_ms": 307,
+          "elapsed_ms": 489,
           "bytes": 113532,
           "content_type": "application/json",
           "verdict": "pass",
@@ -433,7 +433,7 @@
           "name": "Satellite catalogue (payloads, rocket bodies, debris)",
           "url": "https://celestrak.org/satcat/records.php?GROUP=last-30-days&FORMAT=json",
           "status": 200,
-          "elapsed_ms": 303,
+          "elapsed_ms": 516,
           "bytes": 90218,
           "content_type": "application/json",
           "verdict": "pass",
@@ -452,7 +452,7 @@
           "name": "Space-weather indices for drag modelling",
           "url": "https://celestrak.org/SpaceData/SW-Last5Years.csv",
           "status": 200,
-          "elapsed_ms": 438,
+          "elapsed_ms": 274,
           "bytes": 259650,
           "content_type": "application/octet-stream",
           "verdict": "pass",
@@ -461,7 +461,7 @@
             "bytes>=100000"
           ],
           "checks_failed": [],
-          "sample": "text: DATE,BSRN,ND,KP1,KP2,KP3,KP4,KP5,KP6,KP7,KP8,KP_SUM,AP1,AP2,AP3,AP4,AP5,AP6,AP7,AP8,AP_AVG,CP,C9,ISN,F10.7_OBS,F10.7_ADJ,F10.7_DATA_TYPE,F10.7_OBS_CENTER81,F10."
+          "sample": "text: DATE,BSRN,ND,KP1,KP2,KP3,KP4,KP5,KP6,KP7,KP8,KP_SUM,AP1,AP2,AP3,AP4,AP5,AP6,AP7,AP8,AP_AVG,CP,C9,ISN,F10.7_OBS,F10.7_ADJ,F10.7_DATA_TYPE,F10.7_OBS_CENTER81,F10.7_OBS_LAST81,F10.7_ADJ_CENTER81,F10.7_ADJ_LAST81 2021-01-01,2556,10,0,3,7,3,3,13,7,7,43,0,2,3,2,2,5,3,3,2,0.0,0,24,80.4,77.7,OBS,82.9,85.4,80.4,83.5 2021-01-02,2556,11,3,0,0,3,0,0,0,0,7,2,0,0,2,0,0,0,0,0,0.0,0,17,81.5,78.8,OBS,82.7,85.6,80.2,83.5 2021-01-03,2556,12,0,0,0,0,3,3,0,3,10,0,0,0,0,2,2,0,2,1,0.0,0,0,80.4,77.8,OBS,82.4,85.6,79.9,83.6 2021-01-04,2556,13,3,0,3,7,3,3,3,3,27,2,0,2,3,2,2,2,2,2,0.0,0,0,77.6,75.0,OBS,82.1,85.7,79.6,83"
         },
         {
           "source_id": "celestrak",
@@ -469,7 +469,7 @@
           "name": "SOCRATES conjunction screening",
           "url": "https://celestrak.org/SOCRATES/",
           "status": 200,
-          "elapsed_ms": 280,
+          "elapsed_ms": 158,
           "bytes": 20609,
           "content_type": "text/html",
           "verdict": "pass",
@@ -478,7 +478,7 @@
             "bytes>=2000"
           ],
           "checks_failed": [],
-          "sample": "text: <!DOCTYPE html>\r \r <html>\r \r <head>\r \r <title>CelesTrak: SOCRATES Plus</title>\r \r <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r <link re",
+          "sample": "text: <!DOCTYPE html> <html> <head> <title>CelesTrak: SOCRATES Plus</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <link rel=\"stylesheet\" href=\"/web/bootstrap4/css/bootstrap.min.css\"> <script src=\"/web/jquery/jquery-3.7.1.min.js\"></script> <script src=\"/web/popper/umd/popper.min.js\"></script> <!-- <script src=\"https://unpkg.com/@popperjs/core@2\"></script> --> <script src=\"/web/bootstrap4/js/bootstrap.min.js\"></script> <link rel=\"stylesheet\" type=\"text/css\" href=\"/new-site.css\"> </head> <body> <div class=container> <nav class=\"navbar navbar-expand-lg lightBG navbar-light",
           "decode": "gzip"
         }
       ]
@@ -506,7 +506,7 @@
       "license": "Public domain (US Government)",
       "provides": "The operational space-weather feed. No key, no rate limit, updates every\n1\u20135 minutes, and it carries both the raw measurements and the official\nwarnings:\n* alerts.json \u2014 the actual issued Watches, Warnings and Alerts (geomagnetic\n  storm G1\u2013G5, radio blackout R1\u2013R5, radiation storm S1\u2013S5), with issue\n  time and free-text product.\n* noaa-scales.json \u2014 current and 3-day forecast R/S/G scale values.\n* GOES X-ray flux (1-minute, 0.05\u20130.4 nm and 0.1\u20130.8 nm) \u2014 this is how you\n  detect a solar flare and classify it A/B/C/M/X.\n* GOES integral proton flux at >10/>50/>100 MeV \u2014 solar radiation storms,\n  the thing that threatens astronauts, polar flights and satellite parts.\n* GOES integral/differential electrons \u2014 surface and deep-dielectric\n  charging risk for spacecraft.\n* DSCOVR/ACE real-time solar wind at L1 \u2014 density, speed, temperature and\n  the interplanetary magnetic field including Bz, which is the single best\n  ~30\u201360 minute lead indicator of a geomagnetic storm.\n* Planetary K index (1-minute estimated and 3-hourly), Kp forecast.\n* OVATION aurora nowcast grid, D-region absorption, 3-day forecast text.\n* Solar-cycle indices: sunspot number and F10.7 monthly back to 1749.",
       "components": {
-        "liveness": 20.0,
+        "liveness": 18.18,
         "access": 15.0,
         "parseability": 12.0,
         "relevance": 20.0,
@@ -514,12 +514,12 @@
         "depth": 8.0,
         "uniqueness": 8.0
       },
-      "total": 95.0,
+      "total": 93.18,
       "max_score": 100,
-      "normalized": 95.0,
+      "normalized": 93.2,
       "verified": true,
-      "liveness_note": "8/10 probes passed",
-      "median_latency_ms": 48,
+      "liveness_note": "8/11 probes passed",
+      "median_latency_ms": 17,
       "endpoints": [
         {
           "id": "alerts",
@@ -550,6 +550,12 @@
           "name": "GOES integral proton flux, 1-day",
           "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
           "provides": "time_tag, satellite, flux (pfu), energy channel (>=10, >=50, >=100 MeV)"
+        },
+        {
+          "id": "solar_wind_index",
+          "name": "Solar-wind product directory listing",
+          "url": "https://services.swpc.noaa.gov/products/solar-wind/",
+          "provides": "the authoritative list of available solar-wind JSON filenames"
         },
         {
           "id": "solar_wind_plasma",
@@ -589,7 +595,7 @@
           "name": "Issued alerts, watches and warnings",
           "url": "https://services.swpc.noaa.gov/products/alerts.json",
           "status": 200,
-          "elapsed_ms": 222,
+          "elapsed_ms": 421,
           "bytes": 42240,
           "content_type": "application/json",
           "verdict": "pass",
@@ -608,7 +614,7 @@
           "name": "NOAA R/S/G scales, observed + 3-day forecast",
           "url": "https://services.swpc.noaa.gov/products/noaa-scales.json",
           "status": 200,
-          "elapsed_ms": 43,
+          "elapsed_ms": 23,
           "bytes": 1096,
           "content_type": "application/json",
           "verdict": "pass",
@@ -627,7 +633,7 @@
           "name": "Planetary K index, 1-minute estimated",
           "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
           "status": 200,
-          "elapsed_ms": 45,
+          "elapsed_ms": 12,
           "bytes": 27925,
           "content_type": "application/json",
           "verdict": "pass",
@@ -646,8 +652,8 @@
           "name": "GOES X-ray flux, 1-day",
           "url": "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json",
           "status": 200,
-          "elapsed_ms": 60,
-          "bytes": 651132,
+          "elapsed_ms": 14,
+          "bytes": 651141,
           "content_type": "application/json",
           "verdict": "pass",
           "checks_passed": [
@@ -665,18 +671,35 @@
           "name": "GOES integral proton flux, 1-day",
           "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
           "status": 200,
-          "elapsed_ms": 46,
-          "bytes": 241432,
+          "elapsed_ms": 17,
+          "bytes": 242278,
           "content_type": "application/json",
           "verdict": "pass",
           "checks_passed": [
             "status==200",
             "valid JSON",
-            "items>=10 (got 2288)"
+            "items>=10 (got 2296)"
           ],
           "checks_failed": [],
-          "sample": "list[2288], first keys: ['energy', 'flux', 'satellite', 'time_tag']",
+          "sample": "list[2296], first keys: ['energy', 'flux', 'satellite', 'time_tag']",
           "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "solar_wind_index",
+          "name": "Solar-wind product directory listing",
+          "url": "https://services.swpc.noaa.gov/products/solar-wind/",
+          "status": 404,
+          "elapsed_ms": 127,
+          "bytes": 196,
+          "content_type": "text/html",
+          "verdict": "fail",
+          "checks_passed": [],
+          "checks_failed": [
+            "status 404 != 200",
+            "only 196 bytes, wanted 200"
+          ],
+          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found on this server.</p> </body></html>"
         },
         {
           "source_id": "noaa_swpc",
@@ -684,7 +707,7 @@
           "name": "DSCOVR real-time solar wind plasma (1 day)",
           "url": "https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json",
           "status": 404,
-          "elapsed_ms": 76,
+          "elapsed_ms": 72,
           "bytes": 196,
           "content_type": "text/html",
           "verdict": "fail",
@@ -693,7 +716,7 @@
             "status 404 != 200",
             "min_items 10 at '' -> NoneType"
           ],
-          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found"
+          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found on this server.</p> </body></html>"
         },
         {
           "source_id": "noaa_swpc",
@@ -701,7 +724,7 @@
           "name": "DSCOVR real-time interplanetary magnetic field (1 day)",
           "url": "https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json",
           "status": 404,
-          "elapsed_ms": 46,
+          "elapsed_ms": 38,
           "bytes": 196,
           "content_type": "text/html",
           "verdict": "fail",
@@ -710,7 +733,7 @@
             "status 404 != 200",
             "min_items 10 at '' -> NoneType"
           ],
-          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found"
+          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found on this server.</p> </body></html>"
         },
         {
           "source_id": "noaa_swpc",
@@ -718,7 +741,7 @@
           "name": "OVATION aurora nowcast grid",
           "url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
           "status": 200,
-          "elapsed_ms": 83,
+          "elapsed_ms": 14,
           "bytes": 921001,
           "content_type": "application/json",
           "verdict": "pass",
@@ -739,7 +762,7 @@
           "name": "3-day space weather forecast (text product)",
           "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
           "status": 200,
-          "elapsed_ms": 42,
+          "elapsed_ms": 45,
           "bytes": 1986,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -749,7 +772,7 @@
             "bytes>=500"
           ],
           "checks_failed": [],
-          "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Sep 18 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Act",
+          "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Sep 18 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Activity Observation and Forecast The greatest observed 3 hr Kp over the past 24 hours was 3 (below NOAA Scale levels). The greatest expected 3 hr Kp for Sep 18-Sep 20 2026 is 3.00 (below NOAA Scale levels). NOAA Kp index breakdown Sep 18-Sep 20 2026 Sep 18 Sep 19 Sep 20 00-03UT 1.67 2.00 1.67 03-06UT 2.00 2.33 1.33 06-09UT 2.00 2.00 1.33 09-12UT 1.67 2.33 1.33 12-15UT 1.67 2.00 1.33 15-18UT 2.00 2.00 1.33 18-21UT 2.67 2.00 1.67 21-00UT 3.",
           "decode": "gzip"
         },
         {
@@ -758,7 +781,7 @@
           "name": "Observed solar cycle indices",
           "url": "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json",
           "status": 200,
-          "elapsed_ms": 48,
+          "elapsed_ms": 12,
           "bytes": 512287,
           "content_type": "application/json",
           "verdict": "pass",
@@ -806,7 +829,7 @@
       "normalized": 92.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 1470,
+      "median_latency_ms": 2145,
       "endpoints": [
         {
           "id": "kp_ws",
@@ -828,7 +851,7 @@
           "name": "Kp index web service",
           "url": "https://kp.gfz.de/app/json/?start=2024-05-01T00%3A00%3A00Z&end=2024-05-15T00%3A00%3A00Z&index=Kp&status=def",
           "status": 200,
-          "elapsed_ms": 774,
+          "elapsed_ms": 1049,
           "bytes": 3972,
           "content_type": "application/json",
           "verdict": "pass",
@@ -846,7 +869,7 @@
           "name": "Kp/ap/Ap/SN/F10.7 since 1932 (flat file)",
           "url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
           "status": 200,
-          "elapsed_ms": 1470,
+          "elapsed_ms": 2145,
           "bytes": 5504038,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -855,7 +878,7 @@
             "bytes>=500000"
           ],
           "checks_failed": [],
-          "sample": "text: # PURPOSE: This file distributes the geomagnetic planetary three-hour index Kp and associated geomagnetic indices as well as relevant solar indices. # LICENSE: ",
+          "sample": "text: # PURPOSE: This file distributes the geomagnetic planetary three-hour index Kp and associated geomagnetic indices as well as relevant solar indices. # LICENSE: CC BY 4.0, except for the sunspot numbers contained in this file, which have the CC BY-NC 4.0 license # SOURCE: Geomagnetic Observatory Niemegk, GFZ Helmholtz Centre for Geosciences # PLEASE CITE: Matzka, J., Stolle, C., Yamazaki, Y., Bronkalla, O. and Morschhauser, A., 2021. The geomagnetic Kp index # and derived indices of geomagnetic activity. Space Weather, https://doi.org/10.1029/2020SW002641 # # Kp, ap and Ap # The three-hourly eq",
           "decode": "gzip"
         }
       ]
@@ -893,7 +916,7 @@
       "normalized": 91.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 283,
+      "median_latency_ms": 628,
       "endpoints": [
         {
           "id": "status",
@@ -915,7 +938,7 @@
           "name": "Data-source freshness",
           "url": "https://api.helioviewer.org/v2/getStatus/",
           "status": 200,
-          "elapsed_ms": 283,
+          "elapsed_ms": 628,
           "bytes": 1796,
           "content_type": "application/json",
           "verdict": "pass",
@@ -934,7 +957,7 @@
           "name": "Closest LASCO C3 image to a time",
           "url": "https://api.helioviewer.org/v2/getClosestImage/?date=2024-05-10T12%3A00%3A00Z&sourceId=5",
           "status": 200,
-          "elapsed_ms": 248,
+          "elapsed_ms": 406,
           "bytes": 282,
           "content_type": "application/json",
           "verdict": "pass",
@@ -983,7 +1006,7 @@
       "normalized": 90.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 420,
+      "median_latency_ms": 478,
       "endpoints": [
         {
           "id": "circulars_index",
@@ -999,7 +1022,7 @@
           "name": "Circulars archive",
           "url": "https://gcn.nasa.gov/circulars",
           "status": 200,
-          "elapsed_ms": 420,
+          "elapsed_ms": 478,
           "bytes": 57943,
           "content_type": "text/html",
           "verdict": "pass",
@@ -1008,7 +1031,7 @@
             "bytes>=1000"
           ],
           "checks_failed": [],
-          "sample": "text: <!DOCTYPE html><html lang=\"en-US\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><link rel=\"stylesheet\" href=\"",
+          "sample": "text: <!DOCTYPE html><html lang=\"en-US\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_static/app/_assets/theme-MRHDYGQG.css\"/><link rel=\"stylesheet\" href=\"/_static/app/css-bundle-RZWRE3IP.css\"/><link rel=\"icon\" href=\"/_static/app/_assets/favicon-16-TBURIK4G.png\" sizes=\"16x16\"/><link rel=\"icon\" href=\"/_static/app/_assets/favicon-40-CCGNE6QT.png\" sizes=\"40x40\"/><link rel=\"icon\" href=\"/_static/app/_assets/favicon-57-VOHT3NTY.png\" sizes=\"57x57\"/><link rel=\"icon\" href=\"/_static/app/_assets/favicon-72-2NY2FSO2.png\" sizes=\"72",
           "decode": "gzip"
         }
       ]
@@ -1048,7 +1071,7 @@
       "normalized": 90.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 711,
+      "median_latency_ms": 673,
       "endpoints": [
         {
           "id": "catalog",
@@ -1070,7 +1093,7 @@
           "name": "Dataset catalog",
           "url": "https://cdaweb.gsfc.nasa.gov/hapi/catalog",
           "status": 200,
-          "elapsed_ms": 259,
+          "elapsed_ms": 415,
           "bytes": 108155,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1089,7 +1112,7 @@
           "name": "OMNI 1-hour solar wind sample",
           "url": "https://cdaweb.gsfc.nasa.gov/hapi/data?id=OMNI2_H0_MRG1HR&parameters=DST1800&time.min=2024-05-09T00%3A00%3A00Z&time.max=2024-05-12T00%3A00%3A00Z&format=csv",
           "status": 200,
-          "elapsed_ms": 711,
+          "elapsed_ms": 673,
           "bytes": 2143,
           "content_type": "text/csv",
           "verdict": "pass",
@@ -1098,7 +1121,7 @@
             "bytes>=200"
           ],
           "checks_failed": [],
-          "sample": "text: 2024-05-09T00:30:00.000Z,15\r 2024-05-09T01:30:00.000Z,17\r 2024-05-09T02:30:00.000Z,18\r 2024-05-09T03:30:00.000Z,15\r 2024-05-09T04:30:00.000Z,15\r 2024-05-09T05:3"
+          "sample": "text: 2024-05-09T00:30:00.000Z,15 2024-05-09T01:30:00.000Z,17 2024-05-09T02:30:00.000Z,18 2024-05-09T03:30:00.000Z,15 2024-05-09T04:30:00.000Z,15 2024-05-09T05:30:00.000Z,14 2024-05-09T06:30:00.000Z,14 2024-05-09T07:30:00.000Z,13 2024-05-09T08:30:00.000Z,14 2024-05-09T09:30:00.000Z,15 2024-05-09T10:30:00.000Z,15 2024-05-09T11:30:00.000Z,17 2024-05-09T12:30:00.000Z,18 2024-05-09T13:30:00.000Z,21 2024-05-09T14:30:00.000Z,21 2024-05-09T15:30:00.000Z,18 2024-05-09T16:30:00.000Z,18 2024-05-09T17:30:00.000Z,20 2024-05-09T18:30:00.000Z,22 2024-05-09T19:30:00.000Z,22 2024-05-09T20:30:00.000Z,21 2024-05-09T2"
         }
       ]
     },
@@ -1135,7 +1158,7 @@
       "normalized": 89.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 1380,
+      "median_latency_ms": 1482,
       "endpoints": [
         {
           "id": "risk_page",
@@ -1151,7 +1174,7 @@
           "name": "Risk list",
           "url": "https://newton.spacedys.com/neodys/index.php?pc=4.1",
           "status": 200,
-          "elapsed_ms": 1380,
+          "elapsed_ms": 1482,
           "bytes": 1311005,
           "content_type": "text/html",
           "verdict": "pass",
@@ -1161,7 +1184,7 @@
             "bytes>=2000"
           ],
           "checks_failed": [],
-          "sample": "text: <!DOCTYPE html  \tPUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \t\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">  <html xmlns=\"http://www.w3.org/1999/xhtml\" lan",
+          "sample": "text: <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\"> <head> <meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"/> <title>NEODyS</title> <link rel=\"stylesheet\" href=\"./css/persistent_main.css\" type=\"text/css\" media=\"screen\"/> <link rel=\"stylesheet\" href=\"./css/persistent_main_tables.css\" type=\"text/css\" media=\"screen\"/> <link rel=\"stylesheet\" href=\"./css/font-sizes/m_main.css\" type=\"text/css\" title=\"fsm-csd\" media=\"screen\"/> <link rel=\"stylesheet\" href=\"./cs",
           "decode": "gzip"
         }
       ]
@@ -1199,7 +1222,7 @@
       "normalized": 89.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 7259,
+      "median_latency_ms": 8152,
       "endpoints": [
         {
           "id": "eisn",
@@ -1221,7 +1244,7 @@
           "name": "Estimated international sunspot number, current month",
           "url": "https://www.sidc.be/SILSO/DATA/EISN/EISN_current.csv",
           "status": 200,
-          "elapsed_ms": 1562,
+          "elapsed_ms": 1391,
           "bytes": 828,
           "content_type": "text/csv",
           "verdict": "pass",
@@ -1230,7 +1253,7 @@
             "bytes>=100"
           ],
           "checks_failed": [],
-          "sample": "text: 2026, 09, 01, 2026.667,  65,  10.9,  33,  40, 2026, 09, 02, 2026.670,  42,  12.8,  37,  42, 2026, 09, 03, 2026.673,  41,   6.7,  28,  34, 2026, 09, 04, 2026.675"
+          "sample": "text: 2026, 09, 01, 2026.667, 65, 10.9, 33, 40, 2026, 09, 02, 2026.670, 42, 12.8, 37, 42, 2026, 09, 03, 2026.673, 41, 6.7, 28, 34, 2026, 09, 04, 2026.675, 59, 6.2, 21, 31, 2026, 09, 05, 2026.678, 76, 18.0, 36, 43, 2026, 09, 06, 2026.681, 82, 8.3, 31, 41, 2026, 09, 07, 2026.684, 98, 11.2, 32, 39, 2026, 09, 08, 2026.686, 101, 10.3, 25, 34, 2026, 09, 09, 2026.689, 105, 10.3, 26, 31, 2026, 09, 10, 2026.692, 105, 9.5, 26, 34, 2026, 09, 11, 2026.695, 95, 9.9, 27, 33, 2026, 09, 12, 2026.697, 92, 8.2, 29, 37, 2026, 09, 13, 2026.700, 67, 6.3, 15, 21, 2026, 09, 14, 2026.703, 53, 7.6, 27, 35, 2026, 09, 15, 202"
         },
         {
           "source_id": "silso",
@@ -1238,7 +1261,7 @@
           "name": "Daily total sunspot number since 1818",
           "url": "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv",
           "status": 200,
-          "elapsed_ms": 7259,
+          "elapsed_ms": 8152,
           "bytes": 2896132,
           "content_type": "text/csv",
           "verdict": "pass",
@@ -1247,7 +1270,7 @@
             "bytes>=1000000"
           ],
           "checks_failed": [],
-          "sample": "text: 1818;01;01;1818.001;  -1; -1.0;   0;1 1818;01;02;1818.004;  -1; -1.0;   0;1 1818;01;03;1818.007;  -1; -1.0;   0;1 1818;01;04;1818.010;  -1; -1.0;   0;1 1818;01;"
+          "sample": "text: 1818;01;01;1818.001; -1; -1.0; 0;1 1818;01;02;1818.004; -1; -1.0; 0;1 1818;01;03;1818.007; -1; -1.0; 0;1 1818;01;04;1818.010; -1; -1.0; 0;1 1818;01;05;1818.012; -1; -1.0; 0;1 1818;01;06;1818.015; -1; -1.0; 0;1 1818;01;07;1818.018; -1; -1.0; 0;1 1818;01;08;1818.021; 65; 10.2; 1;1 1818;01;09;1818.023; -1; -1.0; 0;1 1818;01;10;1818.026; -1; -1.0; 0;1 1818;01;11;1818.029; -1; -1.0; 0;1 1818;01;12;1818.032; -1; -1.0; 0;1 1818;01;13;1818.034; 37; 7.7; 1;1 1818;01;14;1818.037; -1; -1.0; 0;1 1818;01;15;1818.040; -1; -1.0; 0;1 1818;01;16;1818.042; -1; -1.0; 0;1 1818;01;17;1818.045; 77; 11.1; 1;1 1818;0"
         }
       ]
     },
@@ -1283,7 +1306,7 @@
       "normalized": 88.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 28692,
+      "median_latency_ms": 36132,
       "endpoints": [
         {
           "id": "open_api_probe",
@@ -1299,7 +1322,7 @@
           "name": "Open API without a key (expects rejection or error payload)",
           "url": "https://www.amsmeteors.org/members/api/open_api/get_events?year=2024",
           "status": 200,
-          "elapsed_ms": 28692,
+          "elapsed_ms": 36132,
           "bytes": 8137,
           "content_type": "text/html",
           "verdict": "pass",
@@ -1308,7 +1331,7 @@
             "bytes>=10"
           ],
           "checks_failed": [],
-          "sample": "text: <!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"UTF-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/><meta name=\"app-route\" conten",
+          "sample": "text: <!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"UTF-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/><meta name=\"app-route\" content=\"/\"/><base href=\"./\"/><script>(() => { const route = document.querySelector('meta[name=\"app-route\"]').content; const pathname = location.pathname.replace(/\\/index\\.html$/, '/'); const cleanPath = pathname.replace(/\\/$/, ''); const base = route === '/' ? cleanPath + '/' : cleanPath.slice(0, -route.length) + '/'; document.querySelector('base').setAttribute('href', base); if (pathname !== location.pathname) { history.replaceState(history",
           "decode": "gzip"
         }
       ]
@@ -1346,7 +1369,7 @@
       "normalized": 87.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 2051,
+      "median_latency_ms": 503,
       "endpoints": [
         {
           "id": "traj_summary",
@@ -1362,7 +1385,7 @@
           "name": "Monthly trajectory summary files",
           "url": "https://globalmeteornetwork.org/data/traj_summary_data/monthly/",
           "status": 200,
-          "elapsed_ms": 2051,
+          "elapsed_ms": 503,
           "bytes": 11853,
           "content_type": "text/html",
           "verdict": "pass",
@@ -1371,7 +1394,7 @@
             "bytes>=500"
           ],
           "checks_failed": [],
-          "sample": "text: <html>\r <head><title>Index of /data/traj_summary_data/monthly/</title></head>\r <body>\r <h1>Index of /data/traj_summary_data/monthly/</h1><hr><pre><a href=\"../\">",
+          "sample": "text: <html> <head><title>Index of /data/traj_summary_data/monthly/</title></head> <body> <h1>Index of /data/traj_summary_data/monthly/</h1><hr><pre><a href=\"../\">../</a> <a href=\"traj_summary_monthly_201812.txt\">traj_summary_monthly_201812.txt</a> 16-Jun-2023 11:42 449K <a href=\"traj_summary_monthly_201901.txt\">traj_summary_monthly_201901.txt</a> 16-Jun-2023 11:42 511K <a href=\"traj_summary_monthly_201902.txt\">traj_summary_monthly_201902.txt</a> 16-Jun-2023 11:42 1M <a href=\"traj_summary_monthly_201903.txt\">traj_summary_monthly_201903.txt</a> 16-Jun-2023 11:41 486K <a href=\"traj_summary_monthly_201",
           "decode": "gzip"
         }
       ]
@@ -1408,7 +1431,7 @@
       "normalized": 87.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 748,
+      "median_latency_ms": 939,
       "endpoints": [
         {
           "id": "her_flares",
@@ -1424,7 +1447,7 @@
           "name": "Flare events from the HEK query interface",
           "url": "https://www.lmsal.com/hek/her?cosec=2&cmd=search&type=column&event_type=fl&event_starttime=2024-05-08T00%3A00%3A00&event_endtime=2024-05-12T00%3A00%3A00&event_coordsys=helioprojective&x1=-1200&x2=1200&y1=-1200&y2=1200&result_limit=10&return=event_starttime%2Cevent_peaktime%2Cfl_goescls%2Car_noaanum%2Cfrm_name",
           "status": 200,
-          "elapsed_ms": 748,
+          "elapsed_ms": 939,
           "bytes": 1626,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1471,7 +1494,7 @@
       "normalized": 87.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 3424,
+      "median_latency_ms": 5254,
       "endpoints": [
         {
           "id": "f107",
@@ -1487,7 +1510,7 @@
           "name": "Penticton F10.7 solar radio flux",
           "url": "https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json?time>=2024-05-01",
           "status": 200,
-          "elapsed_ms": 3424,
+          "elapsed_ms": 5254,
           "bytes": 184993,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1538,7 +1561,7 @@
       "normalized": 87.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 559,
+      "median_latency_ms": 531,
       "endpoints": [
         {
           "id": "login_probe",
@@ -1554,7 +1577,7 @@
           "name": "Service liveness (unauthenticated login endpoint)",
           "url": "https://www.space-track.org/ajaxauth/login",
           "status": 200,
-          "elapsed_ms": 559,
+          "elapsed_ms": 531,
           "bytes": 0,
           "content_type": "application/csv",
           "verdict": "pass",
@@ -1598,7 +1621,7 @@
       "normalized": 86.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 586,
+      "median_latency_ms": 380,
       "endpoints": [
         {
           "id": "feed",
@@ -1620,7 +1643,7 @@
           "name": "Close approaches for a date range",
           "url": "https://api.nasa.gov/neo/rest/v1/feed?start_date=2026-09-01&end_date=2026-09-03&api_key=DEMO_KEY",
           "status": 200,
-          "elapsed_ms": 586,
+          "elapsed_ms": 380,
           "bytes": 22280,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1640,7 +1663,7 @@
           "name": "Catalogue statistics",
           "url": "https://api.nasa.gov/neo/rest/v1/stats?api_key=DEMO_KEY",
           "status": 200,
-          "elapsed_ms": 298,
+          "elapsed_ms": 296,
           "bytes": 220,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1691,7 +1714,7 @@
       "normalized": 85.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 560,
+      "median_latency_ms": 397,
       "endpoints": [
         {
           "id": "query",
@@ -1707,7 +1730,7 @@
           "name": "Recent significant events",
           "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmagnitude=5&orderby=time",
           "status": 200,
-          "elapsed_ms": 560,
+          "elapsed_ms": 397,
           "bytes": 7608,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1758,7 +1781,7 @@
       "normalized": 84.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 169,
+      "median_latency_ms": 289,
       "endpoints": [
         {
           "id": "observatories",
@@ -1774,7 +1797,7 @@
           "name": "Available observatories",
           "url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/observatories",
           "status": 200,
-          "elapsed_ms": 169,
+          "elapsed_ms": 289,
           "bytes": 97537,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1823,7 +1846,7 @@
       "normalized": 84.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 697,
+      "median_latency_ms": 723,
       "endpoints": [
         {
           "id": "observer",
@@ -1839,7 +1862,7 @@
           "name": "Observer table for 99942 Apophis",
           "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='99942'&OBJ_DATA='NO'&MAKE_EPHEM='YES'&EPHEM_TYPE='OBSERVER'&CENTER='500%40399'&START_TIME='2026-01-01'&STOP_TIME='2026-01-02'&STEP_SIZE='1+d'",
           "status": 200,
-          "elapsed_ms": 697,
+          "elapsed_ms": 723,
           "bytes": 37842,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1888,7 +1911,7 @@
       "normalized": 81.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 6610,
+      "median_latency_ms": 7384,
       "endpoints": [
         {
           "id": "tap_tables",
@@ -1904,7 +1927,7 @@
           "name": "TAP schema \u2014 available tables",
           "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/tables",
           "status": 200,
-          "elapsed_ms": 6610,
+          "elapsed_ms": 7384,
           "bytes": 4000000,
           "content_type": "text/xml",
           "verdict": "pass",
@@ -1913,7 +1936,7 @@
             "bytes>=5000"
           ],
           "checks_failed": [],
-          "sample": "text: <?xml version=\"1.0\"?> <tableset xsi:schemaLocation=\"http://www.ivoa.net/xml/VODataService/v1.1 http://vo.ari.uni-heidelberg.de/docs/schemata/VODataService-v1.1.",
+          "sample": "text: <?xml version=\"1.0\"?> <tableset xsi:schemaLocation=\"http://www.ivoa.net/xml/VODataService/v1.1 http://vo.ari.uni-heidelberg.de/docs/schemata/VODataService-v1.1.xsd\" xsi:type=\"vs1:TableSet\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:vs1=\"http://www.ivoa.net/xml/VODataService/v1.1\"> <schema> <name>TAP_SCHEMA</name> <table> <name>TAP_SCHEMA.columns</name> <description>Available columns</description> <column> <name>column_name</name> <description>Name of column</description> <dataType xsi:type=\"vs1:VOTableType\">char</dataType> <flag>nullable</flag> </column> <column> <name>table_n",
           "truncated": true
         }
       ]
@@ -1951,7 +1974,7 @@
       "normalized": 80.8,
       "verified": true,
       "liveness_note": "3/4 probes passed",
-      "median_latency_ms": 1231,
+      "median_latency_ms": 1225,
       "endpoints": [
         {
           "id": "all_neo",
@@ -1969,7 +1992,7 @@
           "id": "priority_list",
           "name": "Observation priority list",
           "url": "https://neo.ssa.esa.int/PSDB-portlet/download",
-          "provides": "designation, priority, RA/Dec, V magnitude, observability window"
+          "provides": "designation, priority, RA/Dec, V magnitude, observability window.\nVERIFIED EMPTY: the documented endpoint answers 200 with a zero-byte\nbody. Left failing on purpose so it self-heals if ESA repopulates it.\n"
         },
         {
           "id": "close_approaches",
@@ -1985,7 +2008,7 @@
           "name": "Full NEA list (documented automated-data-access endpoint)",
           "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=allneo.lst",
           "status": 200,
-          "elapsed_ms": 1773,
+          "elapsed_ms": 1797,
           "bytes": 1315857,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -1994,7 +2017,7 @@
             "bytes>=10000"
           ],
           "checks_failed": [],
-          "sample": "text: 433       Eros                 719       Albert               887       Alinda               1036      Ganymed              1221      Amor                 1566 ",
+          "sample": "text: 433 Eros 719 Albert 887 Alinda 1036 Ganymed 1221 Amor 1566 Icarus 1580 Betulia 1620 Geographos 1627 Ivar 1685 Toro 1862 Apollo 1863 Antinous 1864 Daedalus 1865 Cerberus 1866 Sisyphus 1915 Quetzalcoatl 1916 Boreas 1917 Cuyo 1943 Anteros 1980 Tezcatlipoca 1981 Midas 2059 Baboquivari 2061 Anza 2062 Aten 2063 Bacchus 2100 Ra-Shalom 2101 Adonis 2102 Tantalus 2135 Aristaeus 2",
           "decode": "gzip"
         },
         {
@@ -2003,7 +2026,7 @@
           "name": "Risk list (flat file)",
           "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_risk_list",
           "status": 200,
-          "elapsed_ms": 1231,
+          "elapsed_ms": 1225,
           "bytes": 275706,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -2012,16 +2035,16 @@
             "bytes>=2000"
           ],
           "checks_failed": [],
-          "sample": "text: Last Update: 2026-09-18 19:19 UTC            Object             |    Diameter    |             VI Max                                   |          VIs          ",
+          "sample": "text: Last Update: 2026-09-18 19:19 UTC Object | Diameter | VI Max | VIs | Num/des. Name | m | *=Y | Date/Time | IP max | PS max |TS | Vel km/s | Years | IP cum | PS cum | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | NNNN | A | YYYY-MM-DD HH:MM | EEEEEEEE | NNN.NN | NN | NNN.NN | YYYY-YYYY | EEEEEEEE | NNN.NN | 2023VD3 | 14 | * | 2034-11-08 17:08 | 2.35E-3 | -2.67 | 0 | 21.01 | 2034-2039 | 2.35E-3 | -2.67 | 2008JL3 | 30 | * | 2027-05-01 09:05 | 1.49E-4 | -2.73 | 0 | 14.01 | 2027-2122 | 1.61E-4 | -2.73 | 1979XB | 500 | * | 2056-12-12 21:38 | 2.34E-7 | -2.82 | 0 | 27.54 | 2056-2113 | 7.34E-7 | -2.70 | 2000SG344 | ",
           "decode": "gzip"
         },
         {
           "source_id": "esa_neocc",
           "endpoint_id": "priority_list",
           "name": "Observation priority list",
-          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_priority_list",
+          "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_priority_neo_list",
           "status": 200,
-          "elapsed_ms": 740,
+          "elapsed_ms": 685,
           "bytes": 0,
           "content_type": "",
           "verdict": "fail",
@@ -2029,7 +2052,7 @@
             "status==200"
           ],
           "checks_failed": [
-            "only 0 bytes, wanted 500"
+            "only 0 bytes, wanted 1"
           ],
           "sample": "text: "
         },
@@ -2039,7 +2062,7 @@
           "name": "Upcoming close approaches",
           "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_upcoming_close_app",
           "status": 200,
-          "elapsed_ms": 610,
+          "elapsed_ms": 859,
           "bytes": 25150,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -2048,7 +2071,7 @@
             "bytes>=500"
           ],
           "checks_failed": [],
-          "sample": "text: Last Update: 2026-09-18 19:32 UTC            Object             |            |   Miss Distance             |     Diameter     |  H   | Max bright | Rel. vel | C",
+          "sample": "text: Last Update: 2026-09-18 19:32 UTC Object | | Miss Distance | Diameter | H | Max bright | Rel. vel | CAI index | Num/des. Name | Date | km | au | LD | m | *=Yes | mag | mag | km/s | | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | YYYY-MM-DD | DDDDDDD | D.DDDDDD | DD.DDD | NNNN | A | DD.D | DDD.D | DD.D | DDD.DDD | 2026SJ | 2026-09-18 | 2644949 | 0.017680 | 6.881 | 18 | * | 26.5 | 18.7 | 8.5 | 2.885 | 2026RF15 | 2026-09-19 | 2123370 | 0.014194 | 5.524 | 26 | * | 25.6 | 18.4 | 14.1 | 2.373 | 2026RH3 | 2026-09-19 | 6580861 | 0.043990 | 17.120 | 30 | * | 25.3 | 21.9 | 11.7 | 3.086 | 2026SA | 2026-0",
           "decode": "gzip"
         }
       ]
@@ -2087,7 +2110,7 @@
       "normalized": 80.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 571,
+      "median_latency_ms": 1001,
       "endpoints": [
         {
           "id": "currentcat",
@@ -2103,7 +2126,7 @@
           "name": "Current in-orbit catalogue",
           "url": "https://planet4589.org/space/gcat/tsv/cat/satcat.tsv",
           "status": 200,
-          "elapsed_ms": 571,
+          "elapsed_ms": 1001,
           "bytes": 4000000,
           "content_type": "text/tab-separated-values",
           "verdict": "pass",
@@ -2112,7 +2135,7 @@
             "bytes>=100000"
           ],
           "checks_failed": [],
-          "sample": "text: #JCAT\tSatcat\tLaunch_Tag\tPiece\tType\tName\tPLName\tLDate\tParent\tSDate\tPrimary\tDDate\tStatus\tDest\tOwner\tState\tManufacturer\tBus\tMotor\tMass\tMassFlag\tDryMass\tDryFlag\tTot",
+          "sample": "text: #JCAT Satcat Launch_Tag Piece Type Name PLName LDate Parent SDate Primary DDate Status Dest Owner State Manufacturer Bus Motor Mass MassFlag DryMass DryFlag TotMass TotFlag Length LFlag Diameter DFlag Span SpanFlag Shape ODate Perigee PF Apogee AF Inc IF OpOrbit OQUAL AltNames # Updated 2026 Sep 18 0731:16 S00001 00001 1957 ALP 1957 ALP 1 R2 8K71PS No. M1-10 Stage 2 8K71A M1-10 (M1-1PS) 1957 Oct 4 - 1957 Oct 4 1933 Earth 1957 Dec 1 1000? R - OKB1 SU OKB1 Blok-A - 7790 7790 7800 ? 28.0 2.6 28.0 Cyl 1957 Oct 4 214 938 65.10 LLEO/I - - S00002 00002 1957 ALP 1957 ALP 2 P 1-y ISZ PS-1 1957 Oct 4 S0",
           "truncated": true
         }
       ]
@@ -2149,7 +2172,7 @@
       "normalized": 79.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 301,
+      "median_latency_ms": 391,
       "endpoints": [
         {
           "id": "events",
@@ -2165,7 +2188,7 @@
           "name": "Open events",
           "url": "https://eonet.gsfc.nasa.gov/api/v3/events?limit=10&status=open",
           "status": 200,
-          "elapsed_ms": 301,
+          "elapsed_ms": 391,
           "bytes": 8398,
           "content_type": "application/rss+xml",
           "verdict": "pass",
@@ -2177,119 +2200,6 @@
           ],
           "checks_failed": [],
           "sample": "object keys: ['description', 'events', 'link', 'title']"
-        }
-      ]
-    },
-    {
-      "id": "mpc",
-      "name": "IAU Minor Planet Center",
-      "org": "IAU / Smithsonian Astrophysical Observatory",
-      "homepage": "https://minorplanetcenter.net/",
-      "domains": [
-        "neo_impact",
-        "orbits"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "text"
-      ],
-      "cadence": "hourly",
-      "depth": "decades",
-      "relevance": "catalog",
-      "uniqueness": "sole",
-      "license": "Free with attribution",
-      "provides": "The single clearing house every other NEO product depends on: it receives\nraw astrometry from the world's telescopes, assigns designations, and\npublishes the orbit catalogue. For hazard work the important products are\nthe NEA orbit files (orbital elements, H, arc length, number of oppositions,\nMOID), the NEO Confirmation Page listing brand-new unconfirmed objects that\nmay be on an impacting trajectory, the daily orbit-update files, and the\nraw observation records in the ADES/obs80 formats. If an object is not here\nyet, no risk system knows about it.",
-      "components": {
-        "liveness": 16.67,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 8.0,
-        "cadence": 10.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 77.67,
-      "max_score": 100,
-      "normalized": 77.7,
-      "verified": true,
-      "liveness_note": "2/3 probes passed",
-      "median_latency_ms": 814,
-      "endpoints": [
-        {
-          "id": "nea_orbits",
-          "name": "Near-Earth asteroid orbit file",
-          "url": "https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz",
-          "provides": "designation, epoch, a, e, i, node, peri, M, H, G, arc, n_opp, MOID, orbit class"
-        },
-        {
-          "id": "neocp",
-          "name": "NEO Confirmation Page (unconfirmed objects)",
-          "url": "https://www.minorplanetcenter.net/iau/NEO/neocp.txt",
-          "provides": "temporary designation, discovery date, RA/Dec, V magnitude, motion, NEO score, n_obs"
-        },
-        {
-          "id": "nea_mpcorb",
-          "name": "NEA orbits in MPCORB format",
-          "url": "https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt",
-          "provides": "fixed-width MPCORB records \u2014 designation, H, G, epoch, M, peri, node, i, e, n, a, arc, n_obs, n_opp, rms"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "mpc",
-          "endpoint_id": "nea_orbits",
-          "name": "Near-Earth asteroid orbit file",
-          "url": "https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz",
-          "status": 200,
-          "elapsed_ms": 897,
-          "bytes": 21365987,
-          "content_type": "application/x-gzip",
-          "verdict": "fail",
-          "checks_passed": [
-            "status==200",
-            "bytes>=100000"
-          ],
-          "checks_failed": [
-            "JSON parse failed: Expecting ',' delimiter: line 1111194 column 25 (char 21365987)"
-          ],
-          "sample": "text: [ { \"NEO_flag\": 1, \"One_km_NEO_flag\": 1, \"H\": 10.39, \"G\": 0.15, \"Num_obs\": 18058, \"rms\": 0.61, \"U\": \"0\", \"Arc_years\": \"1893-2026\", \"Perturbers\": \"M-v\", \"Perturb",
-          "decode": "gzip-truncated",
-          "truncated": true
-        },
-        {
-          "source_id": "mpc",
-          "endpoint_id": "neocp",
-          "name": "NEO Confirmation Page (unconfirmed objects)",
-          "url": "https://www.minorplanetcenter.net/iau/NEO/neocp.txt",
-          "status": 200,
-          "elapsed_ms": 301,
-          "bytes": 14382,
-          "content_type": "text/plain",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200"
-          ],
-          "checks_failed": [],
-          "sample": "text: CETVWY2  79 2026 09 18.5   5.6286  +0.9181 21.0 Added Sept. 18.51 UT             4   0.01 16.9  0.350 CETVTU2  87 2026 09 18.5   4.7978  -0.2237 21.5 Updated Se"
-        },
-        {
-          "source_id": "mpc",
-          "endpoint_id": "nea_mpcorb",
-          "name": "NEA orbits in MPCORB format",
-          "url": "https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt",
-          "status": 200,
-          "elapsed_ms": 814,
-          "bytes": 4000000,
-          "content_type": "text/plain",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "bytes>=100000"
-          ],
-          "checks_failed": [],
-          "sample": "text: 00433   10.39  0.15 K2669  62.51145  178.91814  304.26797   10.82855  0.2228780  0.55970463   1.4582437  0 E2026-RJ1 18058  59 1893-2026 0.61 M-v 3Ek MPCORBFIT ",
-          "truncated": true
         }
       ]
     },
@@ -2326,7 +2236,7 @@
       "normalized": 77.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 1228,
+      "median_latency_ms": 1094,
       "endpoints": [
         {
           "id": "objects_unauth",
@@ -2342,7 +2252,7 @@
           "name": "Objects endpoint without a token (expects rejection)",
           "url": "https://discosweb.esoc.esa.int/api/objects",
           "status": 401,
-          "elapsed_ms": 1228,
+          "elapsed_ms": 1094,
           "bytes": 118,
           "content_type": "application/json",
           "verdict": "pass",
@@ -2387,7 +2297,7 @@
       "normalized": 75.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 355,
+      "median_latency_ms": 628,
       "endpoints": [
         {
           "id": "iss_now",
@@ -2403,8 +2313,8 @@
           "name": "ISS position now",
           "url": "https://api.wheretheiss.at/v1/satellites/25544",
           "status": 200,
-          "elapsed_ms": 355,
-          "bytes": 311,
+          "elapsed_ms": 628,
+          "bytes": 312,
           "content_type": "application/json",
           "verdict": "pass",
           "checks_passed": [
@@ -2418,6 +2328,109 @@
           ],
           "checks_failed": [],
           "sample": "object keys: ['altitude', 'daynum', 'footprint', 'id', 'latitude', 'longitude', 'name', 'solar_lat', 'solar_lon', 'timestamp']"
+        }
+      ]
+    },
+    {
+      "id": "mpc",
+      "name": "IAU Minor Planet Center",
+      "org": "IAU / Smithsonian Astrophysical Observatory",
+      "homepage": "https://minorplanetcenter.net/",
+      "domains": [
+        "neo_impact",
+        "orbits"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "text"
+      ],
+      "cadence": "hourly",
+      "depth": "decades",
+      "relevance": "catalog",
+      "uniqueness": "sole",
+      "license": "Free with attribution",
+      "provides": "The single clearing house every other NEO product depends on: it receives\nraw astrometry from the world's telescopes, assigns designations, and\npublishes the orbit catalogue. For hazard work the important products are\nthe NEA orbit files (orbital elements, H, arc length, number of oppositions,\nMOID), the NEO Confirmation Page listing brand-new unconfirmed objects that\nmay be on an impacting trajectory, the daily orbit-update files, and the\nraw observation records in the ADES/obs80 formats. If an object is not here\nyet, no risk system knows about it.",
+      "components": {
+        "liveness": 0.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 8.0,
+        "cadence": 10.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 61.0,
+      "max_score": 100,
+      "normalized": 61.0,
+      "verified": true,
+      "liveness_note": "0/3 probes passed",
+      "median_latency_ms": null,
+      "endpoints": [
+        {
+          "id": "nea_orbits",
+          "name": "Near-Earth asteroid orbit file",
+          "url": "https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz",
+          "provides": "designation, epoch, a, e, i, node, peri, M, H, G, arc, n_opp, MOID, orbit class"
+        },
+        {
+          "id": "neocp",
+          "name": "NEO Confirmation Page (unconfirmed objects)",
+          "url": "https://www.minorplanetcenter.net/iau/NEO/neocp.txt",
+          "provides": "temporary designation, discovery date, RA/Dec, V magnitude, motion, NEO score, n_obs"
+        },
+        {
+          "id": "nea_mpcorb",
+          "name": "NEA orbits in MPCORB format",
+          "url": "https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt",
+          "provides": "fixed-width MPCORB records \u2014 designation, H, G, epoch, M, peri, node, i, e, n, a, arc, n_obs, n_opp, rms"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "mpc",
+          "endpoint_id": "nea_orbits",
+          "name": "Near-Earth asteroid orbit file",
+          "url": "https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz",
+          "status": null,
+          "elapsed_ms": 45218,
+          "bytes": 0,
+          "content_type": null,
+          "verdict": "fail",
+          "error": "URLError: <urlopen error timed out>",
+          "checks_failed": [
+            "transport"
+          ]
+        },
+        {
+          "source_id": "mpc",
+          "endpoint_id": "neocp",
+          "name": "NEO Confirmation Page (unconfirmed objects)",
+          "url": "https://www.minorplanetcenter.net/iau/NEO/neocp.txt",
+          "status": null,
+          "elapsed_ms": 45195,
+          "bytes": 0,
+          "content_type": null,
+          "verdict": "fail",
+          "error": "URLError: <urlopen error timed out>",
+          "checks_failed": [
+            "transport"
+          ]
+        },
+        {
+          "source_id": "mpc",
+          "endpoint_id": "nea_mpcorb",
+          "name": "NEA orbits in MPCORB format",
+          "url": "https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt",
+          "status": null,
+          "elapsed_ms": 45181,
+          "bytes": 0,
+          "content_type": null,
+          "verdict": "fail",
+          "error": "URLError: <urlopen error timed out>",
+          "checks_failed": [
+            "transport"
+          ]
         }
       ]
     },
@@ -2469,8 +2482,8 @@
           "name": "Reentry predictions index",
           "url": "https://aerospace.org/reentries",
           "status": 403,
-          "elapsed_ms": 120,
-          "bytes": 5774,
+          "elapsed_ms": 299,
+          "bytes": 5771,
           "content_type": "text/html",
           "verdict": "fail",
           "checks_passed": [
@@ -2479,7 +2492,7 @@
           "checks_failed": [
             "status 403 != 200"
           ],
-          "sample": "text: <!DOCTYPE html> <!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]--> <!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endi",
+          "sample": "text: <!DOCTYPE html> <!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]--> <!--[if IE 7]> <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]--> <!--[if IE 8]> <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]--> <!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!--<![endif]--> <head> <title>Attention Required! | Cloudflare</title> <meta charset=\"UTF-8\" /> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" /> <meta name=\"robots\" content=\"noindex, nofollow\" /> <meta name=\"viewport\" content=\"wid",
           "decode": "gzip"
         }
       ]
