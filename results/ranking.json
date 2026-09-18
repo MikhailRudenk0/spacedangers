@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T20:33:08+00:00",
-  "verified_at": "2026-09-18T20:33:08+00:00",
+  "generated_at": "2026-09-18T20:35:12+00:00",
+  "verified_at": "2026-09-18T20:35:12+00:00",
   "weights": {
     "liveness": 25,
     "access": 15,
@@ -11,6 +11,300 @@
     "uniqueness": 8
   },
   "ranking": [
+    {
+      "id": "noaa_swpc",
+      "name": "NOAA Space Weather Prediction Center \u2014 services.swpc.noaa.gov",
+      "org": "NOAA / US National Weather Service",
+      "homepage": "https://www.swpc.noaa.gov/",
+      "domains": [
+        "solar",
+        "geomagnetic",
+        "radiation",
+        "ionosphere"
+      ],
+      "auth": "none",
+      "formats": [
+        "json",
+        "text"
+      ],
+      "cadence": "minutes",
+      "depth": "decades",
+      "relevance": "warning",
+      "uniqueness": "sole",
+      "license": "Public domain (US Government)",
+      "provides": "The operational space-weather feed. No key, no rate limit, updates every\n1\u20135 minutes, and it carries both the raw measurements and the official\nwarnings:\n* alerts.json \u2014 the actual issued Watches, Warnings and Alerts (geomagnetic\n  storm G1\u2013G5, radio blackout R1\u2013R5, radiation storm S1\u2013S5), with issue\n  time and free-text product.\n* noaa-scales.json \u2014 current and 3-day forecast R/S/G scale values.\n* GOES X-ray flux (1-minute, 0.05\u20130.4 nm and 0.1\u20130.8 nm) \u2014 this is how you\n  detect a solar flare and classify it A/B/C/M/X.\n* GOES integral proton flux at >10/>50/>100 MeV \u2014 solar radiation storms,\n  the thing that threatens astronauts, polar flights and satellite parts.\n* GOES integral/differential electrons \u2014 surface and deep-dielectric\n  charging risk for spacecraft.\n* DSCOVR real-time solar wind at L1 (the /json/rtsw/ files; the older\n  /products/solar-wind/ paths are gone) \u2014 density, speed, temperature and\n  the interplanetary magnetic field including Bz, which is the single best\n  ~30\u201360 minute lead indicator of a geomagnetic storm.\n* Planetary K index (1-minute estimated and 3-hourly), Kp forecast.\n* OVATION aurora nowcast grid, D-region absorption, 3-day forecast text.\n* Solar-cycle indices: sunspot number and F10.7 monthly back to 1749.",
+      "components": {
+        "liveness": 25.0,
+        "access": 15.0,
+        "parseability": 12.0,
+        "relevance": 20.0,
+        "cadence": 12.0,
+        "depth": 8.0,
+        "uniqueness": 8.0
+      },
+      "total": 100.0,
+      "max_score": 100,
+      "normalized": 100.0,
+      "verified": true,
+      "liveness_note": "10/10 probes passed",
+      "median_latency_ms": 18,
+      "endpoints": [
+        {
+          "id": "alerts",
+          "name": "Issued alerts, watches and warnings",
+          "url": "https://services.swpc.noaa.gov/products/alerts.json",
+          "provides": "product_id, issue_datetime, message (full NOAA alert text)"
+        },
+        {
+          "id": "scales",
+          "name": "NOAA R/S/G scales, observed + 3-day forecast",
+          "url": "https://services.swpc.noaa.gov/products/noaa-scales.json",
+          "provides": "per-day R, S, G scale value, text label, and prediction"
+        },
+        {
+          "id": "kp_1m",
+          "name": "Planetary K index, 1-minute estimated",
+          "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
+          "provides": "time_tag, kp_index, estimated_kp, kp string"
+        },
+        {
+          "id": "xray_flux",
+          "name": "GOES X-ray flux, 1-day",
+          "url": "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json",
+          "provides": "time_tag, satellite, flux (W/m^2), energy band, observed_flux, electron_correction"
+        },
+        {
+          "id": "protons",
+          "name": "GOES integral proton flux, 1-day",
+          "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
+          "provides": "time_tag, satellite, flux (pfu), energy channel (>=10, >=50, >=100 MeV)"
+        },
+        {
+          "id": "rtsw_wind",
+          "name": "Real-time solar wind plasma (RTSW)",
+          "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json",
+          "provides": "time_tag, proton_speed, proton_density, proton_temperature, source spacecraft"
+        },
+        {
+          "id": "rtsw_mag",
+          "name": "Real-time interplanetary magnetic field (RTSW)",
+          "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json",
+          "provides": "time_tag, bx_gsm, by_gsm, bz_gsm, bt, lat_gsm, lon_gsm"
+        },
+        {
+          "id": "ovation",
+          "name": "OVATION aurora nowcast grid",
+          "url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
+          "provides": "1-degree lon/lat grid of aurora probability, observation and forecast time"
+        },
+        {
+          "id": "forecast_3day",
+          "name": "3-day space weather forecast (text product)",
+          "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
+          "provides": "human-readable 3-day Kp table, storm probabilities, rationale"
+        },
+        {
+          "id": "solar_cycle",
+          "name": "Observed solar cycle indices",
+          "url": "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json",
+          "provides": "time-tag, ssn, smoothed_ssn, observed_swpc_ssn, f10.7, smoothed_f10.7"
+        }
+      ],
+      "probes": [
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "alerts",
+          "name": "Issued alerts, watches and warnings",
+          "url": "https://services.swpc.noaa.gov/products/alerts.json",
+          "status": 200,
+          "elapsed_ms": 142,
+          "bytes": 42240,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=5 (got 77)"
+          ],
+          "checks_failed": [],
+          "sample": "list[77], first keys: ['issue_datetime', 'message', 'product_id']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "scales",
+          "name": "NOAA R/S/G scales, observed + 3-day forecast",
+          "url": "https://services.swpc.noaa.gov/products/noaa-scales.json",
+          "status": 200,
+          "elapsed_ms": 12,
+          "bytes": 1096,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "bytes>=100"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['-1', '0', '1', '2', '3']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "kp_1m",
+          "name": "Planetary K index, 1-minute estimated",
+          "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
+          "status": 200,
+          "elapsed_ms": 16,
+          "bytes": 27925,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=10 (got 358)"
+          ],
+          "checks_failed": [],
+          "sample": "list[358], first keys: ['estimated_kp', 'kp', 'kp_index', 'time_tag']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "xray_flux",
+          "name": "GOES X-ray flux, 1-day",
+          "url": "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json",
+          "status": 200,
+          "elapsed_ms": 19,
+          "bytes": 651141,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=10 (got 2874)"
+          ],
+          "checks_failed": [],
+          "sample": "list[2874], first keys: ['electron_contaminaton', 'electron_correction', 'energy', 'flux', 'observed_flux', 'satellite', 'time_tag']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "protons",
+          "name": "GOES integral proton flux, 1-day",
+          "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
+          "status": 200,
+          "elapsed_ms": 26,
+          "bytes": 241432,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=10 (got 2288)"
+          ],
+          "checks_failed": [],
+          "sample": "list[2288], first keys: ['energy', 'flux', 'satellite', 'time_tag']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "rtsw_wind",
+          "name": "Real-time solar wind plasma (RTSW)",
+          "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json",
+          "status": 200,
+          "elapsed_ms": 17,
+          "bytes": 2874285,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=10 (got 3887)"
+          ],
+          "checks_failed": [],
+          "sample": "list[3887], first keys: ['active', 'alpha_density', 'alpha_sample_size', 'alpha_speed', 'alpha_temperature', 'alpha_vx_gse', 'alpha_vx_gsm', 'alpha_vy_gse']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "rtsw_mag",
+          "name": "Real-time interplanetary magnetic field (RTSW)",
+          "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json",
+          "status": 200,
+          "elapsed_ms": 18,
+          "bytes": 1648467,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=10 (got 3911)"
+          ],
+          "checks_failed": [],
+          "sample": "list[3911], first keys: ['active', 'bt', 'bx_gse', 'bx_gsm', 'by_gse', 'by_gsm', 'bz_gse', 'bz_gsm']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "ovation",
+          "name": "OVATION aurora nowcast grid",
+          "url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
+          "status": 200,
+          "elapsed_ms": 19,
+          "bytes": 920906,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "key:Observation Time",
+            "key:Forecast Time",
+            "key:coordinates"
+          ],
+          "checks_failed": [],
+          "sample": "object keys: ['Data Format', 'Forecast Time', 'Observation Time', 'coordinates', 'type']",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "forecast_3day",
+          "name": "3-day space weather forecast (text product)",
+          "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
+          "status": 200,
+          "elapsed_ms": 16,
+          "bytes": 1986,
+          "content_type": "text/plain",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "contains:'NOAA'",
+            "bytes>=500"
+          ],
+          "checks_failed": [],
+          "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Sep 18 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Activity Observation and Forecast The greatest observed 3 hr Kp over the past 24 hours was 3 (below NOAA Scale levels). The greatest expected 3 hr Kp for Sep 18-Sep 20 2026 is 3.00 (below NOAA Scale levels). NOAA Kp index breakdown Sep 18-Sep 20 2026 Sep 18 Sep 19 Sep 20 00-03UT 1.67 2.00 1.67 03-06UT 2.00 2.33 1.33 06-09UT 2.00 2.00 1.33 09-12UT 1.67 2.33 1.33 12-15UT 1.67 2.00 1.33 15-18UT 2.00 2.00 1.33 18-21UT 2.67 2.00 1.67 21-00UT 3.",
+          "decode": "gzip"
+        },
+        {
+          "source_id": "noaa_swpc",
+          "endpoint_id": "solar_cycle",
+          "name": "Observed solar cycle indices",
+          "url": "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json",
+          "status": 200,
+          "elapsed_ms": 15,
+          "bytes": 512287,
+          "content_type": "application/json",
+          "verdict": "pass",
+          "checks_passed": [
+            "status==200",
+            "valid JSON",
+            "items>=100 (got 3332)"
+          ],
+          "checks_failed": [],
+          "sample": "list[3332], first keys: ['f10.7', 'observed_swpc_ssn', 'smoothed_f10.7', 'smoothed_ssn', 'smoothed_swpc_ssn', 'ssn', 'time-tag']",
+          "decode": "gzip"
+        }
+      ]
+    },
     {
       "id": "nasa_donki",
       "name": "NASA CCMC DONKI (Space Weather Database of Notifications, Knowledge, Information)",
@@ -45,7 +339,7 @@
       "normalized": 96.0,
       "verified": true,
       "liveness_note": "5/5 probes passed",
-      "median_latency_ms": 1159,
+      "median_latency_ms": 824,
       "endpoints": [
         {
           "id": "ccmc_cme_analysis",
@@ -85,7 +379,7 @@
           "name": "CME analyses (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/CMEAnalysis?startDate=2024-05-01&endDate=2024-05-15&mostAccurateOnly=true",
           "status": 200,
-          "elapsed_ms": 1159,
+          "elapsed_ms": 824,
           "bytes": 59692,
           "content_type": "application/json",
           "verdict": "pass",
@@ -103,7 +397,7 @@
           "name": "Geomagnetic storms (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2024-05-01&endDate=2024-05-15",
           "status": 200,
-          "elapsed_ms": 448,
+          "elapsed_ms": 220,
           "bytes": 4127,
           "content_type": "application/json",
           "verdict": "pass",
@@ -121,7 +415,7 @@
           "name": "Solar flares (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/FLR?startDate=2024-05-01&endDate=2024-05-15",
           "status": 200,
-          "elapsed_ms": 1433,
+          "elapsed_ms": 1142,
           "bytes": 87105,
           "content_type": "application/json",
           "verdict": "pass",
@@ -139,7 +433,7 @@
           "name": "Space-weather notifications (CCMC host, keyless)",
           "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/notifications?startDate=2024-05-01&endDate=2024-05-15&type=all",
           "status": 200,
-          "elapsed_ms": 710,
+          "elapsed_ms": 254,
           "bytes": 225748,
           "content_type": "application/json",
           "verdict": "pass",
@@ -157,7 +451,7 @@
           "name": "CME list via api.nasa.gov mirror",
           "url": "https://api.nasa.gov/DONKI/CME?startDate=2024-05-01&endDate=2024-05-10&api_key=DEMO_KEY",
           "status": 200,
-          "elapsed_ms": 2742,
+          "elapsed_ms": 3011,
           "bytes": 124617,
           "content_type": "application/json",
           "verdict": "pass",
@@ -206,7 +500,7 @@
       "normalized": 96.0,
       "verified": true,
       "liveness_note": "5/5 probes passed",
-      "median_latency_ms": 147,
+      "median_latency_ms": 374,
       "endpoints": [
         {
           "id": "cad",
@@ -246,7 +540,7 @@
           "name": "Close-approach data (next 60 days, inside 0.05 au)",
           "url": "https://ssd-api.jpl.nasa.gov/cad.api?date-min=now&date-max=%2B60&dist-max=0.05&sort=dist&limit=20",
           "status": 200,
-          "elapsed_ms": 147,
+          "elapsed_ms": 360,
           "bytes": 3721,
           "content_type": "application/json",
           "verdict": "pass",
@@ -267,7 +561,7 @@
           "name": "Impact-risk table (Palermo scale >= -5)",
           "url": "https://ssd-api.jpl.nasa.gov/sentry.api?ps-min=-5",
           "status": 200,
-          "elapsed_ms": 133,
+          "elapsed_ms": 374,
           "bytes": 55967,
           "content_type": "application/json",
           "verdict": "pass",
@@ -287,7 +581,7 @@
           "name": "Bolide / fireball detections",
           "url": "https://ssd-api.jpl.nasa.gov/fireball.api?limit=10&sort=-date",
           "status": 200,
-          "elapsed_ms": 82,
+          "elapsed_ms": 236,
           "bytes": 892,
           "content_type": "application/json",
           "verdict": "pass",
@@ -308,7 +602,7 @@
           "name": "Bulk query \u2014 potentially hazardous asteroids",
           "url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name%2CH%2Cdiameter%2Cmoid%2Cclass&sb-group=pha&limit=10",
           "status": 200,
-          "elapsed_ms": 4281,
+          "elapsed_ms": 5010,
           "bytes": 750,
           "content_type": "application/json",
           "verdict": "pass",
@@ -328,7 +622,7 @@
           "name": "Scout \u2014 imminent-impactor hazard assessment",
           "url": "https://ssd-api.jpl.nasa.gov/scout.api",
           "status": 200,
-          "elapsed_ms": 328,
+          "elapsed_ms": 388,
           "bytes": 52289,
           "content_type": "application/json",
           "verdict": "pass",
@@ -340,346 +634,6 @@
           ],
           "checks_failed": [],
           "sample": "object keys: ['count', 'data', 'signature']"
-        }
-      ]
-    },
-    {
-      "id": "noaa_swpc",
-      "name": "NOAA Space Weather Prediction Center \u2014 services.swpc.noaa.gov",
-      "org": "NOAA / US National Weather Service",
-      "homepage": "https://www.swpc.noaa.gov/",
-      "domains": [
-        "solar",
-        "geomagnetic",
-        "radiation",
-        "ionosphere"
-      ],
-      "auth": "none",
-      "formats": [
-        "json",
-        "text"
-      ],
-      "cadence": "minutes",
-      "depth": "decades",
-      "relevance": "warning",
-      "uniqueness": "sole",
-      "license": "Public domain (US Government)",
-      "provides": "The operational space-weather feed. No key, no rate limit, updates every\n1\u20135 minutes, and it carries both the raw measurements and the official\nwarnings:\n* alerts.json \u2014 the actual issued Watches, Warnings and Alerts (geomagnetic\n  storm G1\u2013G5, radio blackout R1\u2013R5, radiation storm S1\u2013S5), with issue\n  time and free-text product.\n* noaa-scales.json \u2014 current and 3-day forecast R/S/G scale values.\n* GOES X-ray flux (1-minute, 0.05\u20130.4 nm and 0.1\u20130.8 nm) \u2014 this is how you\n  detect a solar flare and classify it A/B/C/M/X.\n* GOES integral proton flux at >10/>50/>100 MeV \u2014 solar radiation storms,\n  the thing that threatens astronauts, polar flights and satellite parts.\n* GOES integral/differential electrons \u2014 surface and deep-dielectric\n  charging risk for spacecraft.\n* DSCOVR/ACE real-time solar wind at L1 \u2014 density, speed, temperature and\n  the interplanetary magnetic field including Bz, which is the single best\n  ~30\u201360 minute lead indicator of a geomagnetic storm.\n* Planetary K index (1-minute estimated and 3-hourly), Kp forecast.\n* OVATION aurora nowcast grid, D-region absorption, 3-day forecast text.\n* Solar-cycle indices: sunspot number and F10.7 monthly back to 1749.",
-      "components": {
-        "liveness": 20.83,
-        "access": 15.0,
-        "parseability": 12.0,
-        "relevance": 20.0,
-        "cadence": 12.0,
-        "depth": 8.0,
-        "uniqueness": 8.0
-      },
-      "total": 95.83,
-      "max_score": 100,
-      "normalized": 95.8,
-      "verified": true,
-      "liveness_note": "10/12 probes passed",
-      "median_latency_ms": 45,
-      "endpoints": [
-        {
-          "id": "alerts",
-          "name": "Issued alerts, watches and warnings",
-          "url": "https://services.swpc.noaa.gov/products/alerts.json",
-          "provides": "product_id, issue_datetime, message (full NOAA alert text)"
-        },
-        {
-          "id": "scales",
-          "name": "NOAA R/S/G scales, observed + 3-day forecast",
-          "url": "https://services.swpc.noaa.gov/products/noaa-scales.json",
-          "provides": "per-day R, S, G scale value, text label, and prediction"
-        },
-        {
-          "id": "kp_1m",
-          "name": "Planetary K index, 1-minute estimated",
-          "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
-          "provides": "time_tag, kp_index, estimated_kp, kp string"
-        },
-        {
-          "id": "xray_flux",
-          "name": "GOES X-ray flux, 1-day",
-          "url": "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json",
-          "provides": "time_tag, satellite, flux (W/m^2), energy band, observed_flux, electron_correction"
-        },
-        {
-          "id": "protons",
-          "name": "GOES integral proton flux, 1-day",
-          "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
-          "provides": "time_tag, satellite, flux (pfu), energy channel (>=10, >=50, >=100 MeV)"
-        },
-        {
-          "id": "rtsw_wind",
-          "name": "Real-time solar wind plasma (RTSW)",
-          "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json",
-          "provides": "time_tag, proton_speed, proton_density, proton_temperature, source spacecraft"
-        },
-        {
-          "id": "rtsw_mag",
-          "name": "Real-time interplanetary magnetic field (RTSW)",
-          "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json",
-          "provides": "time_tag, bx_gsm, by_gsm, bz_gsm, bt, lat_gsm, lon_gsm"
-        },
-        {
-          "id": "solar_wind_plasma",
-          "name": "DSCOVR real-time solar wind plasma (1 day)",
-          "url": "https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json",
-          "provides": "time_tag, density (p/cm^3), speed (km/s), temperature (K)"
-        },
-        {
-          "id": "solar_wind_mag",
-          "name": "DSCOVR real-time interplanetary magnetic field (1 day)",
-          "url": "https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json",
-          "provides": "time_tag, bx_gsm, by_gsm, bz_gsm, bt, lon_gsm, lat_gsm"
-        },
-        {
-          "id": "ovation",
-          "name": "OVATION aurora nowcast grid",
-          "url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
-          "provides": "1-degree lon/lat grid of aurora probability, observation and forecast time"
-        },
-        {
-          "id": "forecast_3day",
-          "name": "3-day space weather forecast (text product)",
-          "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
-          "provides": "human-readable 3-day Kp table, storm probabilities, rationale"
-        },
-        {
-          "id": "solar_cycle",
-          "name": "Observed solar cycle indices",
-          "url": "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json",
-          "provides": "time-tag, ssn, smoothed_ssn, observed_swpc_ssn, f10.7, smoothed_f10.7"
-        }
-      ],
-      "probes": [
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "alerts",
-          "name": "Issued alerts, watches and warnings",
-          "url": "https://services.swpc.noaa.gov/products/alerts.json",
-          "status": 200,
-          "elapsed_ms": 150,
-          "bytes": 42240,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "items>=5 (got 77)"
-          ],
-          "checks_failed": [],
-          "sample": "list[77], first keys: ['issue_datetime', 'message', 'product_id']",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "scales",
-          "name": "NOAA R/S/G scales, observed + 3-day forecast",
-          "url": "https://services.swpc.noaa.gov/products/noaa-scales.json",
-          "status": 200,
-          "elapsed_ms": 30,
-          "bytes": 1096,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "bytes>=100"
-          ],
-          "checks_failed": [],
-          "sample": "object keys: ['-1', '0', '1', '2', '3']",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "kp_1m",
-          "name": "Planetary K index, 1-minute estimated",
-          "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
-          "status": 200,
-          "elapsed_ms": 31,
-          "bytes": 27925,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "items>=10 (got 358)"
-          ],
-          "checks_failed": [],
-          "sample": "list[358], first keys: ['estimated_kp', 'kp', 'kp_index', 'time_tag']",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "xray_flux",
-          "name": "GOES X-ray flux, 1-day",
-          "url": "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json",
-          "status": 200,
-          "elapsed_ms": 49,
-          "bytes": 651141,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "items>=10 (got 2874)"
-          ],
-          "checks_failed": [],
-          "sample": "list[2874], first keys: ['electron_contaminaton', 'electron_correction', 'energy', 'flux', 'observed_flux', 'satellite', 'time_tag']",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "protons",
-          "name": "GOES integral proton flux, 1-day",
-          "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
-          "status": 200,
-          "elapsed_ms": 36,
-          "bytes": 242278,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "items>=10 (got 2296)"
-          ],
-          "checks_failed": [],
-          "sample": "list[2296], first keys: ['energy', 'flux', 'satellite', 'time_tag']",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "rtsw_wind",
-          "name": "Real-time solar wind plasma (RTSW)",
-          "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json",
-          "status": 200,
-          "elapsed_ms": 45,
-          "bytes": 2872054,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "items>=10 (got 3884)"
-          ],
-          "checks_failed": [],
-          "sample": "list[3884], first keys: ['active', 'alpha_density', 'alpha_sample_size', 'alpha_speed', 'alpha_temperature', 'alpha_vx_gse', 'alpha_vx_gsm', 'alpha_vy_gse']",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "rtsw_mag",
-          "name": "Real-time interplanetary magnetic field (RTSW)",
-          "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json",
-          "status": 200,
-          "elapsed_ms": 52,
-          "bytes": 1648467,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "items>=10 (got 3911)"
-          ],
-          "checks_failed": [],
-          "sample": "list[3911], first keys: ['active', 'bt', 'bx_gse', 'bx_gsm', 'by_gse', 'by_gsm', 'bz_gse', 'bz_gsm']",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "solar_wind_plasma",
-          "name": "DSCOVR real-time solar wind plasma (1 day)",
-          "url": "https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json",
-          "status": 404,
-          "elapsed_ms": 32,
-          "bytes": 196,
-          "content_type": "text/html",
-          "verdict": "fail",
-          "checks_passed": [],
-          "checks_failed": [
-            "status 404 != 200",
-            "min_items 10 at '' -> NoneType"
-          ],
-          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found on this server.</p> </body></html>"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "solar_wind_mag",
-          "name": "DSCOVR real-time interplanetary magnetic field (1 day)",
-          "url": "https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json",
-          "status": 404,
-          "elapsed_ms": 32,
-          "bytes": 196,
-          "content_type": "text/html",
-          "verdict": "fail",
-          "checks_passed": [],
-          "checks_failed": [
-            "status 404 != 200",
-            "min_items 10 at '' -> NoneType"
-          ],
-          "sample": "text: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found on this server.</p> </body></html>"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "ovation",
-          "name": "OVATION aurora nowcast grid",
-          "url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
-          "status": 200,
-          "elapsed_ms": 49,
-          "bytes": 920906,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "key:Observation Time",
-            "key:Forecast Time",
-            "key:coordinates"
-          ],
-          "checks_failed": [],
-          "sample": "object keys: ['Data Format', 'Forecast Time', 'Observation Time', 'coordinates', 'type']",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "forecast_3day",
-          "name": "3-day space weather forecast (text product)",
-          "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
-          "status": 200,
-          "elapsed_ms": 33,
-          "bytes": 1986,
-          "content_type": "text/plain",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "contains:'NOAA'",
-            "bytes>=500"
-          ],
-          "checks_failed": [],
-          "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Sep 18 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Activity Observation and Forecast The greatest observed 3 hr Kp over the past 24 hours was 3 (below NOAA Scale levels). The greatest expected 3 hr Kp for Sep 18-Sep 20 2026 is 3.00 (below NOAA Scale levels). NOAA Kp index breakdown Sep 18-Sep 20 2026 Sep 18 Sep 19 Sep 20 00-03UT 1.67 2.00 1.67 03-06UT 2.00 2.33 1.33 06-09UT 2.00 2.00 1.33 09-12UT 1.67 2.33 1.33 12-15UT 1.67 2.00 1.33 15-18UT 2.00 2.00 1.33 18-21UT 2.67 2.00 1.67 21-00UT 3.",
-          "decode": "gzip"
-        },
-        {
-          "source_id": "noaa_swpc",
-          "endpoint_id": "solar_cycle",
-          "name": "Observed solar cycle indices",
-          "url": "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json",
-          "status": 200,
-          "elapsed_ms": 35,
-          "bytes": 512287,
-          "content_type": "application/json",
-          "verdict": "pass",
-          "checks_passed": [
-            "status==200",
-            "valid JSON",
-            "items>=100 (got 3332)"
-          ],
-          "checks_failed": [],
-          "sample": "list[3332], first keys: ['f10.7', 'observed_swpc_ssn', 'smoothed_f10.7', 'smoothed_ssn', 'smoothed_swpc_ssn', 'ssn', 'time-tag']",
-          "decode": "gzip"
         }
       ]
     },
@@ -720,7 +674,7 @@
       "normalized": 95.0,
       "verified": true,
       "liveness_note": "4/4 probes passed",
-      "median_latency_ms": 1843,
+      "median_latency_ms": 428,
       "endpoints": [
         {
           "id": "gp_recent",
@@ -754,7 +708,7 @@
           "name": "GP elements for objects launched in the last 30 days",
           "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json",
           "status": 200,
-          "elapsed_ms": 960,
+          "elapsed_ms": 424,
           "bytes": 113532,
           "content_type": "application/json",
           "verdict": "pass",
@@ -773,7 +727,7 @@
           "name": "Satellite catalogue (payloads, rocket bodies, debris)",
           "url": "https://celestrak.org/satcat/records.php?GROUP=last-30-days&FORMAT=json",
           "status": 200,
-          "elapsed_ms": 3130,
+          "elapsed_ms": 331,
           "bytes": 90218,
           "content_type": "application/json",
           "verdict": "pass",
@@ -792,8 +746,8 @@
           "name": "Space-weather indices for drag modelling",
           "url": "https://celestrak.org/SpaceData/SW-Last5Years.csv",
           "status": 200,
-          "elapsed_ms": 1843,
-          "bytes": 259650,
+          "elapsed_ms": 675,
+          "bytes": 259651,
           "content_type": "application/octet-stream",
           "verdict": "pass",
           "checks_passed": [
@@ -809,7 +763,7 @@
           "name": "SOCRATES conjunction screening",
           "url": "https://celestrak.org/SOCRATES/",
           "status": 200,
-          "elapsed_ms": 1066,
+          "elapsed_ms": 428,
           "bytes": 20609,
           "content_type": "text/html",
           "verdict": "pass",
@@ -856,7 +810,7 @@
       "normalized": 92.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 2072,
+      "median_latency_ms": 1361,
       "endpoints": [
         {
           "id": "kp_ws",
@@ -878,7 +832,7 @@
           "name": "Kp index web service",
           "url": "https://kp.gfz.de/app/json/?start=2024-05-01T00%3A00%3A00Z&end=2024-05-15T00%3A00%3A00Z&index=Kp&status=def",
           "status": 200,
-          "elapsed_ms": 898,
+          "elapsed_ms": 1079,
           "bytes": 3972,
           "content_type": "application/json",
           "verdict": "pass",
@@ -896,7 +850,7 @@
           "name": "Kp/ap/Ap/SN/F10.7 since 1932 (flat file)",
           "url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
           "status": 200,
-          "elapsed_ms": 2072,
+          "elapsed_ms": 1361,
           "bytes": 5504038,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -943,7 +897,7 @@
       "normalized": 91.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 638,
+      "median_latency_ms": 225,
       "endpoints": [
         {
           "id": "status",
@@ -965,8 +919,8 @@
           "name": "Data-source freshness",
           "url": "https://api.helioviewer.org/v2/getStatus/",
           "status": 200,
-          "elapsed_ms": 638,
-          "bytes": 1794,
+          "elapsed_ms": 225,
+          "bytes": 1793,
           "content_type": "application/json",
           "verdict": "pass",
           "checks_passed": [
@@ -984,7 +938,7 @@
           "name": "Closest LASCO C3 image to a time",
           "url": "https://api.helioviewer.org/v2/getClosestImage/?date=2024-05-10T12%3A00%3A00Z&sourceId=5",
           "status": 200,
-          "elapsed_ms": 361,
+          "elapsed_ms": 204,
           "bytes": 282,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1033,7 +987,7 @@
       "normalized": 90.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 1153,
+      "median_latency_ms": 465,
       "endpoints": [
         {
           "id": "circulars_index",
@@ -1049,7 +1003,7 @@
           "name": "Circulars archive",
           "url": "https://gcn.nasa.gov/circulars",
           "status": 200,
-          "elapsed_ms": 1153,
+          "elapsed_ms": 465,
           "bytes": 57943,
           "content_type": "text/html",
           "verdict": "pass",
@@ -1098,7 +1052,7 @@
       "normalized": 90.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 3710,
+      "median_latency_ms": 661,
       "endpoints": [
         {
           "id": "catalog",
@@ -1120,7 +1074,7 @@
           "name": "Dataset catalog",
           "url": "https://cdaweb.gsfc.nasa.gov/hapi/catalog",
           "status": 200,
-          "elapsed_ms": 449,
+          "elapsed_ms": 145,
           "bytes": 108155,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1139,7 +1093,7 @@
           "name": "OMNI 1-hour solar wind sample",
           "url": "https://cdaweb.gsfc.nasa.gov/hapi/data?id=OMNI2_H0_MRG1HR&parameters=DST1800&time.min=2024-05-09T00%3A00%3A00Z&time.max=2024-05-12T00%3A00%3A00Z&format=csv",
           "status": 200,
-          "elapsed_ms": 3710,
+          "elapsed_ms": 661,
           "bytes": 2143,
           "content_type": "text/csv",
           "verdict": "pass",
@@ -1185,7 +1139,7 @@
       "normalized": 89.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 1908,
+      "median_latency_ms": 1156,
       "endpoints": [
         {
           "id": "risk_page",
@@ -1201,7 +1155,7 @@
           "name": "Risk list",
           "url": "https://newton.spacedys.com/neodys/index.php?pc=4.1",
           "status": 200,
-          "elapsed_ms": 1908,
+          "elapsed_ms": 1156,
           "bytes": 1311005,
           "content_type": "text/html",
           "verdict": "pass",
@@ -1249,7 +1203,7 @@
       "normalized": 89.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 8947,
+      "median_latency_ms": 6790,
       "endpoints": [
         {
           "id": "eisn",
@@ -1271,7 +1225,7 @@
           "name": "Estimated international sunspot number, current month",
           "url": "https://www.sidc.be/SILSO/DATA/EISN/EISN_current.csv",
           "status": 200,
-          "elapsed_ms": 1513,
+          "elapsed_ms": 1310,
           "bytes": 828,
           "content_type": "text/csv",
           "verdict": "pass",
@@ -1288,7 +1242,7 @@
           "name": "Daily total sunspot number since 1818",
           "url": "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv",
           "status": 200,
-          "elapsed_ms": 8947,
+          "elapsed_ms": 6790,
           "bytes": 2896132,
           "content_type": "text/csv",
           "verdict": "pass",
@@ -1333,7 +1287,7 @@
       "normalized": 88.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 23780,
+      "median_latency_ms": 40701,
       "endpoints": [
         {
           "id": "open_api_probe",
@@ -1349,7 +1303,7 @@
           "name": "Open API without a key (expects rejection or error payload)",
           "url": "https://www.amsmeteors.org/members/api/open_api/get_events?year=2024",
           "status": 200,
-          "elapsed_ms": 23780,
+          "elapsed_ms": 40701,
           "bytes": 8137,
           "content_type": "text/html",
           "verdict": "pass",
@@ -1396,7 +1350,7 @@
       "normalized": 87.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 2649,
+      "median_latency_ms": 1857,
       "endpoints": [
         {
           "id": "traj_summary",
@@ -1412,7 +1366,7 @@
           "name": "Monthly trajectory summary files",
           "url": "https://globalmeteornetwork.org/data/traj_summary_data/monthly/",
           "status": 200,
-          "elapsed_ms": 2649,
+          "elapsed_ms": 1857,
           "bytes": 11853,
           "content_type": "text/html",
           "verdict": "pass",
@@ -1458,7 +1412,7 @@
       "normalized": 87.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 1003,
+      "median_latency_ms": 640,
       "endpoints": [
         {
           "id": "her_flares",
@@ -1474,7 +1428,7 @@
           "name": "Flare events from the HEK query interface",
           "url": "https://www.lmsal.com/hek/her?cosec=2&cmd=search&type=column&event_type=fl&event_starttime=2024-05-08T00%3A00%3A00&event_endtime=2024-05-12T00%3A00%3A00&event_coordsys=helioprojective&x1=-1200&x2=1200&y1=-1200&y2=1200&result_limit=10&return=event_starttime%2Cevent_peaktime%2Cfl_goescls%2Car_noaanum%2Cfrm_name",
           "status": 200,
-          "elapsed_ms": 1003,
+          "elapsed_ms": 640,
           "bytes": 1626,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1521,7 +1475,7 @@
       "normalized": 87.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 3222,
+      "median_latency_ms": 3538,
       "endpoints": [
         {
           "id": "f107",
@@ -1537,7 +1491,7 @@
           "name": "Penticton F10.7 solar radio flux",
           "url": "https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json?time>=2024-05-01",
           "status": 200,
-          "elapsed_ms": 3222,
+          "elapsed_ms": 3538,
           "bytes": 184993,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1588,7 +1542,7 @@
       "normalized": 87.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 541,
+      "median_latency_ms": 470,
       "endpoints": [
         {
           "id": "login_probe",
@@ -1604,7 +1558,7 @@
           "name": "Service liveness (unauthenticated login endpoint)",
           "url": "https://www.space-track.org/ajaxauth/login",
           "status": 200,
-          "elapsed_ms": 541,
+          "elapsed_ms": 470,
           "bytes": 0,
           "content_type": "application/csv",
           "verdict": "pass",
@@ -1650,7 +1604,7 @@
       "normalized": 86.0,
       "verified": true,
       "liveness_note": "3/3 probes passed",
-      "median_latency_ms": 1386,
+      "median_latency_ms": 635,
       "endpoints": [
         {
           "id": "nea_orbits",
@@ -1678,7 +1632,7 @@
           "name": "Near-Earth asteroid orbit file",
           "url": "https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz",
           "status": 200,
-          "elapsed_ms": 1386,
+          "elapsed_ms": 675,
           "bytes": 21365987,
           "content_type": "application/x-gzip",
           "verdict": "pass",
@@ -1698,7 +1652,7 @@
           "name": "NEO Confirmation Page (unconfirmed objects)",
           "url": "https://www.minorplanetcenter.net/iau/NEO/neocp.txt",
           "status": 200,
-          "elapsed_ms": 341,
+          "elapsed_ms": 255,
           "bytes": 14382,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -1714,7 +1668,7 @@
           "name": "NEA orbits in MPCORB format",
           "url": "https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt",
           "status": 200,
-          "elapsed_ms": 1391,
+          "elapsed_ms": 635,
           "bytes": 4000000,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -1760,7 +1714,7 @@
       "normalized": 86.0,
       "verified": true,
       "liveness_note": "2/2 probes passed",
-      "median_latency_ms": 418,
+      "median_latency_ms": 570,
       "endpoints": [
         {
           "id": "feed",
@@ -1782,7 +1736,7 @@
           "name": "Close approaches for a date range",
           "url": "https://api.nasa.gov/neo/rest/v1/feed?start_date=2026-09-01&end_date=2026-09-03&api_key=DEMO_KEY",
           "status": 200,
-          "elapsed_ms": 418,
+          "elapsed_ms": 570,
           "bytes": 22280,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1802,7 +1756,7 @@
           "name": "Catalogue statistics",
           "url": "https://api.nasa.gov/neo/rest/v1/stats?api_key=DEMO_KEY",
           "status": 200,
-          "elapsed_ms": 145,
+          "elapsed_ms": 422,
           "bytes": 220,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1853,7 +1807,7 @@
       "normalized": 85.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 441,
+      "median_latency_ms": 164,
       "endpoints": [
         {
           "id": "query",
@@ -1869,7 +1823,7 @@
           "name": "Recent significant events",
           "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmagnitude=5&orderby=time",
           "status": 200,
-          "elapsed_ms": 441,
+          "elapsed_ms": 164,
           "bytes": 7608,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1920,7 +1874,7 @@
       "normalized": 84.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 305,
+      "median_latency_ms": 129,
       "endpoints": [
         {
           "id": "observatories",
@@ -1936,7 +1890,7 @@
           "name": "Available observatories",
           "url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/observatories",
           "status": 200,
-          "elapsed_ms": 305,
+          "elapsed_ms": 129,
           "bytes": 97537,
           "content_type": "application/json",
           "verdict": "pass",
@@ -1985,7 +1939,7 @@
       "normalized": 84.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 510,
+      "median_latency_ms": 1143,
       "endpoints": [
         {
           "id": "observer",
@@ -2001,7 +1955,7 @@
           "name": "Observer table for 99942 Apophis",
           "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='99942'&OBJ_DATA='NO'&MAKE_EPHEM='YES'&EPHEM_TYPE='OBSERVER'&CENTER='500%40399'&START_TIME='2026-01-01'&STOP_TIME='2026-01-02'&STEP_SIZE='1+d'",
           "status": 200,
-          "elapsed_ms": 510,
+          "elapsed_ms": 1143,
           "bytes": 37842,
           "content_type": "application/json",
           "verdict": "pass",
@@ -2050,7 +2004,7 @@
       "normalized": 81.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 7568,
+      "median_latency_ms": 5907,
       "endpoints": [
         {
           "id": "tap_tables",
@@ -2066,7 +2020,7 @@
           "name": "TAP schema \u2014 available tables",
           "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/tables",
           "status": 200,
-          "elapsed_ms": 7568,
+          "elapsed_ms": 5907,
           "bytes": 4000000,
           "content_type": "text/xml",
           "verdict": "pass",
@@ -2113,7 +2067,7 @@
       "normalized": 80.8,
       "verified": true,
       "liveness_note": "3/4 probes passed",
-      "median_latency_ms": 1073,
+      "median_latency_ms": 1195,
       "endpoints": [
         {
           "id": "all_neo",
@@ -2147,7 +2101,7 @@
           "name": "Full NEA list (documented automated-data-access endpoint)",
           "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=allneo.lst",
           "status": 200,
-          "elapsed_ms": 1843,
+          "elapsed_ms": 1503,
           "bytes": 1315857,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -2165,7 +2119,7 @@
           "name": "Risk list (flat file)",
           "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_risk_list",
           "status": 200,
-          "elapsed_ms": 988,
+          "elapsed_ms": 1195,
           "bytes": 275706,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -2183,7 +2137,7 @@
           "name": "Observation priority list",
           "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_priority_neo_list",
           "status": 200,
-          "elapsed_ms": 847,
+          "elapsed_ms": 670,
           "bytes": 0,
           "content_type": "",
           "verdict": "fail",
@@ -2201,7 +2155,7 @@
           "name": "Upcoming close approaches",
           "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_upcoming_close_app",
           "status": 200,
-          "elapsed_ms": 1073,
+          "elapsed_ms": 877,
           "bytes": 25150,
           "content_type": "text/plain",
           "verdict": "pass",
@@ -2249,7 +2203,7 @@
       "normalized": 80.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 1035,
+      "median_latency_ms": 617,
       "endpoints": [
         {
           "id": "currentcat",
@@ -2265,7 +2219,7 @@
           "name": "Current in-orbit catalogue",
           "url": "https://planet4589.org/space/gcat/tsv/cat/satcat.tsv",
           "status": 200,
-          "elapsed_ms": 1035,
+          "elapsed_ms": 617,
           "bytes": 4000000,
           "content_type": "text/tab-separated-values",
           "verdict": "pass",
@@ -2311,7 +2265,7 @@
       "normalized": 79.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 352,
+      "median_latency_ms": 160,
       "endpoints": [
         {
           "id": "events",
@@ -2327,7 +2281,7 @@
           "name": "Open events",
           "url": "https://eonet.gsfc.nasa.gov/api/v3/events?limit=10&status=open",
           "status": 200,
-          "elapsed_ms": 352,
+          "elapsed_ms": 160,
           "bytes": 8398,
           "content_type": "application/rss+xml",
           "verdict": "pass",
@@ -2375,7 +2329,7 @@
       "normalized": 77.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 1399,
+      "median_latency_ms": 804,
       "endpoints": [
         {
           "id": "objects_unauth",
@@ -2391,7 +2345,7 @@
           "name": "Objects endpoint without a token (expects rejection)",
           "url": "https://discosweb.esoc.esa.int/api/objects",
           "status": 401,
-          "elapsed_ms": 1399,
+          "elapsed_ms": 804,
           "bytes": 118,
           "content_type": "application/json",
           "verdict": "pass",
@@ -2436,7 +2390,7 @@
       "normalized": 75.0,
       "verified": true,
       "liveness_note": "1/1 probes passed",
-      "median_latency_ms": 575,
+      "median_latency_ms": 377,
       "endpoints": [
         {
           "id": "iss_now",
@@ -2452,8 +2406,8 @@
           "name": "ISS position now",
           "url": "https://api.wheretheiss.at/v1/satellites/25544",
           "status": 200,
-          "elapsed_ms": 575,
-          "bytes": 311,
+          "elapsed_ms": 377,
+          "bytes": 310,
           "content_type": "application/json",
           "verdict": "pass",
           "checks_passed": [
@@ -2518,7 +2472,7 @@
           "name": "Reentry predictions index",
           "url": "https://aerospace.org/reentries",
           "status": 403,
-          "elapsed_ms": 229,
+          "elapsed_ms": 179,
           "bytes": 5772,
           "content_type": "text/html",
           "verdict": "fail",
