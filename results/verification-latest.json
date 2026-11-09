@@ -1,11 +1,11 @@
 {
-  "verified_at": "2026-11-02T15:42:36+00:00",
+  "verified_at": "2026-11-09T16:09:49+00:00",
   "catalog_version": 1,
   "totals": {
     "sources": 27,
     "endpoints": 57,
-    "pass": 47,
-    "fail": 10,
+    "pass": 49,
+    "fail": 8,
     "skipped": 0,
     "blocked": 0
   },
@@ -16,8 +16,8 @@
       "name": "Close-approach data (next 60 days, inside 0.05 au)",
       "url": "https://ssd-api.jpl.nasa.gov/cad.api?date-min=now&date-max=%2B60&dist-max=0.05&sort=dist&limit=20",
       "status": 200,
-      "elapsed_ms": 375,
-      "bytes": 3709,
+      "elapsed_ms": 243,
+      "bytes": 3719,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -37,8 +37,8 @@
       "name": "Impact-risk table (Palermo scale >= -5)",
       "url": "https://ssd-api.jpl.nasa.gov/sentry.api?ps-min=-5",
       "status": 200,
-      "elapsed_ms": 473,
-      "bytes": 56512,
+      "elapsed_ms": 332,
+      "bytes": 56249,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -57,7 +57,7 @@
       "name": "Bolide / fireball detections",
       "url": "https://ssd-api.jpl.nasa.gov/fireball.api?limit=10&sort=-date",
       "status": 200,
-      "elapsed_ms": 274,
+      "elapsed_ms": 210,
       "bytes": 897,
       "content_type": "application/json",
       "verdict": "pass",
@@ -78,7 +78,7 @@
       "name": "Bulk query \u2014 potentially hazardous asteroids",
       "url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name%2CH%2Cdiameter%2Cmoid%2Cclass&sb-group=pha&limit=10",
       "status": 200,
-      "elapsed_ms": 3987,
+      "elapsed_ms": 3292,
       "bytes": 750,
       "content_type": "application/json",
       "verdict": "pass",
@@ -97,18 +97,19 @@
       "endpoint_id": "scout",
       "name": "Scout \u2014 imminent-impactor hazard assessment",
       "url": "https://ssd-api.jpl.nasa.gov/scout.api",
-      "status": 502,
-      "elapsed_ms": 301,
-      "bytes": 150,
-      "content_type": "text/html",
-      "verdict": "fail",
-      "checks_passed": [],
-      "checks_failed": [
-        "status 502 != 200",
-        "missing JSON key: signature",
-        "missing JSON key: count"
+      "status": 200,
+      "elapsed_ms": 257,
+      "bytes": 25725,
+      "content_type": "application/json",
+      "verdict": "pass",
+      "checks_passed": [
+        "status==200",
+        "valid JSON",
+        "key:signature",
+        "key:count"
       ],
-      "sample": "text: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html>"
+      "checks_failed": [],
+      "sample": "object keys: ['count', 'data', 'signature']"
     },
     {
       "source_id": "jpl_horizons",
@@ -116,7 +117,7 @@
       "name": "Observer table for 99942 Apophis",
       "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='99942'&OBJ_DATA='NO'&MAKE_EPHEM='YES'&EPHEM_TYPE='OBSERVER'&CENTER='500%40399'&START_TIME='2026-01-01'&STOP_TIME='2026-01-02'&STEP_SIZE='1+d'",
       "status": 200,
-      "elapsed_ms": 591,
+      "elapsed_ms": 310,
       "bytes": 37842,
       "content_type": "application/json",
       "verdict": "pass",
@@ -135,7 +136,7 @@
       "name": "Close approaches for a date range",
       "url": "https://api.nasa.gov/neo/rest/v1/feed?start_date=2026-09-01&end_date=2026-09-03&api_key=DEMO_KEY",
       "status": 200,
-      "elapsed_ms": 912,
+      "elapsed_ms": 837,
       "bytes": 22280,
       "content_type": "application/json",
       "verdict": "pass",
@@ -155,7 +156,7 @@
       "name": "Catalogue statistics",
       "url": "https://api.nasa.gov/neo/rest/v1/stats?api_key=DEMO_KEY",
       "status": 200,
-      "elapsed_ms": 457,
+      "elapsed_ms": 285,
       "bytes": 220,
       "content_type": "application/json",
       "verdict": "pass",
@@ -175,8 +176,8 @@
       "name": "Full NEA list (documented automated-data-access endpoint)",
       "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=allneo.lst",
       "status": 200,
-      "elapsed_ms": 1225,
-      "bytes": 1327761,
+      "elapsed_ms": 1740,
+      "bytes": 1332690,
       "content_type": "text/plain",
       "verdict": "pass",
       "checks_passed": [
@@ -193,8 +194,8 @@
       "name": "Risk list (flat file)",
       "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_risk_list",
       "status": 200,
-      "elapsed_ms": 1061,
-      "bytes": 298690,
+      "elapsed_ms": 1534,
+      "bytes": 300594,
       "content_type": "text/plain",
       "verdict": "pass",
       "checks_passed": [
@@ -202,7 +203,7 @@
         "bytes>=2000"
       ],
       "checks_failed": [],
-      "sample": "text: Last Update: 2026-11-02 13:50 UTC Object | Diameter | VI Max | VIs | Num/des. Name | m | *=Y | Date/Time | IP max | PS max |TS | Vel km/s | Years | IP cum | PS cum | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | NNNN | A | YYYY-MM-DD HH:MM | EEEEEEEE | NNN.NN | NN | NNN.NN | YYYY-YYYY | EEEEEEEE | NNN.NN | 2008JL3 | 30 | * | 2027-05-01 09:05 | 1.66E-4 | -2.29 | 0 | 14.01 | 2027-2126 | 1.84E-4 | -2.29 | 2023VD3 | 14 | * | 2034-11-08 17:08 | 2.35E-3 | -2.62 | 0 | 21.01 | 2034-2039 | 2.35E-3 | -2.62 | 2023TB2 | 60 | * | 2126-09-01 21:40 | 7.30E-4 | -2.92 |n/a | 13.11 | 2107-2126 | 8.26E-4 | -2.86 | 1979XB | 50",
+      "sample": "text: Last Update: 2026-11-09 14:27 UTC Object | Diameter | VI Max | VIs | Num/des. Name | m | *=Y | Date/Time | IP max | PS max |TS | Vel km/s | Years | IP cum | PS cum | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | NNNN | A | YYYY-MM-DD HH:MM | EEEEEEEE | NNN.NN | NN | NNN.NN | YYYY-YYYY | EEEEEEEE | NNN.NN | 2008JL3 | 30 | * | 2027-05-01 09:05 | 1.66E-4 | -2.10 | 0 | 14.01 | 2027-2126 | 1.84E-4 | -2.10 | 2023VD3 | 14 | * | 2034-11-08 17:08 | 2.35E-3 | -2.61 | 0 | 21.01 | 2034-2039 | 2.35E-3 | -2.61 | 2023TB2 | 60 | * | 2126-09-01 21:40 | 7.30E-4 | -2.92 |n/a | 13.11 | 2107-2126 | 8.26E-4 | -2.86 | 2025OB | 19",
       "decode": "gzip"
     },
     {
@@ -211,7 +212,7 @@
       "name": "Observation priority list",
       "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_priority_neo_list",
       "status": 200,
-      "elapsed_ms": 835,
+      "elapsed_ms": 496,
       "bytes": 0,
       "content_type": "",
       "verdict": "fail",
@@ -229,8 +230,8 @@
       "name": "Upcoming close approaches",
       "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_upcoming_close_app",
       "status": 200,
-      "elapsed_ms": 826,
-      "bytes": 23494,
+      "elapsed_ms": 849,
+      "bytes": 25840,
       "content_type": "text/plain",
       "verdict": "pass",
       "checks_passed": [
@@ -238,7 +239,7 @@
         "bytes>=500"
       ],
       "checks_failed": [],
-      "sample": "text: Last Update: 2026-11-02 14:14 UTC Object | | Miss Distance | Diameter | H | Max bright | Rel. vel | CAI index | Num/des. Name | Date | km | au | LD | m | *=Yes | mag | mag | km/s | | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | YYYY-MM-DD | DDDDDDD | D.DDDDDD | DD.DDD | NNNN | A | DD.D | DDD.D | DD.D | DDD.DDD | 2026VA | 2026-11-02 | 1240122 | 0.008290 | 3.226 | 30 | * | 25.4 | 16.2 | 9.0 | 1.526 | 524522 Zoozve | 2026-11-02 | 6018478 | 0.040231 | 15.657 | 280 | * | 20.5 | 15.5 | 8.7 | 0.757 | 2021VC4 | 2026-11-03 | 2299513 | 0.015371 | 5.982 | 15 | * | 26.8 | 20.4 | 11.2 | 3.108 | 2017WJ2 | 2026-1",
+      "sample": "text: Last Update: 2026-11-09 14:43 UTC Object | | Miss Distance | Diameter | H | Max bright | Rel. vel | CAI index | Num/des. Name | Date | km | au | LD | m | *=Yes | mag | mag | km/s | | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | YYYY-MM-DD | DDDDDDD | D.DDDDDD | DD.DDD | NNNN | A | DD.D | DDD.D | DD.D | DDD.DDD | 2025UF5 | 2026-11-09 | 7216394 | 0.048239 | 18.773 | 11 | * | 27.6 | 24.9 | 1.9 | 3.396 | 2026VQ4 | 2026-11-09 | 3819013 | 0.025529 | 9.935 | 14 | * | 27.0 | 21.7 | 10.2 | 3.625 | 2015VH65 | 2026-11-09 | 3750475 | 0.025070 | 9.757 | 11 | * | 27.5 | 21.1 | 8.0 | 3.814 | 2026VT3 | 2026-1",
       "decode": "gzip"
     },
     {
@@ -247,8 +248,8 @@
       "name": "Risk list",
       "url": "https://newton.spacedys.com/neodys/index.php?pc=4.1",
       "status": 200,
-      "elapsed_ms": 987,
-      "bytes": 1325087,
+      "elapsed_ms": 1364,
+      "bytes": 1334377,
       "content_type": "text/html",
       "verdict": "pass",
       "checks_passed": [
@@ -266,8 +267,8 @@
       "name": "Near-Earth asteroid orbit file",
       "url": "https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz",
       "status": 200,
-      "elapsed_ms": 384,
-      "bytes": 21711015,
+      "elapsed_ms": 1527,
+      "bytes": 21708860,
       "content_type": "application/x-gzip",
       "verdict": "pass",
       "checks_passed": [
@@ -286,15 +287,15 @@
       "name": "NEO Confirmation Page (unconfirmed objects)",
       "url": "https://www.minorplanetcenter.net/iau/NEO/neocp.txt",
       "status": 200,
-      "elapsed_ms": 234,
-      "bytes": 4386,
+      "elapsed_ms": 289,
+      "bytes": 6936,
       "content_type": "text/plain",
       "verdict": "pass",
       "checks_passed": [
         "status==200"
       ],
       "checks_failed": [],
-      "sample": "text: P22rEFS 68 2026 11 02.5 5.9613 +54.7258 21.5 Added Nov. 2.62 UT 3 0.04 17.3 0.090 LVV0086 100 2026 11 01.7 5.0997 +36.4342 17.4 Added Nov. 2.61 UT 3 0.03 28.0 0.873 LVV0087 100 2026 11 01.8 1.8568 +15.7379 18.4 Added Nov. 2.61 UT 3 0.03 23.5 0.859 W023338 85 2026 11 02.0 4.1151 +28.5260 20.9 Added Nov. 2.59 UT 3 0.00 21.3 0.695 W023334 100 2026 11 02.0 4.1464 +26.3400 20.8 Added Nov. 2.59 UT 3 0.00 23.1 0.696 P12rED6 94 2026 11 02.5 3.1144 +4.9200 20.2 Added Nov. 2.55 UT 4 0.04 18.1 0.158 P22rEy8 100 2026 11 02.4 4.0119 +18.9009 21.2 Added Nov. 2.54 UT 4 0.04 23.0 0.241 P12rECL 100 2026 11 02."
+      "sample": "text: MHN0891 100 2026 11 09.3 5.8046 +31.9449 20.7 Added Nov. 9.65 UT 10 0.08 22.5 0.296 ZTF10Hn 100 2026 11 09.3 3.3851 +3.0123 19.6 Added Nov. 9.61 UT 4 0.03 24.5 0.374 P12rWEd 100 2026 11 09.3 1.9709 -0.0070 20.4 Added Nov. 9.56 UT 3 0.04 24.1 0.292 MVcJ197 41 2026 11 05.7 1.7647 +3.0275 22.3 Added Nov. 9.54 UT 6 3.02 21.0 0.987 P22rWzv 100 2026 11 09.3 2.2920 +14.0124 21.5 Updated Nov. 9.46 UT 6 0.13 24.5 0.216 CF044R2 92 2026 11 09.3 5.4358 +35.2535 19.3 Updated Nov. 9.44 UT 9 0.12 14.9 0.242 C46RD91 98 2026 11 09.3 4.6371 +6.7022 18.5 Updated Nov. 9.62 UT 8 0.10 33.5 0.312 CF03WQ2 68 2026 11 "
     },
     {
       "source_id": "mpc",
@@ -302,7 +303,7 @@
       "name": "NEA orbits in MPCORB format",
       "url": "https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt",
       "status": 200,
-      "elapsed_ms": 323,
+      "elapsed_ms": 3325,
       "bytes": 4000000,
       "content_type": "text/plain",
       "verdict": "pass",
@@ -320,17 +321,17 @@
       "name": "Issued alerts, watches and warnings",
       "url": "https://services.swpc.noaa.gov/products/alerts.json",
       "status": 200,
-      "elapsed_ms": 197,
-      "bytes": 66263,
+      "elapsed_ms": 183,
+      "bytes": 49109,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
         "status==200",
         "valid JSON",
-        "items>=5 (got 99)"
+        "items>=5 (got 75)"
       ],
       "checks_failed": [],
-      "sample": "list[99], first keys: ['issue_datetime', 'message', 'product_id']",
+      "sample": "list[75], first keys: ['issue_datetime', 'message', 'product_id']",
       "decode": "gzip"
     },
     {
@@ -339,8 +340,8 @@
       "name": "NOAA R/S/G scales, observed + 3-day forecast",
       "url": "https://services.swpc.noaa.gov/products/noaa-scales.json",
       "status": 200,
-      "elapsed_ms": 24,
-      "bytes": 1096,
+      "elapsed_ms": 46,
+      "bytes": 1107,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -358,7 +359,7 @@
       "name": "Planetary K index, 1-minute estimated",
       "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
       "status": 200,
-      "elapsed_ms": 22,
+      "elapsed_ms": 32,
       "bytes": 27925,
       "content_type": "application/json",
       "verdict": "pass",
@@ -377,8 +378,8 @@
       "name": "GOES X-ray flux, 1-day",
       "url": "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json",
       "status": 200,
-      "elapsed_ms": 31,
-      "bytes": 655078,
+      "elapsed_ms": 57,
+      "bytes": 655881,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -396,8 +397,8 @@
       "name": "GOES integral proton flux, 1-day",
       "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
       "status": 200,
-      "elapsed_ms": 24,
-      "bytes": 242309,
+      "elapsed_ms": 42,
+      "bytes": 242211,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -415,17 +416,17 @@
       "name": "Real-time solar wind plasma (RTSW)",
       "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json",
       "status": 200,
-      "elapsed_ms": 30,
-      "bytes": 2428096,
+      "elapsed_ms": 50,
+      "bytes": 2693448,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
         "status==200",
         "valid JSON",
-        "items>=10 (got 3279)"
+        "items>=10 (got 3635)"
       ],
       "checks_failed": [],
-      "sample": "list[3279], first keys: ['active', 'alpha_density', 'alpha_sample_size', 'alpha_speed', 'alpha_temperature', 'alpha_vx_gse', 'alpha_vx_gsm', 'alpha_vy_gse']",
+      "sample": "list[3635], first keys: ['active', 'alpha_density', 'alpha_sample_size', 'alpha_speed', 'alpha_temperature', 'alpha_vx_gse', 'alpha_vx_gsm', 'alpha_vy_gse']",
       "decode": "gzip"
     },
     {
@@ -434,17 +435,17 @@
       "name": "Real-time interplanetary magnetic field (RTSW)",
       "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json",
       "status": 200,
-      "elapsed_ms": 36,
-      "bytes": 1484250,
+      "elapsed_ms": 61,
+      "bytes": 1533041,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
         "status==200",
         "valid JSON",
-        "items>=10 (got 3519)"
+        "items>=10 (got 3665)"
       ],
       "checks_failed": [],
-      "sample": "list[3519], first keys: ['active', 'bt', 'bx_gse', 'bx_gsm', 'by_gse', 'by_gsm', 'bz_gse', 'bz_gsm']",
+      "sample": "list[3665], first keys: ['active', 'bt', 'bx_gse', 'bx_gsm', 'by_gse', 'by_gsm', 'bz_gse', 'bz_gsm']",
       "decode": "gzip"
     },
     {
@@ -453,8 +454,8 @@
       "name": "OVATION aurora nowcast grid",
       "url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
       "status": 200,
-      "elapsed_ms": 35,
-      "bytes": 920066,
+      "elapsed_ms": 56,
+      "bytes": 919100,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -474,8 +475,8 @@
       "name": "3-day space weather forecast (text product)",
       "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
       "status": 200,
-      "elapsed_ms": 25,
-      "bytes": 1919,
+      "elapsed_ms": 33,
+      "bytes": 1937,
       "content_type": "text/plain",
       "verdict": "pass",
       "checks_passed": [
@@ -484,7 +485,7 @@
         "bytes>=500"
       ],
       "checks_failed": [],
-      "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Nov 02 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Activity Observation and Forecast The greatest observed 3 hr Kp over the past 24 hours was 3 (below NOAA Scale levels). The greatest expected 3 hr Kp for Nov 02-Nov 04 2026 is 3.00 (below NOAA Scale levels). NOAA Kp index breakdown Nov 02-Nov 04 2026 Nov 02 Nov 03 Nov 04 00-03UT 1.00 1.67 1.67 03-06UT 2.00 2.00 2.00 06-09UT 3.00 1.67 1.67 09-12UT 2.33 1.33 1.33 12-15UT 2.00 0.67 1.33 15-18UT 2.00 0.67 0.67 18-21UT 1.67 1.67 0.67 21-00UT 2.",
+      "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Nov 09 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Activity Observation and Forecast The greatest observed 3 hr Kp over the past 24 hours was 4 (below NOAA Scale levels). The greatest expected 3 hr Kp for Nov 09-Nov 11 2026 is 4.67 (NOAA Scale G1). NOAA Kp index breakdown Nov 09-Nov 11 2026 Nov 09 Nov 10 Nov 11 00-03UT 3.00 3.67 2.33 03-06UT 3.33 3.67 2.00 06-09UT 2.67 2.67 2.67 09-12UT 3.00 2.67 2.67 12-15UT 4.00 1.67 2.33 15-18UT 2.67 1.67 2.33 18-21UT 3.67 1.67 2.33 21-00UT 4.67 (G1) 2.",
       "decode": "gzip"
     },
     {
@@ -493,7 +494,7 @@
       "name": "Observed solar cycle indices",
       "url": "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json",
       "status": 200,
-      "elapsed_ms": 24,
+      "elapsed_ms": 50,
       "bytes": 512601,
       "content_type": "application/json",
       "verdict": "pass",
@@ -512,7 +513,7 @@
       "name": "CME analyses (CCMC host, keyless)",
       "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/CMEAnalysis?startDate=2024-05-01&endDate=2024-05-15&mostAccurateOnly=true",
       "status": null,
-      "elapsed_ms": 45069,
+      "elapsed_ms": 45084,
       "bytes": 0,
       "content_type": null,
       "verdict": "fail",
@@ -527,7 +528,7 @@
       "name": "Geomagnetic storms (CCMC host, keyless)",
       "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2024-05-01&endDate=2024-05-15",
       "status": null,
-      "elapsed_ms": 45006,
+      "elapsed_ms": 45046,
       "bytes": 0,
       "content_type": null,
       "verdict": "fail",
@@ -542,7 +543,7 @@
       "name": "Solar flares (CCMC host, keyless)",
       "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/FLR?startDate=2024-05-01&endDate=2024-05-15",
       "status": null,
-      "elapsed_ms": 45030,
+      "elapsed_ms": 45046,
       "bytes": 0,
       "content_type": null,
       "verdict": "fail",
@@ -557,7 +558,7 @@
       "name": "Space-weather notifications (CCMC host, keyless)",
       "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/notifications?startDate=2024-05-01&endDate=2024-05-15&type=all",
       "status": null,
-      "elapsed_ms": 45036,
+      "elapsed_ms": 45046,
       "bytes": 0,
       "content_type": null,
       "verdict": "fail",
@@ -572,7 +573,7 @@
       "name": "CME list via api.nasa.gov mirror",
       "url": "https://api.nasa.gov/DONKI/CME?startDate=2024-05-01&endDate=2024-05-10&api_key=DEMO_KEY",
       "status": 503,
-      "elapsed_ms": 1283,
+      "elapsed_ms": 1002,
       "bytes": 91,
       "content_type": "text/plain",
       "verdict": "fail",
@@ -589,7 +590,7 @@
       "name": "Kp index web service",
       "url": "https://kp.gfz.de/app/json/?start=2024-05-01T00%3A00%3A00Z&end=2024-05-15T00%3A00%3A00Z&index=Kp&status=def",
       "status": 200,
-      "elapsed_ms": 871,
+      "elapsed_ms": 917,
       "bytes": 3972,
       "content_type": "application/json",
       "verdict": "pass",
@@ -607,8 +608,8 @@
       "name": "Kp/ap/Ap/SN/F10.7 since 1932 (flat file)",
       "url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
       "status": 200,
-      "elapsed_ms": 1113,
-      "bytes": 5511193,
+      "elapsed_ms": 1380,
+      "bytes": 5512306,
       "content_type": "text/plain",
       "verdict": "pass",
       "checks_passed": [
@@ -625,17 +626,16 @@
       "name": "Estimated international sunspot number, current month",
       "url": "https://www.sidc.be/SILSO/DATA/EISN/EISN_current.csv",
       "status": 200,
-      "elapsed_ms": 843,
-      "bytes": 92,
+      "elapsed_ms": 1288,
+      "bytes": 414,
       "content_type": "text/csv",
-      "verdict": "fail",
+      "verdict": "pass",
       "checks_passed": [
-        "status==200"
+        "status==200",
+        "bytes>=100"
       ],
-      "checks_failed": [
-        "only 92 bytes, wanted 100"
-      ],
-      "sample": "text: 2026, 11, 01, 2026.834, 33, 4.5, 18, 23, 2026, 11, 02, 2026.837, 49, 6.9, 13, 15,"
+      "checks_failed": [],
+      "sample": "text: 2026, 11, 01, 2026.834, 33, 5.1, 21, 27, 2026, 11, 02, 2026.837, 49, 7.1, 20, 24, 2026, 11, 03, 2026.840, 45, 8.2, 17, 19, 2026, 11, 04, 2026.842, 77, 16.9, 15, 20, 2026, 11, 05, 2026.845, 97, 7.7, 22, 32, 2026, 11, 06, 2026.848, 113, 15.6, 17, 22, 2026, 11, 07, 2026.851, 94, 16.3, 8, 11, 2026, 11, 08, 2026.853, 74, 6.6, 13, 15, 2026, 11, 09, 2026.856, 92, 5.3, 15, 18,"
     },
     {
       "source_id": "silso",
@@ -643,7 +643,7 @@
       "name": "Daily total sunspot number since 1818",
       "url": "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv",
       "status": 200,
-      "elapsed_ms": 1240,
+      "elapsed_ms": 22011,
       "bytes": 2898450,
       "content_type": "text/csv",
       "verdict": "pass",
@@ -660,7 +660,7 @@
       "name": "Flare events from the HEK query interface",
       "url": "https://www.lmsal.com/hek/her?cosec=2&cmd=search&type=column&event_type=fl&event_starttime=2024-05-08T00%3A00%3A00&event_endtime=2024-05-12T00%3A00%3A00&event_coordsys=helioprojective&x1=-1200&x2=1200&y1=-1200&y2=1200&result_limit=10&return=event_starttime%2Cevent_peaktime%2Cfl_goescls%2Car_noaanum%2Cfrm_name",
       "status": 200,
-      "elapsed_ms": 637,
+      "elapsed_ms": 657,
       "bytes": 1626,
       "content_type": "application/json",
       "verdict": "pass",
@@ -678,8 +678,8 @@
       "name": "Data-source freshness",
       "url": "https://api.helioviewer.org/v2/getStatus/",
       "status": 200,
-      "elapsed_ms": 521,
-      "bytes": 1796,
+      "elapsed_ms": 360,
+      "bytes": 1798,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -697,7 +697,7 @@
       "name": "Closest LASCO C3 image to a time",
       "url": "https://api.helioviewer.org/v2/getClosestImage/?date=2024-05-10T12%3A00%3A00Z&sourceId=5",
       "status": 200,
-      "elapsed_ms": 449,
+      "elapsed_ms": 455,
       "bytes": 282,
       "content_type": "application/json",
       "verdict": "pass",
@@ -716,8 +716,8 @@
       "name": "Dataset catalog",
       "url": "https://cdaweb.gsfc.nasa.gov/hapi/catalog",
       "status": 200,
-      "elapsed_ms": 78,
-      "bytes": 108260,
+      "elapsed_ms": 254,
+      "bytes": 108606,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -735,7 +735,7 @@
       "name": "OMNI 1-hour solar wind sample",
       "url": "https://cdaweb.gsfc.nasa.gov/hapi/data?id=OMNI2_H0_MRG1HR&parameters=DST1800&time.min=2024-05-09T00%3A00%3A00Z&time.max=2024-05-12T00%3A00%3A00Z&format=csv",
       "status": 200,
-      "elapsed_ms": 693,
+      "elapsed_ms": 739,
       "bytes": 2143,
       "content_type": "text/csv",
       "verdict": "pass",
@@ -752,8 +752,8 @@
       "name": "Penticton F10.7 solar radio flux",
       "url": "https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json?time>=2024-05-01",
       "status": 200,
-      "elapsed_ms": 4072,
-      "bytes": 194388,
+      "elapsed_ms": 3876,
+      "bytes": 195868,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -771,17 +771,18 @@
       "name": "GP elements for objects launched in the last 30 days",
       "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json",
       "status": 200,
-      "elapsed_ms": 568,
-      "bytes": 93265,
+      "elapsed_ms": 315,
+      "bytes": 108574,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
         "status==200",
         "valid JSON",
-        "items>=1 (got 220)"
+        "items>=1 (got 257)"
       ],
       "checks_failed": [],
-      "sample": "list[220], first keys: ['ARG_OF_PERICENTER', 'BSTAR', 'CLASSIFICATION_TYPE', 'ECCENTRICITY', 'ELEMENT_SET_NO', 'EPHEMERIS_TYPE', 'EPOCH', 'INCLINATION']"
+      "sample": "list[257], first keys: ['ARG_OF_PERICENTER', 'BSTAR', 'CLASSIFICATION_TYPE', 'ECCENTRICITY', 'ELEMENT_SET_NO', 'EPHEMERIS_TYPE', 'EPOCH', 'INCLINATION']",
+      "decode": "gzip"
     },
     {
       "source_id": "celestrak",
@@ -789,17 +790,18 @@
       "name": "Satellite catalogue (payloads, rocket bodies, debris)",
       "url": "https://celestrak.org/satcat/records.php?GROUP=last-30-days&FORMAT=json",
       "status": 200,
-      "elapsed_ms": 743,
-      "bytes": 78538,
+      "elapsed_ms": 386,
+      "bytes": 90848,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
         "status==200",
         "valid JSON",
-        "items>=1 (got 237)"
+        "items>=1 (got 274)"
       ],
       "checks_failed": [],
-      "sample": "list[237], first keys: ['APOGEE', 'DATA_STATUS_CODE', 'DECAY_DATE', 'INCLINATION', 'LAUNCH_DATE', 'LAUNCH_SITE', 'NORAD_CAT_ID', 'OBJECT_ID']"
+      "sample": "list[274], first keys: ['APOGEE', 'DATA_STATUS_CODE', 'DECAY_DATE', 'INCLINATION', 'LAUNCH_DATE', 'LAUNCH_SITE', 'NORAD_CAT_ID', 'OBJECT_ID']",
+      "decode": "gzip"
     },
     {
       "source_id": "celestrak",
@@ -807,8 +809,8 @@
       "name": "Space-weather indices for drag modelling",
       "url": "https://celestrak.org/SpaceData/SW-Last5Years.csv",
       "status": 200,
-      "elapsed_ms": 1549,
-      "bytes": 264548,
+      "elapsed_ms": 543,
+      "bytes": 264766,
       "content_type": "application/octet-stream",
       "verdict": "pass",
       "checks_passed": [
@@ -824,7 +826,7 @@
       "name": "SOCRATES conjunction screening",
       "url": "https://celestrak.org/SOCRATES/",
       "status": 200,
-      "elapsed_ms": 1561,
+      "elapsed_ms": 307,
       "bytes": 20619,
       "content_type": "text/html",
       "verdict": "pass",
@@ -833,7 +835,8 @@
         "bytes>=2000"
       ],
       "checks_failed": [],
-      "sample": "text: <!DOCTYPE html> <html> <head> <title>CelesTrak: SOCRATES Plus</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <link rel=\"stylesheet\" href=\"/web/bootstrap4/css/bootstrap.min.css\"> <script src=\"/web/jquery/jquery-3.7.1.min.js\"></script> <script src=\"/web/popper/umd/popper.min.js\"></script> <!-- <script src=\"https://unpkg.com/@popperjs/core@2\"></script> --> <script src=\"/web/bootstrap4/js/bootstrap.min.js\"></script> <link rel=\"stylesheet\" type=\"text/css\" href=\"/new-site.css\"> </head> <body> <div class=container> <nav class=\"navbar navbar-expand-lg lightBG navbar-light"
+      "sample": "text: <!DOCTYPE html> <html> <head> <title>CelesTrak: SOCRATES Plus</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <link rel=\"stylesheet\" href=\"/web/bootstrap4/css/bootstrap.min.css\"> <script src=\"/web/jquery/jquery-3.7.1.min.js\"></script> <script src=\"/web/popper/umd/popper.min.js\"></script> <!-- <script src=\"https://unpkg.com/@popperjs/core@2\"></script> --> <script src=\"/web/bootstrap4/js/bootstrap.min.js\"></script> <link rel=\"stylesheet\" type=\"text/css\" href=\"/new-site.css\"> </head> <body> <div class=container> <nav class=\"navbar navbar-expand-lg lightBG navbar-light",
+      "decode": "gzip"
     },
     {
       "source_id": "space_track",
@@ -841,7 +844,7 @@
       "name": "Service liveness (unauthenticated login endpoint)",
       "url": "https://www.space-track.org/ajaxauth/login",
       "status": 200,
-      "elapsed_ms": 247,
+      "elapsed_ms": 290,
       "bytes": 0,
       "content_type": "application/csv",
       "verdict": "pass",
@@ -857,7 +860,7 @@
       "name": "Objects endpoint without a token (expects rejection)",
       "url": "https://discosweb.esoc.esa.int/api/objects",
       "status": 401,
-      "elapsed_ms": 1099,
+      "elapsed_ms": 1318,
       "bytes": 118,
       "content_type": "application/json",
       "verdict": "pass",
@@ -874,7 +877,7 @@
       "name": "Reentry predictions index",
       "url": "https://aerospace.org/reentries",
       "status": 403,
-      "elapsed_ms": 105,
+      "elapsed_ms": 80,
       "bytes": 5590,
       "content_type": "text/html",
       "verdict": "fail",
@@ -884,7 +887,7 @@
       "checks_failed": [
         "status 403 != 200"
       ],
-      "sample": "text: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"content-security-policy\" content=\"default-src &#39;none&#39;; script-src &#39;nonce-PwI7f45sVZ6L8o39LY9Esp&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-src-attr &#39;none&#39;; style-src &#39;unsafe-inline&#39;; img-src &#39;self&#39; https://challenges",
+      "sample": "text: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"content-security-policy\" content=\"default-src &#39;none&#39;; script-src &#39;nonce-lKzD5xV7hVNmDEJ82H76ol&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-src-attr &#39;none&#39;; style-src &#39;unsafe-inline&#39;; img-src &#39;self&#39; https://challenges",
       "decode": "gzip"
     },
     {
@@ -893,7 +896,7 @@
       "name": "Current in-orbit catalogue",
       "url": "https://planet4589.org/space/gcat/tsv/cat/satcat.tsv",
       "status": 200,
-      "elapsed_ms": 311,
+      "elapsed_ms": 616,
       "bytes": 4000000,
       "content_type": "text/tab-separated-values",
       "verdict": "pass",
@@ -902,7 +905,7 @@
         "bytes>=100000"
       ],
       "checks_failed": [],
-      "sample": "text: #JCAT Satcat Launch_Tag Piece Type Name PLName LDate Parent SDate Primary DDate Status Dest Owner State Manufacturer Bus Motor Mass MassFlag DryMass DryFlag TotMass TotFlag Length LFlag Diameter DFlag Span SpanFlag Shape ODate Perigee PF Apogee AF Inc IF OpOrbit OQUAL AltNames # Updated 2026 Nov 2 0005:00 S00001 00001 1957 ALP 1957 ALP 1 R2 8K71PS No. M1-10 Stage 2 8K71A M1-10 (M1-1PS) 1957 Oct 4 - 1957 Oct 4 1933 Earth 1957 Dec 1 1000? R - OKB1 SU OKB1 Blok-A - 7790 7790 7800 ? 28.0 2.6 28.0 Cyl 1957 Oct 4 214 938 65.10 LLEO/I - - S00002 00002 1957 ALP 1957 ALP 2 P 1-y ISZ PS-1 1957 Oct 4 S00",
+      "sample": "text: #JCAT Satcat Launch_Tag Piece Type Name PLName LDate Parent SDate Primary DDate Status Dest Owner State Manufacturer Bus Motor Mass MassFlag DryMass DryFlag TotMass TotFlag Length LFlag Diameter DFlag Span SpanFlag Shape ODate Perigee PF Apogee AF Inc IF OpOrbit OQUAL AltNames # Updated 2026 Nov 9 0053:14 S00001 00001 1957 ALP 1957 ALP 1 R2 8K71PS No. M1-10 Stage 2 8K71A M1-10 (M1-1PS) 1957 Oct 4 - 1957 Oct 4 1933 Earth 1957 Dec 1 1000? R - OKB1 SU OKB1 Blok-A - 7790 7790 7800 ? 28.0 2.6 28.0 Cyl 1957 Oct 4 214 938 65.10 LLEO/I - - S00002 00002 1957 ALP 1957 ALP 2 P 1-y ISZ PS-1 1957 Oct 4 S00",
       "truncated": true
     },
     {
@@ -911,7 +914,7 @@
       "name": "Open API without a key (expects rejection or error payload)",
       "url": "https://www.amsmeteors.org/members/api/open_api/get_events?year=2024",
       "status": 410,
-      "elapsed_ms": 161,
+      "elapsed_ms": 145,
       "bytes": 0,
       "content_type": "",
       "verdict": "fail",
@@ -928,7 +931,7 @@
       "name": "Monthly trajectory summary files",
       "url": "https://globalmeteornetwork.org/data/traj_summary_data/monthly/",
       "status": 200,
-      "elapsed_ms": 120,
+      "elapsed_ms": 277,
       "bytes": 12101,
       "content_type": "text/html",
       "verdict": "pass",
@@ -946,8 +949,8 @@
       "name": "Circulars archive",
       "url": "https://gcn.nasa.gov/circulars",
       "status": 200,
-      "elapsed_ms": 240,
-      "bytes": 58048,
+      "elapsed_ms": 472,
+      "bytes": 58294,
       "content_type": "text/html",
       "verdict": "pass",
       "checks_passed": [
@@ -964,7 +967,7 @@
       "name": "TAP schema \u2014 available tables",
       "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/tables",
       "status": 200,
-      "elapsed_ms": 12101,
+      "elapsed_ms": 11115,
       "bytes": 4000000,
       "content_type": "text/xml",
       "verdict": "pass",
@@ -982,8 +985,8 @@
       "name": "Open events",
       "url": "https://eonet.gsfc.nasa.gov/api/v3/events?limit=10&status=open",
       "status": 200,
-      "elapsed_ms": 5403,
-      "bytes": 19676,
+      "elapsed_ms": 372,
+      "bytes": 6777,
       "content_type": "application/rss+xml",
       "verdict": "pass",
       "checks_passed": [
@@ -1001,8 +1004,8 @@
       "name": "Recent significant events",
       "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmagnitude=5&orderby=time",
       "status": 200,
-      "elapsed_ms": 146,
-      "bytes": 7455,
+      "elapsed_ms": 437,
+      "bytes": 7785,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -1022,7 +1025,7 @@
       "name": "Available observatories",
       "url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/observatories",
       "status": 200,
-      "elapsed_ms": 142,
+      "elapsed_ms": 229,
       "bytes": 101077,
       "content_type": "application/json",
       "verdict": "pass",
@@ -1041,8 +1044,8 @@
       "name": "ISS position now",
       "url": "https://api.wheretheiss.at/v1/satellites/25544",
       "status": 200,
-      "elapsed_ms": 361,
-      "bytes": 312,
+      "elapsed_ms": 840,
+      "bytes": 311,
       "content_type": "application/json",
       "verdict": "pass",
       "checks_passed": [
@@ -1066,8 +1069,8 @@
         "name": "Close-approach data (next 60 days, inside 0.05 au)",
         "url": "https://ssd-api.jpl.nasa.gov/cad.api?date-min=now&date-max=%2B60&dist-max=0.05&sort=dist&limit=20",
         "status": 200,
-        "elapsed_ms": 375,
-        "bytes": 3709,
+        "elapsed_ms": 243,
+        "bytes": 3719,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1087,8 +1090,8 @@
         "name": "Impact-risk table (Palermo scale >= -5)",
         "url": "https://ssd-api.jpl.nasa.gov/sentry.api?ps-min=-5",
         "status": 200,
-        "elapsed_ms": 473,
-        "bytes": 56512,
+        "elapsed_ms": 332,
+        "bytes": 56249,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1107,7 +1110,7 @@
         "name": "Bolide / fireball detections",
         "url": "https://ssd-api.jpl.nasa.gov/fireball.api?limit=10&sort=-date",
         "status": 200,
-        "elapsed_ms": 274,
+        "elapsed_ms": 210,
         "bytes": 897,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1128,7 +1131,7 @@
         "name": "Bulk query \u2014 potentially hazardous asteroids",
         "url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name%2CH%2Cdiameter%2Cmoid%2Cclass&sb-group=pha&limit=10",
         "status": 200,
-        "elapsed_ms": 3987,
+        "elapsed_ms": 3292,
         "bytes": 750,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1147,18 +1150,19 @@
         "endpoint_id": "scout",
         "name": "Scout \u2014 imminent-impactor hazard assessment",
         "url": "https://ssd-api.jpl.nasa.gov/scout.api",
-        "status": 502,
-        "elapsed_ms": 301,
-        "bytes": 150,
-        "content_type": "text/html",
-        "verdict": "fail",
-        "checks_passed": [],
-        "checks_failed": [
-          "status 502 != 200",
-          "missing JSON key: signature",
-          "missing JSON key: count"
+        "status": 200,
+        "elapsed_ms": 257,
+        "bytes": 25725,
+        "content_type": "application/json",
+        "verdict": "pass",
+        "checks_passed": [
+          "status==200",
+          "valid JSON",
+          "key:signature",
+          "key:count"
         ],
-        "sample": "text: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html>"
+        "checks_failed": [],
+        "sample": "object keys: ['count', 'data', 'signature']"
       }
     ],
     "jpl_horizons": [
@@ -1168,7 +1172,7 @@
         "name": "Observer table for 99942 Apophis",
         "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='99942'&OBJ_DATA='NO'&MAKE_EPHEM='YES'&EPHEM_TYPE='OBSERVER'&CENTER='500%40399'&START_TIME='2026-01-01'&STOP_TIME='2026-01-02'&STEP_SIZE='1+d'",
         "status": 200,
-        "elapsed_ms": 591,
+        "elapsed_ms": 310,
         "bytes": 37842,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1189,7 +1193,7 @@
         "name": "Close approaches for a date range",
         "url": "https://api.nasa.gov/neo/rest/v1/feed?start_date=2026-09-01&end_date=2026-09-03&api_key=DEMO_KEY",
         "status": 200,
-        "elapsed_ms": 912,
+        "elapsed_ms": 837,
         "bytes": 22280,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1209,7 +1213,7 @@
         "name": "Catalogue statistics",
         "url": "https://api.nasa.gov/neo/rest/v1/stats?api_key=DEMO_KEY",
         "status": 200,
-        "elapsed_ms": 457,
+        "elapsed_ms": 285,
         "bytes": 220,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1231,8 +1235,8 @@
         "name": "Full NEA list (documented automated-data-access endpoint)",
         "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=allneo.lst",
         "status": 200,
-        "elapsed_ms": 1225,
-        "bytes": 1327761,
+        "elapsed_ms": 1740,
+        "bytes": 1332690,
         "content_type": "text/plain",
         "verdict": "pass",
         "checks_passed": [
@@ -1249,8 +1253,8 @@
         "name": "Risk list (flat file)",
         "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_risk_list",
         "status": 200,
-        "elapsed_ms": 1061,
-        "bytes": 298690,
+        "elapsed_ms": 1534,
+        "bytes": 300594,
         "content_type": "text/plain",
         "verdict": "pass",
         "checks_passed": [
@@ -1258,7 +1262,7 @@
           "bytes>=2000"
         ],
         "checks_failed": [],
-        "sample": "text: Last Update: 2026-11-02 13:50 UTC Object | Diameter | VI Max | VIs | Num/des. Name | m | *=Y | Date/Time | IP max | PS max |TS | Vel km/s | Years | IP cum | PS cum | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | NNNN | A | YYYY-MM-DD HH:MM | EEEEEEEE | NNN.NN | NN | NNN.NN | YYYY-YYYY | EEEEEEEE | NNN.NN | 2008JL3 | 30 | * | 2027-05-01 09:05 | 1.66E-4 | -2.29 | 0 | 14.01 | 2027-2126 | 1.84E-4 | -2.29 | 2023VD3 | 14 | * | 2034-11-08 17:08 | 2.35E-3 | -2.62 | 0 | 21.01 | 2034-2039 | 2.35E-3 | -2.62 | 2023TB2 | 60 | * | 2126-09-01 21:40 | 7.30E-4 | -2.92 |n/a | 13.11 | 2107-2126 | 8.26E-4 | -2.86 | 1979XB | 50",
+        "sample": "text: Last Update: 2026-11-09 14:27 UTC Object | Diameter | VI Max | VIs | Num/des. Name | m | *=Y | Date/Time | IP max | PS max |TS | Vel km/s | Years | IP cum | PS cum | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | NNNN | A | YYYY-MM-DD HH:MM | EEEEEEEE | NNN.NN | NN | NNN.NN | YYYY-YYYY | EEEEEEEE | NNN.NN | 2008JL3 | 30 | * | 2027-05-01 09:05 | 1.66E-4 | -2.10 | 0 | 14.01 | 2027-2126 | 1.84E-4 | -2.10 | 2023VD3 | 14 | * | 2034-11-08 17:08 | 2.35E-3 | -2.61 | 0 | 21.01 | 2034-2039 | 2.35E-3 | -2.61 | 2023TB2 | 60 | * | 2126-09-01 21:40 | 7.30E-4 | -2.92 |n/a | 13.11 | 2107-2126 | 8.26E-4 | -2.86 | 2025OB | 19",
         "decode": "gzip"
       },
       {
@@ -1267,7 +1271,7 @@
         "name": "Observation priority list",
         "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_priority_neo_list",
         "status": 200,
-        "elapsed_ms": 835,
+        "elapsed_ms": 496,
         "bytes": 0,
         "content_type": "",
         "verdict": "fail",
@@ -1285,8 +1289,8 @@
         "name": "Upcoming close approaches",
         "url": "https://neo.ssa.esa.int/PSDB-portlet/download?file=esa_upcoming_close_app",
         "status": 200,
-        "elapsed_ms": 826,
-        "bytes": 23494,
+        "elapsed_ms": 849,
+        "bytes": 25840,
         "content_type": "text/plain",
         "verdict": "pass",
         "checks_passed": [
@@ -1294,7 +1298,7 @@
           "bytes>=500"
         ],
         "checks_failed": [],
-        "sample": "text: Last Update: 2026-11-02 14:14 UTC Object | | Miss Distance | Diameter | H | Max bright | Rel. vel | CAI index | Num/des. Name | Date | km | au | LD | m | *=Yes | mag | mag | km/s | | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | YYYY-MM-DD | DDDDDDD | D.DDDDDD | DD.DDD | NNNN | A | DD.D | DDD.D | DD.D | DDD.DDD | 2026VA | 2026-11-02 | 1240122 | 0.008290 | 3.226 | 30 | * | 25.4 | 16.2 | 9.0 | 1.526 | 524522 Zoozve | 2026-11-02 | 6018478 | 0.040231 | 15.657 | 280 | * | 20.5 | 15.5 | 8.7 | 0.757 | 2021VC4 | 2026-11-03 | 2299513 | 0.015371 | 5.982 | 15 | * | 26.8 | 20.4 | 11.2 | 3.108 | 2017WJ2 | 2026-1",
+        "sample": "text: Last Update: 2026-11-09 14:43 UTC Object | | Miss Distance | Diameter | H | Max bright | Rel. vel | CAI index | Num/des. Name | Date | km | au | LD | m | *=Yes | mag | mag | km/s | | AAAAAAAAAAAA AAAAAAAAAAAAAAAA | YYYY-MM-DD | DDDDDDD | D.DDDDDD | DD.DDD | NNNN | A | DD.D | DDD.D | DD.D | DDD.DDD | 2025UF5 | 2026-11-09 | 7216394 | 0.048239 | 18.773 | 11 | * | 27.6 | 24.9 | 1.9 | 3.396 | 2026VQ4 | 2026-11-09 | 3819013 | 0.025529 | 9.935 | 14 | * | 27.0 | 21.7 | 10.2 | 3.625 | 2015VH65 | 2026-11-09 | 3750475 | 0.025070 | 9.757 | 11 | * | 27.5 | 21.1 | 8.0 | 3.814 | 2026VT3 | 2026-1",
         "decode": "gzip"
       }
     ],
@@ -1305,8 +1309,8 @@
         "name": "Risk list",
         "url": "https://newton.spacedys.com/neodys/index.php?pc=4.1",
         "status": 200,
-        "elapsed_ms": 987,
-        "bytes": 1325087,
+        "elapsed_ms": 1364,
+        "bytes": 1334377,
         "content_type": "text/html",
         "verdict": "pass",
         "checks_passed": [
@@ -1326,8 +1330,8 @@
         "name": "Near-Earth asteroid orbit file",
         "url": "https://www.minorplanetcenter.net/Extended_Files/nea_extended.json.gz",
         "status": 200,
-        "elapsed_ms": 384,
-        "bytes": 21711015,
+        "elapsed_ms": 1527,
+        "bytes": 21708860,
         "content_type": "application/x-gzip",
         "verdict": "pass",
         "checks_passed": [
@@ -1346,15 +1350,15 @@
         "name": "NEO Confirmation Page (unconfirmed objects)",
         "url": "https://www.minorplanetcenter.net/iau/NEO/neocp.txt",
         "status": 200,
-        "elapsed_ms": 234,
-        "bytes": 4386,
+        "elapsed_ms": 289,
+        "bytes": 6936,
         "content_type": "text/plain",
         "verdict": "pass",
         "checks_passed": [
           "status==200"
         ],
         "checks_failed": [],
-        "sample": "text: P22rEFS 68 2026 11 02.5 5.9613 +54.7258 21.5 Added Nov. 2.62 UT 3 0.04 17.3 0.090 LVV0086 100 2026 11 01.7 5.0997 +36.4342 17.4 Added Nov. 2.61 UT 3 0.03 28.0 0.873 LVV0087 100 2026 11 01.8 1.8568 +15.7379 18.4 Added Nov. 2.61 UT 3 0.03 23.5 0.859 W023338 85 2026 11 02.0 4.1151 +28.5260 20.9 Added Nov. 2.59 UT 3 0.00 21.3 0.695 W023334 100 2026 11 02.0 4.1464 +26.3400 20.8 Added Nov. 2.59 UT 3 0.00 23.1 0.696 P12rED6 94 2026 11 02.5 3.1144 +4.9200 20.2 Added Nov. 2.55 UT 4 0.04 18.1 0.158 P22rEy8 100 2026 11 02.4 4.0119 +18.9009 21.2 Added Nov. 2.54 UT 4 0.04 23.0 0.241 P12rECL 100 2026 11 02."
+        "sample": "text: MHN0891 100 2026 11 09.3 5.8046 +31.9449 20.7 Added Nov. 9.65 UT 10 0.08 22.5 0.296 ZTF10Hn 100 2026 11 09.3 3.3851 +3.0123 19.6 Added Nov. 9.61 UT 4 0.03 24.5 0.374 P12rWEd 100 2026 11 09.3 1.9709 -0.0070 20.4 Added Nov. 9.56 UT 3 0.04 24.1 0.292 MVcJ197 41 2026 11 05.7 1.7647 +3.0275 22.3 Added Nov. 9.54 UT 6 3.02 21.0 0.987 P22rWzv 100 2026 11 09.3 2.2920 +14.0124 21.5 Updated Nov. 9.46 UT 6 0.13 24.5 0.216 CF044R2 92 2026 11 09.3 5.4358 +35.2535 19.3 Updated Nov. 9.44 UT 9 0.12 14.9 0.242 C46RD91 98 2026 11 09.3 4.6371 +6.7022 18.5 Updated Nov. 9.62 UT 8 0.10 33.5 0.312 CF03WQ2 68 2026 11 "
       },
       {
         "source_id": "mpc",
@@ -1362,7 +1366,7 @@
         "name": "NEA orbits in MPCORB format",
         "url": "https://www.minorplanetcenter.net/iau/MPCORB/NEA.txt",
         "status": 200,
-        "elapsed_ms": 323,
+        "elapsed_ms": 3325,
         "bytes": 4000000,
         "content_type": "text/plain",
         "verdict": "pass",
@@ -1382,17 +1386,17 @@
         "name": "Issued alerts, watches and warnings",
         "url": "https://services.swpc.noaa.gov/products/alerts.json",
         "status": 200,
-        "elapsed_ms": 197,
-        "bytes": 66263,
+        "elapsed_ms": 183,
+        "bytes": 49109,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
           "status==200",
           "valid JSON",
-          "items>=5 (got 99)"
+          "items>=5 (got 75)"
         ],
         "checks_failed": [],
-        "sample": "list[99], first keys: ['issue_datetime', 'message', 'product_id']",
+        "sample": "list[75], first keys: ['issue_datetime', 'message', 'product_id']",
         "decode": "gzip"
       },
       {
@@ -1401,8 +1405,8 @@
         "name": "NOAA R/S/G scales, observed + 3-day forecast",
         "url": "https://services.swpc.noaa.gov/products/noaa-scales.json",
         "status": 200,
-        "elapsed_ms": 24,
-        "bytes": 1096,
+        "elapsed_ms": 46,
+        "bytes": 1107,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1420,7 +1424,7 @@
         "name": "Planetary K index, 1-minute estimated",
         "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
         "status": 200,
-        "elapsed_ms": 22,
+        "elapsed_ms": 32,
         "bytes": 27925,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1439,8 +1443,8 @@
         "name": "GOES X-ray flux, 1-day",
         "url": "https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json",
         "status": 200,
-        "elapsed_ms": 31,
-        "bytes": 655078,
+        "elapsed_ms": 57,
+        "bytes": 655881,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1458,8 +1462,8 @@
         "name": "GOES integral proton flux, 1-day",
         "url": "https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json",
         "status": 200,
-        "elapsed_ms": 24,
-        "bytes": 242309,
+        "elapsed_ms": 42,
+        "bytes": 242211,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1477,17 +1481,17 @@
         "name": "Real-time solar wind plasma (RTSW)",
         "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json",
         "status": 200,
-        "elapsed_ms": 30,
-        "bytes": 2428096,
+        "elapsed_ms": 50,
+        "bytes": 2693448,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
           "status==200",
           "valid JSON",
-          "items>=10 (got 3279)"
+          "items>=10 (got 3635)"
         ],
         "checks_failed": [],
-        "sample": "list[3279], first keys: ['active', 'alpha_density', 'alpha_sample_size', 'alpha_speed', 'alpha_temperature', 'alpha_vx_gse', 'alpha_vx_gsm', 'alpha_vy_gse']",
+        "sample": "list[3635], first keys: ['active', 'alpha_density', 'alpha_sample_size', 'alpha_speed', 'alpha_temperature', 'alpha_vx_gse', 'alpha_vx_gsm', 'alpha_vy_gse']",
         "decode": "gzip"
       },
       {
@@ -1496,17 +1500,17 @@
         "name": "Real-time interplanetary magnetic field (RTSW)",
         "url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json",
         "status": 200,
-        "elapsed_ms": 36,
-        "bytes": 1484250,
+        "elapsed_ms": 61,
+        "bytes": 1533041,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
           "status==200",
           "valid JSON",
-          "items>=10 (got 3519)"
+          "items>=10 (got 3665)"
         ],
         "checks_failed": [],
-        "sample": "list[3519], first keys: ['active', 'bt', 'bx_gse', 'bx_gsm', 'by_gse', 'by_gsm', 'bz_gse', 'bz_gsm']",
+        "sample": "list[3665], first keys: ['active', 'bt', 'bx_gse', 'bx_gsm', 'by_gse', 'by_gsm', 'bz_gse', 'bz_gsm']",
         "decode": "gzip"
       },
       {
@@ -1515,8 +1519,8 @@
         "name": "OVATION aurora nowcast grid",
         "url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
         "status": 200,
-        "elapsed_ms": 35,
-        "bytes": 920066,
+        "elapsed_ms": 56,
+        "bytes": 919100,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1536,8 +1540,8 @@
         "name": "3-day space weather forecast (text product)",
         "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
         "status": 200,
-        "elapsed_ms": 25,
-        "bytes": 1919,
+        "elapsed_ms": 33,
+        "bytes": 1937,
         "content_type": "text/plain",
         "verdict": "pass",
         "checks_passed": [
@@ -1546,7 +1550,7 @@
           "bytes>=500"
         ],
         "checks_failed": [],
-        "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Nov 02 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Activity Observation and Forecast The greatest observed 3 hr Kp over the past 24 hours was 3 (below NOAA Scale levels). The greatest expected 3 hr Kp for Nov 02-Nov 04 2026 is 3.00 (below NOAA Scale levels). NOAA Kp index breakdown Nov 02-Nov 04 2026 Nov 02 Nov 03 Nov 04 00-03UT 1.00 1.67 1.67 03-06UT 2.00 2.00 2.00 06-09UT 3.00 1.67 1.67 09-12UT 2.33 1.33 1.33 12-15UT 2.00 0.67 1.33 15-18UT 2.00 0.67 0.67 18-21UT 1.67 1.67 0.67 21-00UT 2.",
+        "sample": "text: :Product: 3-Day Forecast :Issued: 2026 Nov 09 1230 UTC # Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center # A. NOAA Geomagnetic Activity Observation and Forecast The greatest observed 3 hr Kp over the past 24 hours was 4 (below NOAA Scale levels). The greatest expected 3 hr Kp for Nov 09-Nov 11 2026 is 4.67 (NOAA Scale G1). NOAA Kp index breakdown Nov 09-Nov 11 2026 Nov 09 Nov 10 Nov 11 00-03UT 3.00 3.67 2.33 03-06UT 3.33 3.67 2.00 06-09UT 2.67 2.67 2.67 09-12UT 3.00 2.67 2.67 12-15UT 4.00 1.67 2.33 15-18UT 2.67 1.67 2.33 18-21UT 3.67 1.67 2.33 21-00UT 4.67 (G1) 2.",
         "decode": "gzip"
       },
       {
@@ -1555,7 +1559,7 @@
         "name": "Observed solar cycle indices",
         "url": "https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json",
         "status": 200,
-        "elapsed_ms": 24,
+        "elapsed_ms": 50,
         "bytes": 512601,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1576,7 +1580,7 @@
         "name": "CME analyses (CCMC host, keyless)",
         "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/CMEAnalysis?startDate=2024-05-01&endDate=2024-05-15&mostAccurateOnly=true",
         "status": null,
-        "elapsed_ms": 45069,
+        "elapsed_ms": 45084,
         "bytes": 0,
         "content_type": null,
         "verdict": "fail",
@@ -1591,7 +1595,7 @@
         "name": "Geomagnetic storms (CCMC host, keyless)",
         "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2024-05-01&endDate=2024-05-15",
         "status": null,
-        "elapsed_ms": 45006,
+        "elapsed_ms": 45046,
         "bytes": 0,
         "content_type": null,
         "verdict": "fail",
@@ -1606,7 +1610,7 @@
         "name": "Solar flares (CCMC host, keyless)",
         "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/FLR?startDate=2024-05-01&endDate=2024-05-15",
         "status": null,
-        "elapsed_ms": 45030,
+        "elapsed_ms": 45046,
         "bytes": 0,
         "content_type": null,
         "verdict": "fail",
@@ -1621,7 +1625,7 @@
         "name": "Space-weather notifications (CCMC host, keyless)",
         "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/notifications?startDate=2024-05-01&endDate=2024-05-15&type=all",
         "status": null,
-        "elapsed_ms": 45036,
+        "elapsed_ms": 45046,
         "bytes": 0,
         "content_type": null,
         "verdict": "fail",
@@ -1636,7 +1640,7 @@
         "name": "CME list via api.nasa.gov mirror",
         "url": "https://api.nasa.gov/DONKI/CME?startDate=2024-05-01&endDate=2024-05-10&api_key=DEMO_KEY",
         "status": 503,
-        "elapsed_ms": 1283,
+        "elapsed_ms": 1002,
         "bytes": 91,
         "content_type": "text/plain",
         "verdict": "fail",
@@ -1655,7 +1659,7 @@
         "name": "Kp index web service",
         "url": "https://kp.gfz.de/app/json/?start=2024-05-01T00%3A00%3A00Z&end=2024-05-15T00%3A00%3A00Z&index=Kp&status=def",
         "status": 200,
-        "elapsed_ms": 871,
+        "elapsed_ms": 917,
         "bytes": 3972,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1673,8 +1677,8 @@
         "name": "Kp/ap/Ap/SN/F10.7 since 1932 (flat file)",
         "url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
         "status": 200,
-        "elapsed_ms": 1113,
-        "bytes": 5511193,
+        "elapsed_ms": 1380,
+        "bytes": 5512306,
         "content_type": "text/plain",
         "verdict": "pass",
         "checks_passed": [
@@ -1693,17 +1697,16 @@
         "name": "Estimated international sunspot number, current month",
         "url": "https://www.sidc.be/SILSO/DATA/EISN/EISN_current.csv",
         "status": 200,
-        "elapsed_ms": 843,
-        "bytes": 92,
+        "elapsed_ms": 1288,
+        "bytes": 414,
         "content_type": "text/csv",
-        "verdict": "fail",
+        "verdict": "pass",
         "checks_passed": [
-          "status==200"
+          "status==200",
+          "bytes>=100"
         ],
-        "checks_failed": [
-          "only 92 bytes, wanted 100"
-        ],
-        "sample": "text: 2026, 11, 01, 2026.834, 33, 4.5, 18, 23, 2026, 11, 02, 2026.837, 49, 6.9, 13, 15,"
+        "checks_failed": [],
+        "sample": "text: 2026, 11, 01, 2026.834, 33, 5.1, 21, 27, 2026, 11, 02, 2026.837, 49, 7.1, 20, 24, 2026, 11, 03, 2026.840, 45, 8.2, 17, 19, 2026, 11, 04, 2026.842, 77, 16.9, 15, 20, 2026, 11, 05, 2026.845, 97, 7.7, 22, 32, 2026, 11, 06, 2026.848, 113, 15.6, 17, 22, 2026, 11, 07, 2026.851, 94, 16.3, 8, 11, 2026, 11, 08, 2026.853, 74, 6.6, 13, 15, 2026, 11, 09, 2026.856, 92, 5.3, 15, 18,"
       },
       {
         "source_id": "silso",
@@ -1711,7 +1714,7 @@
         "name": "Daily total sunspot number since 1818",
         "url": "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv",
         "status": 200,
-        "elapsed_ms": 1240,
+        "elapsed_ms": 22011,
         "bytes": 2898450,
         "content_type": "text/csv",
         "verdict": "pass",
@@ -1730,7 +1733,7 @@
         "name": "Flare events from the HEK query interface",
         "url": "https://www.lmsal.com/hek/her?cosec=2&cmd=search&type=column&event_type=fl&event_starttime=2024-05-08T00%3A00%3A00&event_endtime=2024-05-12T00%3A00%3A00&event_coordsys=helioprojective&x1=-1200&x2=1200&y1=-1200&y2=1200&result_limit=10&return=event_starttime%2Cevent_peaktime%2Cfl_goescls%2Car_noaanum%2Cfrm_name",
         "status": 200,
-        "elapsed_ms": 637,
+        "elapsed_ms": 657,
         "bytes": 1626,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1750,8 +1753,8 @@
         "name": "Data-source freshness",
         "url": "https://api.helioviewer.org/v2/getStatus/",
         "status": 200,
-        "elapsed_ms": 521,
-        "bytes": 1796,
+        "elapsed_ms": 360,
+        "bytes": 1798,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1769,7 +1772,7 @@
         "name": "Closest LASCO C3 image to a time",
         "url": "https://api.helioviewer.org/v2/getClosestImage/?date=2024-05-10T12%3A00%3A00Z&sourceId=5",
         "status": 200,
-        "elapsed_ms": 449,
+        "elapsed_ms": 455,
         "bytes": 282,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1790,8 +1793,8 @@
         "name": "Dataset catalog",
         "url": "https://cdaweb.gsfc.nasa.gov/hapi/catalog",
         "status": 200,
-        "elapsed_ms": 78,
-        "bytes": 108260,
+        "elapsed_ms": 254,
+        "bytes": 108606,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1809,7 +1812,7 @@
         "name": "OMNI 1-hour solar wind sample",
         "url": "https://cdaweb.gsfc.nasa.gov/hapi/data?id=OMNI2_H0_MRG1HR&parameters=DST1800&time.min=2024-05-09T00%3A00%3A00Z&time.max=2024-05-12T00%3A00%3A00Z&format=csv",
         "status": 200,
-        "elapsed_ms": 693,
+        "elapsed_ms": 739,
         "bytes": 2143,
         "content_type": "text/csv",
         "verdict": "pass",
@@ -1828,8 +1831,8 @@
         "name": "Penticton F10.7 solar radio flux",
         "url": "https://lasp.colorado.edu/lisird/latis/dap/penticton_radio_flux.json?time>=2024-05-01",
         "status": 200,
-        "elapsed_ms": 4072,
-        "bytes": 194388,
+        "elapsed_ms": 3876,
+        "bytes": 195868,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -1849,17 +1852,18 @@
         "name": "GP elements for objects launched in the last 30 days",
         "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json",
         "status": 200,
-        "elapsed_ms": 568,
-        "bytes": 93265,
+        "elapsed_ms": 315,
+        "bytes": 108574,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
           "status==200",
           "valid JSON",
-          "items>=1 (got 220)"
+          "items>=1 (got 257)"
         ],
         "checks_failed": [],
-        "sample": "list[220], first keys: ['ARG_OF_PERICENTER', 'BSTAR', 'CLASSIFICATION_TYPE', 'ECCENTRICITY', 'ELEMENT_SET_NO', 'EPHEMERIS_TYPE', 'EPOCH', 'INCLINATION']"
+        "sample": "list[257], first keys: ['ARG_OF_PERICENTER', 'BSTAR', 'CLASSIFICATION_TYPE', 'ECCENTRICITY', 'ELEMENT_SET_NO', 'EPHEMERIS_TYPE', 'EPOCH', 'INCLINATION']",
+        "decode": "gzip"
       },
       {
         "source_id": "celestrak",
@@ -1867,17 +1871,18 @@
         "name": "Satellite catalogue (payloads, rocket bodies, debris)",
         "url": "https://celestrak.org/satcat/records.php?GROUP=last-30-days&FORMAT=json",
         "status": 200,
-        "elapsed_ms": 743,
-        "bytes": 78538,
+        "elapsed_ms": 386,
+        "bytes": 90848,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
           "status==200",
           "valid JSON",
-          "items>=1 (got 237)"
+          "items>=1 (got 274)"
         ],
         "checks_failed": [],
-        "sample": "list[237], first keys: ['APOGEE', 'DATA_STATUS_CODE', 'DECAY_DATE', 'INCLINATION', 'LAUNCH_DATE', 'LAUNCH_SITE', 'NORAD_CAT_ID', 'OBJECT_ID']"
+        "sample": "list[274], first keys: ['APOGEE', 'DATA_STATUS_CODE', 'DECAY_DATE', 'INCLINATION', 'LAUNCH_DATE', 'LAUNCH_SITE', 'NORAD_CAT_ID', 'OBJECT_ID']",
+        "decode": "gzip"
       },
       {
         "source_id": "celestrak",
@@ -1885,8 +1890,8 @@
         "name": "Space-weather indices for drag modelling",
         "url": "https://celestrak.org/SpaceData/SW-Last5Years.csv",
         "status": 200,
-        "elapsed_ms": 1549,
-        "bytes": 264548,
+        "elapsed_ms": 543,
+        "bytes": 264766,
         "content_type": "application/octet-stream",
         "verdict": "pass",
         "checks_passed": [
@@ -1902,7 +1907,7 @@
         "name": "SOCRATES conjunction screening",
         "url": "https://celestrak.org/SOCRATES/",
         "status": 200,
-        "elapsed_ms": 1561,
+        "elapsed_ms": 307,
         "bytes": 20619,
         "content_type": "text/html",
         "verdict": "pass",
@@ -1911,7 +1916,8 @@
           "bytes>=2000"
         ],
         "checks_failed": [],
-        "sample": "text: <!DOCTYPE html> <html> <head> <title>CelesTrak: SOCRATES Plus</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <link rel=\"stylesheet\" href=\"/web/bootstrap4/css/bootstrap.min.css\"> <script src=\"/web/jquery/jquery-3.7.1.min.js\"></script> <script src=\"/web/popper/umd/popper.min.js\"></script> <!-- <script src=\"https://unpkg.com/@popperjs/core@2\"></script> --> <script src=\"/web/bootstrap4/js/bootstrap.min.js\"></script> <link rel=\"stylesheet\" type=\"text/css\" href=\"/new-site.css\"> </head> <body> <div class=container> <nav class=\"navbar navbar-expand-lg lightBG navbar-light"
+        "sample": "text: <!DOCTYPE html> <html> <head> <title>CelesTrak: SOCRATES Plus</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <link rel=\"stylesheet\" href=\"/web/bootstrap4/css/bootstrap.min.css\"> <script src=\"/web/jquery/jquery-3.7.1.min.js\"></script> <script src=\"/web/popper/umd/popper.min.js\"></script> <!-- <script src=\"https://unpkg.com/@popperjs/core@2\"></script> --> <script src=\"/web/bootstrap4/js/bootstrap.min.js\"></script> <link rel=\"stylesheet\" type=\"text/css\" href=\"/new-site.css\"> </head> <body> <div class=container> <nav class=\"navbar navbar-expand-lg lightBG navbar-light",
+        "decode": "gzip"
       }
     ],
     "space_track": [
@@ -1921,7 +1927,7 @@
         "name": "Service liveness (unauthenticated login endpoint)",
         "url": "https://www.space-track.org/ajaxauth/login",
         "status": 200,
-        "elapsed_ms": 247,
+        "elapsed_ms": 290,
         "bytes": 0,
         "content_type": "application/csv",
         "verdict": "pass",
@@ -1939,7 +1945,7 @@
         "name": "Objects endpoint without a token (expects rejection)",
         "url": "https://discosweb.esoc.esa.int/api/objects",
         "status": 401,
-        "elapsed_ms": 1099,
+        "elapsed_ms": 1318,
         "bytes": 118,
         "content_type": "application/json",
         "verdict": "pass",
@@ -1958,7 +1964,7 @@
         "name": "Reentry predictions index",
         "url": "https://aerospace.org/reentries",
         "status": 403,
-        "elapsed_ms": 105,
+        "elapsed_ms": 80,
         "bytes": 5590,
         "content_type": "text/html",
         "verdict": "fail",
@@ -1968,7 +1974,7 @@
         "checks_failed": [
           "status 403 != 200"
         ],
-        "sample": "text: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"content-security-policy\" content=\"default-src &#39;none&#39;; script-src &#39;nonce-PwI7f45sVZ6L8o39LY9Esp&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-src-attr &#39;none&#39;; style-src &#39;unsafe-inline&#39;; img-src &#39;self&#39; https://challenges",
+        "sample": "text: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"content-security-policy\" content=\"default-src &#39;none&#39;; script-src &#39;nonce-lKzD5xV7hVNmDEJ82H76ol&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-src-attr &#39;none&#39;; style-src &#39;unsafe-inline&#39;; img-src &#39;self&#39; https://challenges",
         "decode": "gzip"
       }
     ],
@@ -1979,7 +1985,7 @@
         "name": "Current in-orbit catalogue",
         "url": "https://planet4589.org/space/gcat/tsv/cat/satcat.tsv",
         "status": 200,
-        "elapsed_ms": 311,
+        "elapsed_ms": 616,
         "bytes": 4000000,
         "content_type": "text/tab-separated-values",
         "verdict": "pass",
@@ -1988,7 +1994,7 @@
           "bytes>=100000"
         ],
         "checks_failed": [],
-        "sample": "text: #JCAT Satcat Launch_Tag Piece Type Name PLName LDate Parent SDate Primary DDate Status Dest Owner State Manufacturer Bus Motor Mass MassFlag DryMass DryFlag TotMass TotFlag Length LFlag Diameter DFlag Span SpanFlag Shape ODate Perigee PF Apogee AF Inc IF OpOrbit OQUAL AltNames # Updated 2026 Nov 2 0005:00 S00001 00001 1957 ALP 1957 ALP 1 R2 8K71PS No. M1-10 Stage 2 8K71A M1-10 (M1-1PS) 1957 Oct 4 - 1957 Oct 4 1933 Earth 1957 Dec 1 1000? R - OKB1 SU OKB1 Blok-A - 7790 7790 7800 ? 28.0 2.6 28.0 Cyl 1957 Oct 4 214 938 65.10 LLEO/I - - S00002 00002 1957 ALP 1957 ALP 2 P 1-y ISZ PS-1 1957 Oct 4 S00",
+        "sample": "text: #JCAT Satcat Launch_Tag Piece Type Name PLName LDate Parent SDate Primary DDate Status Dest Owner State Manufacturer Bus Motor Mass MassFlag DryMass DryFlag TotMass TotFlag Length LFlag Diameter DFlag Span SpanFlag Shape ODate Perigee PF Apogee AF Inc IF OpOrbit OQUAL AltNames # Updated 2026 Nov 9 0053:14 S00001 00001 1957 ALP 1957 ALP 1 R2 8K71PS No. M1-10 Stage 2 8K71A M1-10 (M1-1PS) 1957 Oct 4 - 1957 Oct 4 1933 Earth 1957 Dec 1 1000? R - OKB1 SU OKB1 Blok-A - 7790 7790 7800 ? 28.0 2.6 28.0 Cyl 1957 Oct 4 214 938 65.10 LLEO/I - - S00002 00002 1957 ALP 1957 ALP 2 P 1-y ISZ PS-1 1957 Oct 4 S00",
         "truncated": true
       }
     ],
@@ -1999,7 +2005,7 @@
         "name": "Open API without a key (expects rejection or error payload)",
         "url": "https://www.amsmeteors.org/members/api/open_api/get_events?year=2024",
         "status": 410,
-        "elapsed_ms": 161,
+        "elapsed_ms": 145,
         "bytes": 0,
         "content_type": "",
         "verdict": "fail",
@@ -2018,7 +2024,7 @@
         "name": "Monthly trajectory summary files",
         "url": "https://globalmeteornetwork.org/data/traj_summary_data/monthly/",
         "status": 200,
-        "elapsed_ms": 120,
+        "elapsed_ms": 277,
         "bytes": 12101,
         "content_type": "text/html",
         "verdict": "pass",
@@ -2038,8 +2044,8 @@
         "name": "Circulars archive",
         "url": "https://gcn.nasa.gov/circulars",
         "status": 200,
-        "elapsed_ms": 240,
-        "bytes": 58048,
+        "elapsed_ms": 472,
+        "bytes": 58294,
         "content_type": "text/html",
         "verdict": "pass",
         "checks_passed": [
@@ -2058,7 +2064,7 @@
         "name": "TAP schema \u2014 available tables",
         "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/tables",
         "status": 200,
-        "elapsed_ms": 12101,
+        "elapsed_ms": 11115,
         "bytes": 4000000,
         "content_type": "text/xml",
         "verdict": "pass",
@@ -2078,8 +2084,8 @@
         "name": "Open events",
         "url": "https://eonet.gsfc.nasa.gov/api/v3/events?limit=10&status=open",
         "status": 200,
-        "elapsed_ms": 5403,
-        "bytes": 19676,
+        "elapsed_ms": 372,
+        "bytes": 6777,
         "content_type": "application/rss+xml",
         "verdict": "pass",
         "checks_passed": [
@@ -2099,8 +2105,8 @@
         "name": "Recent significant events",
         "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmagnitude=5&orderby=time",
         "status": 200,
-        "elapsed_ms": 146,
-        "bytes": 7455,
+        "elapsed_ms": 437,
+        "bytes": 7785,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
@@ -2122,7 +2128,7 @@
         "name": "Available observatories",
         "url": "https://sscweb.gsfc.nasa.gov/WS/sscr/2/observatories",
         "status": 200,
-        "elapsed_ms": 142,
+        "elapsed_ms": 229,
         "bytes": 101077,
         "content_type": "application/json",
         "verdict": "pass",
@@ -2143,8 +2149,8 @@
         "name": "ISS position now",
         "url": "https://api.wheretheiss.at/v1/satellites/25544",
         "status": 200,
-        "elapsed_ms": 361,
-        "bytes": 312,
+        "elapsed_ms": 840,
+        "bytes": 311,
         "content_type": "application/json",
         "verdict": "pass",
         "checks_passed": [
